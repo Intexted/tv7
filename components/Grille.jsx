@@ -19,7 +19,6 @@ import "swiper/css";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import { PercentageOutlined } from "@ant-design/icons";
 
 function Grille({ genders, program, bf, bm, bmo }) {
   const { width } = useWindowDimensions();
@@ -33,8 +32,22 @@ function Grille({ genders, program, bf, bm, bmo }) {
   const [bouquet, setBouquet] = useState(false);
   const [page, setpage] = useState(2);
   const [hasMore, sethasMore] = useState(true);
+  const countDownDate = Date.now();
 
   const router = useRouter();
+
+  const [oldTime, setOldTime] = useState(Date.now());
+
+  const progressTime = (x, y, z) => {
+    const Time = Math.floor(((z - new Date(x).getTime()) / (y * 60000)) * 100);
+    if (Time < 0) {
+      return 0;
+    } else if (Time > 100) {
+      return 100;
+    } else {
+      return Time;
+    }
+  };
 
   useEffect(() => {
     setGenderProgram(program);
@@ -463,11 +476,10 @@ function Grille({ genders, program, bf, bm, bmo }) {
                               isLabelVisible={false}
                               height="5px"
                               bgColor="#339FFF"
-                              completed={Math.floor(
-                                ((Date.now() -
-                                  new Date(chaine.date_start).getTime()) /
-                                  (chaine.duration * 60000)) *
-                                  100
+                              completed={progressTime(
+                                chaine.date_start,
+                                chaine.duration,
+                                oldTime
                               )}
                             />
                           </div>
@@ -529,11 +541,10 @@ function Grille({ genders, program, bf, bm, bmo }) {
                             isLabelVisible={false}
                             height="5px"
                             bgColor="#339FFF"
-                            completed={Math.floor(
-                              ((Date.now() -
-                                new Date(chaine.date_start).getTime()) /
-                                (chaine.duration * 60000)) *
-                                100
+                            completed={progressTime(
+                              chaine.date_start,
+                              chaine.duration,
+                              oldTime
                             )}
                           />
                         </div>
