@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .grid-3 {
+    grid-column: span 3; /* <-- here is the trick */
+  }
+  /* ... */
+}
+
+@font-face {
+  font-family: "TubeStn_";
+  src: url("/fonts/TubeStn_.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.roboto {
+  font-family: TubeStn_;
+}
+
+.bg-color-blue {
+  background-color: #0052a2;
+}
+
+.text-xxs {
+  font-size: xx-small;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+.swiper-button-prev:after,
+.swiper-rtl .swiper-button-next:after {
+  display: none;
+}
+
+.swiper-button-next {
+  top: 30px !important;
+}
+
+.swiper-slide {
+  height: unset !important;
+}
+
+.dot {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
