@@ -126,6 +126,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
           onClick={() => {
             setGenderProgram(program);
             setRedGender("TOUS");
+            sethasMore(true);
+            setpage(2);
             setBouquet(false);
             setEvening(false);
             setJournee(false);
@@ -141,6 +143,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
         <h1
           onClick={async () => {
             setBouquet(false);
+            sethasMore(true);
+            setpage(2);
             getParams(1);
           }}
           className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${
@@ -152,6 +156,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
         <h1
           onClick={() => {
             setBouquet(false);
+            sethasMore(true);
+            setpage(2);
             getParams(2);
           }}
           className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${
@@ -163,6 +169,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
         <h1
           onClick={async () => {
             setBouquet(false);
+            sethasMore(true);
+            setpage(2);
             getParams(3);
           }}
           className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${
@@ -245,6 +253,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
             onClick={() => {
               setGenderProgram(program);
               setRedGender("TOUS");
+              sethasMore(true);
+              setpage(2);
               setEvening(false);
               setJournee(false);
             }}
@@ -270,6 +280,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
               setJournee(false);
               await setEvening(true);
               setJournee(false);
+              sethasMore(true);
+              setpage(2);
               setRedGender("TOUS");
               await setEveningNumber(1);
               getNightProgram(null, 1);
@@ -283,7 +295,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
         </div>
       )}
       {journee && !bouquet && (
-        <div className="mt-5  border-2 border-slate-100 ">
+        <div className="mt-5  border-2 border-slate-100 px-5">
           <Swiper
             navigation
             modules={[Navigation]}
@@ -313,7 +325,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                   </div>
 
                   <div
-                    className={` overflow-y-auto `}
+                    className={` overflow-y-auto  `}
                     style={{ height: `${string.toString()}px` }}
                   >
                     <Swiper
@@ -379,6 +391,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                   onClick={() => {
                     getGenderProgram(gender.gender_fr, eveningNumber);
                     setRedGender(gender.gender_fr);
+                    sethasMore(true);
                     setpage(2);
                   }}
                   className={`text-xs cursor-pointer
@@ -403,7 +416,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 className="grid grid-cols-1 gap-1 md:grid-cols-3 m-auto mb-5 border-t-2 w-11/12"
                 endMessage={
                   <p style={{ textAlign: "center" }}>
-                    <b>Yay! You have seen it all</b>
+                    <b></b>
                   </p>
                 }
               >
