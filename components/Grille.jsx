@@ -497,8 +497,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
                               customLabel={`${print_Time(
                                 chaine.duration -
                                   Math.floor(
-                                    (Date.now() -
-                                      new Date(chaine.date_start).getTime()) /
+                                    (new Date(chaine.date_end).getTime() -
+                                      Date.now()) /
                                       60000
                                   )
                               )}`}
@@ -573,8 +573,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
                             customLabel={`${print_Time(
                               chaine.duration -
                                 Math.floor(
-                                  (Date.now() -
-                                    new Date(chaine.date_start).getTime()) /
+                                  (new Date(chaine.date_end).getTime() -
+                                    Date.now()) /
                                     60000
                                 )
                             )}`}
