@@ -115,6 +115,9 @@ function Grille({ genders, program, bf, bm, bmo }) {
   };
 
   function print_Time(m) {
+    if (m < 60 && m > 0) {
+      return m + "mn";
+    }
     return (
       Math.floor(m / 60) + "h" + (m % 60 < 10 ? "0" + (m % 60) : m % 60) + "mn"
     );
@@ -479,11 +482,26 @@ function Grille({ genders, program, bf, bm, bmo }) {
                               </div>
                             </div>
                             <ProgressBar
+                              labelClassName={
+                                progressTime(
+                                  chaine.date_start,
+                                  chaine.duration,
+                                  oldTime
+                                ) < 10
+                                  ? "translateXs30 min-w  font-semibold mb-5"
+                                  : "min-w translateXg30  font-semibold mb-5"
+                              }
+                              margin="auto"
                               borderRadius="2px"
-                              labelColor="#000"
-                              labelClassName="min-w  mb-5"
                               labelSize="5px"
-                              customLabel={`${chaine.duration} mn`}
+                              customLabel={`${print_Time(
+                                chaine.duration -
+                                  Math.floor(
+                                    (Date.now() -
+                                      new Date(chaine.date_start).getTime()) /
+                                      60000
+                                  )
+                              )}`}
                               height="5px"
                               bgColor="#339FFF"
                               completed={progressTime(
@@ -540,11 +558,26 @@ function Grille({ genders, program, bf, bm, bmo }) {
                             </div>
                           </div>
                           <ProgressBar
+                            labelClassName={
+                              progressTime(
+                                chaine.date_start,
+                                chaine.duration,
+                                oldTime
+                              ) < 10
+                                ? "translateXs30 min-w  font-semibold mb-5"
+                                : "min-w translateXg30 font-semibold mb-5"
+                            }
+                            margin="auto"
                             borderRadius="2px"
-                            labelColor="#000"
-                            labelClassName="min-w   mb-5"
                             labelSize="5px"
-                            customLabel={`${chaine.duration} mn`}
+                            customLabel={`${print_Time(
+                              chaine.duration -
+                                Math.floor(
+                                  (Date.now() -
+                                    new Date(chaine.date_start).getTime()) /
+                                    60000
+                                )
+                            )}`}
                             height="5px"
                             bgColor="#339FFF"
                             completed={progressTime(

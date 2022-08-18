@@ -13,11 +13,17 @@
   .min-w {
     min-width: 60px;
     font-size: 10px;
-    color: "";
+    color: #339fff !important;
     text-align: center;
-    margin-left: 100px;
+    /* transform: translateX(30px); */
   }
   /* ... */
+  .translateXs30 {
+    transform: translateX(60px);
+  }
+  .translateXg30 {
+    transform: translateX(40px);
+  }
 }
 
 @font-face {
