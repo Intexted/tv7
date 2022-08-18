@@ -32,7 +32,6 @@ function Grille({ genders, program, bf, bm, bmo }) {
   const [bouquet, setBouquet] = useState(false);
   const [page, setpage] = useState(2);
   const [hasMore, sethasMore] = useState(true);
-  const countDownDate = Date.now();
 
   const router = useRouter();
 
@@ -415,7 +414,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 next={fetchMoreData}
                 hasMore={hasMore}
                 loader={<h4 className="p-2 text-gray-500">Loading...</h4>}
-                className="grid grid-cols-1 gap-1 md:grid-cols-3 m-auto mb-5 border-t-2 w-11/12"
+                className="grid grid-cols-1 gap-2 xl:pl-14  sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-4  m-auto mb-5 border-t-2 w-11/12"
                 endMessage={
                   <p style={{ textAlign: "center" }}>
                     <b></b>
@@ -425,9 +424,9 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 {genderProgram.map((chaine, index) => {
                   return (
                     <>
-                      {index != 0 && index % 12 === 0 ? (
+                      {index != 0 && index % 16 === 0 ? (
                         <>
-                          <div className=" md:grid-3 m-auto my-5 ">
+                          <div className="sm:grid-3 md:grid-4  m-auto my-5 ">
                             <Image
                               src="/static/banner3.png"
                               alt="banner"
@@ -435,40 +434,21 @@ function Grille({ genders, program, bf, bm, bmo }) {
                               height="70px"
                             />
                           </div>
-                          <div className="flex flex-col">
+                          <div className="flex flex-col space-y-4">
                             <div
-                              className=" border-b-2 py-1 text-center  flex  space-x-2  "
+                              className="  py-1 text-center  flex  space-x-4 "
                               key={chaine.id}
                             >
-                              <div className="w-1/4">
+                              <div className="">
                                 <Image
                                   src={chaine.logo_chaine}
                                   alt="logo chaine"
-                                  width="30px"
-                                  height="30px"
+                                  width="40px"
+                                  height="40px"
                                 />
-
-                                <h1 className="text-xs  text-gray-500">
-                                  Programme
-                                </h1>
-                                <h1 className="text-xxs text-gray-500">
-                                  {chaine.nom_chaine}
-                                </h1>
                               </div>
                               <div className="flex space-x-2 text-left ">
-                                <div className="w-fit">
-                                  <Image
-                                    src={
-                                      chaine.thumbnail
-                                        ? chaine.thumbnail
-                                        : "/static/tvShowNo.jfif"
-                                    }
-                                    alt="logo chaine"
-                                    width="60px"
-                                    height="55px"
-                                  />
-                                </div>
-                                <div className="">
+                                <div className="w-2/3">
                                   <h1 className="font-semibold text-xs">
                                     {moment(chaine.date_start).format("HH:mm")}
                                   </h1>
@@ -484,11 +464,26 @@ function Grille({ genders, program, bf, bm, bmo }) {
                                     )})`}</span>
                                   </h1>
                                 </div>
+                                <div className="w-fit">
+                                  <Image
+                                    src={
+                                      chaine.thumbnail
+                                        ? chaine.thumbnail
+                                        : "/static/tvShowNo.jfif"
+                                    }
+                                    alt="logo chaine"
+                                    width="60px"
+                                    height="55px"
+                                  />
+                                </div>
                               </div>
                             </div>
                             <ProgressBar
                               borderRadius="2px"
-                              isLabelVisible={false}
+                              labelColor="#000"
+                              labelClassName="min-w  mb-5"
+                              labelSize="5px"
+                              customLabel={`${chaine.duration} mn`}
                               height="5px"
                               bgColor="#339FFF"
                               completed={progressTime(
@@ -500,40 +495,21 @@ function Grille({ genders, program, bf, bm, bmo }) {
                           </div>
                         </>
                       ) : (
-                        <div className="flex flex-col">
+                        <div className="flex flex-col space-y-4">
                           <div
-                            className=" border-b-2 py-1 text-center  flex  space-x-2  "
+                            className="  py-1 text-center  flex  space-x-4 "
                             key={chaine.id}
                           >
-                            <div className="w-1/4">
+                            <div className="">
                               <Image
                                 src={chaine.logo_chaine}
                                 alt="logo chaine"
-                                width="30px"
-                                height="30px"
+                                width="40px"
+                                height="40px"
                               />
-
-                              <h1 className="text-xs  text-gray-500">
-                                Programme
-                              </h1>
-                              <h1 className="text-xxs text-gray-500">
-                                {chaine.nom_chaine}
-                              </h1>
                             </div>
                             <div className="flex space-x-2 text-left ">
-                              <div className="w-fit">
-                                <Image
-                                  src={
-                                    chaine.thumbnail
-                                      ? chaine.thumbnail
-                                      : "/static/tvShowNo.jfif"
-                                  }
-                                  alt="logo chaine"
-                                  width="60px"
-                                  height="55px"
-                                />
-                              </div>
-                              <div className="">
+                              <div className="w-2/3">
                                 <h1 className="font-semibold text-xs">
                                   {moment(chaine.date_start).format("HH:mm")}
                                 </h1>
@@ -549,11 +525,26 @@ function Grille({ genders, program, bf, bm, bmo }) {
                                   )})`}</span>
                                 </h1>
                               </div>
+                              <div className="w-fit">
+                                <Image
+                                  src={
+                                    chaine.thumbnail
+                                      ? chaine.thumbnail
+                                      : "/static/tvShowNo.jfif"
+                                  }
+                                  alt="logo chaine"
+                                  width="60px"
+                                  height="55px"
+                                />
+                              </div>
                             </div>
                           </div>
                           <ProgressBar
                             borderRadius="2px"
-                            isLabelVisible={false}
+                            labelColor="#000"
+                            labelClassName="min-w   mb-5"
+                            labelSize="5px"
+                            customLabel={`${chaine.duration} mn`}
                             height="5px"
                             bgColor="#339FFF"
                             completed={progressTime(

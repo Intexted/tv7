@@ -6,6 +6,17 @@
   .grid-3 {
     grid-column: span 3; /* <-- here is the trick */
   }
+  .grid-4 {
+    grid-column: span 4; /* <-- here is the trick */
+  }
+
+  .min-w {
+    min-width: 60px;
+    font-size: 10px;
+    color: "";
+    text-align: center;
+    margin-left: 100px;
+  }
   /* ... */
 }
 
