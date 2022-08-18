@@ -437,7 +437,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                               height="70px"
                             />
                           </div>
-                          <div className="flex flex-col space-y-4">
+                          <div className="flex flex-col space-y-4 h-24">
                             <div
                               className="  py-1 text-center  flex  space-x-4 "
                               key={chaine.id}
@@ -530,7 +530,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                           </div>
                         </>
                       ) : (
-                        <div className="flex flex-col space-y-4">
+                        <div className="flex flex-col space-y-4 h-24">
                           <div
                             className="  py-1 text-center  flex  space-x-4 "
                             key={chaine.id}
