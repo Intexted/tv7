@@ -60,10 +60,10 @@ function Grille({ genders, program, bf, bm, bmo }) {
       const { data } = await axios.get(
         evening
           ? `/public/programs/evening/pt${eveningNumber}/${time} ? ${
-              redGender != "TOUS" ? "gender=${redGender}&" : ""
+              redGender != "TOUS" ? `gender=${redGender}&` : ""
             }page=${page} `
           : `/public/programs/atthemoment/${time} ? ${
-              redGender != "TOUS" ? "gender=${redGender}&" : ""
+              redGender != "TOUS" ? `gender=${redGender}&` : ""
             }page=${page}`
       );
       setGenderProgram([...genderProgram, ...data.data]);
@@ -82,14 +82,16 @@ function Grille({ genders, program, bf, bm, bmo }) {
     setJournee(false);
     setRedGender("TOUS");
     setEveningNumber(num);
-    await getNightProgram(null, num);
+    await getNightProgram(num);
   };
 
-  const getNightProgram = async (gender = "", num) => {
+  const getNightProgram = async (num) => {
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
-        `/public/programs/evening/pt${num}/${time} ?gender=${gender} `
+        `/public/programs/evening/pt${num}/${time} ${
+          redGender != "TOUS" ? `gender=${redGender}` : ""
+        } `
       );
       await setGenderProgram(data.data);
     } catch (error) {
