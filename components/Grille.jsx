@@ -490,10 +490,26 @@ function Grille({ genders, program, bf, bm, bmo }) {
                                 ) < 10
                                   ? `translateXs30 min-w ${
                                       evening ? "hide" : ""
-                                    } font-semibold mb-5`
+                                    } font-semibold mb-5 ${
+                                      progressTime(
+                                        chaine.date_start,
+                                        chaine.duration,
+                                        oldTime
+                                      ) === 100
+                                        ? "hide"
+                                        : ""
+                                    } `
                                   : `min-w translateXg30 ${
                                       evening ? "hide" : ""
-                                    } font-semibold mb-5`
+                                    } font-semibold mb-5 ${
+                                      progressTime(
+                                        chaine.date_start,
+                                        chaine.duration,
+                                        oldTime
+                                      ) === 100
+                                        ? "hide"
+                                        : ""
+                                    } `
                               }
                               margin="auto"
                               borderRadius="2px"
@@ -583,10 +599,26 @@ function Grille({ genders, program, bf, bm, bmo }) {
                               ) < 10
                                 ? `translateXs30 min-w ${
                                     evening ? "hide" : ""
-                                  } font-semibold mb-5`
+                                  } font-semibold mb-5 ${
+                                    progressTime(
+                                      chaine.date_start,
+                                      chaine.duration,
+                                      oldTime
+                                    ) === 100
+                                      ? "hide"
+                                      : ""
+                                  } `
                                 : `min-w translateXg30 ${
                                     evening ? "hide" : ""
-                                  } font-semibold mb-5`
+                                  } font-semibold mb-5 ${
+                                    progressTime(
+                                      chaine.date_start,
+                                      chaine.duration,
+                                      oldTime
+                                    ) === 100
+                                      ? "hide"
+                                      : ""
+                                  } `
                             }
                             margin="auto"
                             borderRadius="2px"
