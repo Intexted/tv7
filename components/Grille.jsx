@@ -488,20 +488,37 @@ function Grille({ genders, program, bf, bm, bmo }) {
                                   chaine.duration,
                                   oldTime
                                 ) < 10
-                                  ? "translateXs30 min-w  font-semibold mb-5"
-                                  : "min-w translateXg30  font-semibold mb-5"
+                                  ? `translateXs30 min-w ${
+                                      evening ? "hide" : ""
+                                    } font-semibold mb-5`
+                                  : `min-w translateXg30 ${
+                                      evening ? "hide" : ""
+                                    } font-semibold mb-5`
                               }
                               margin="auto"
                               borderRadius="2px"
                               labelSize="5px"
-                              customLabel={`${print_Time(
-                                chaine.duration -
-                                  Math.floor(
-                                    (new Date(chaine.date_end).getTime() -
-                                      Date.now()) /
-                                      60000
-                                  )
-                              )}`}
+                              customLabel={`${
+                                progressTime(
+                                  chaine.date_start,
+                                  chaine.duration,
+                                  oldTime
+                                ) > 0 &&
+                                progressTime(
+                                  chaine.date_start,
+                                  chaine.duration,
+                                  oldTime
+                                ) < 100
+                                  ? print_Time(
+                                      chaine.duration -
+                                        Math.floor(
+                                          (new Date(chaine.date_end).getTime() -
+                                            Date.now()) /
+                                            60000
+                                        )
+                                    )
+                                  : ""
+                              }`}
                               height="5px"
                               bgColor="#339FFF"
                               completed={progressTime(
@@ -564,20 +581,37 @@ function Grille({ genders, program, bf, bm, bmo }) {
                                 chaine.duration,
                                 oldTime
                               ) < 10
-                                ? "translateXs30 min-w  font-semibold mb-5"
-                                : "min-w translateXg30 font-semibold mb-5"
+                                ? `translateXs30 min-w ${
+                                    evening ? "hide" : ""
+                                  } font-semibold mb-5`
+                                : `min-w translateXg30 ${
+                                    evening ? "hide" : ""
+                                  } font-semibold mb-5`
                             }
                             margin="auto"
                             borderRadius="2px"
                             labelSize="5px"
-                            customLabel={`${print_Time(
-                              chaine.duration -
-                                Math.floor(
-                                  (new Date(chaine.date_end).getTime() -
-                                    Date.now()) /
-                                    60000
-                                )
-                            )}`}
+                            customLabel={`${
+                              progressTime(
+                                chaine.date_start,
+                                chaine.duration,
+                                oldTime
+                              ) > 0 &&
+                              progressTime(
+                                chaine.date_start,
+                                chaine.duration,
+                                oldTime
+                              ) < 100
+                                ? print_Time(
+                                    chaine.duration -
+                                      Math.floor(
+                                        (new Date(chaine.date_end).getTime() -
+                                          Date.now()) /
+                                          60000
+                                      )
+                                  )
+                                : ""
+                            }`}
                             height="5px"
                             bgColor="#339FFF"
                             completed={progressTime(

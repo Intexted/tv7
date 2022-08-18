@@ -24,6 +24,9 @@
   .translateXg30 {
     transform: translateX(40px);
   }
+  .hide {
+    display: none;
+  }
 }
 
 @font-face {
