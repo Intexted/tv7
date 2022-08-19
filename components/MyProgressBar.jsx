@@ -16,7 +16,7 @@ function MyProgressBar({ date_start, duration, genderProgram }) {
   useEffect(() => {
     updateProgressBar();
     console.log(time_step);
-    // return clearInterval(progressInterval);
+    //
   }, [genderProgram, time_step]);
 
   useEffect(() => {
@@ -24,7 +24,8 @@ function MyProgressBar({ date_start, duration, genderProgram }) {
       let ti = time_step;
       setTime_step(ti + 1);
     }, 30000);
-  }, []);
+    // return clearInterval(progressInterval);
+  }, [time_step]);
 
   return (
     <div className="w-full  rounded-md   h-4 relative">
