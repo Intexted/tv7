@@ -27,9 +27,13 @@ function MyProgressBar({ date_start, duration, genderProgram }) {
   }, []);
 
   return (
-    <div className="w-full  rounded-md  h-2">
+    <div className="w-full  rounded-md   h-4 relative">
       <div
-        className=" h-3 text-xxs bg-slate-100 text-blue-600 text-right"
+        className=" h-1 text-xxs  bg-slate-200 w-full"
+        style={{ position: "absolute", bottom: 0 }}
+      ></div>
+      <div
+        className=" h-3 text-xxs   text-blue-600 text-right relative"
         style={{
           width: labelPosition,
         }}
@@ -37,7 +41,7 @@ function MyProgressBar({ date_start, duration, genderProgram }) {
         <span>{progressLabel}</span>
       </div>
       <div
-        className=" bg-blue-400 h-1"
+        className=" bg-blue-400 h-1 z-50 relative"
         style={{
           width: percentage,
         }}
