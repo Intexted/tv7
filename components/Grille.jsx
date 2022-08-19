@@ -19,6 +19,9 @@ import "swiper/css";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
+import { getPercentage, heureDebut } from "./progressbar";
+import MyProgressBar from "./MyProgressBar";
+import ProgrammeGrille from "./ProgrammeGrille";
 
 function Grille({ genders, program, bf, bm, bmo }) {
   const { width } = useWindowDimensions();
@@ -113,15 +116,6 @@ function Grille({ genders, program, bf, bm, bmo }) {
       console.log(error);
     }
   };
-
-  function print_Time(m) {
-    if (m < 60 && m > 0) {
-      return m + "mn";
-    }
-    return (
-      Math.floor(m / 60) + "h" + (m % 60 < 10 ? "0" + (m % 60) : m % 60) + "mn"
-    );
-  }
 
   return (
     <div className="mt-5">
@@ -280,15 +274,11 @@ function Grille({ genders, program, bf, bm, bmo }) {
             JOURNEE
           </h1>
           <h1
-            onClick={async () => {
-              setJournee(false);
-              await setEvening(true);
-              setJournee(false);
+            onClick={() => {
+              setBouquet(false);
               sethasMore(true);
               setpage(2);
-              setRedGender("TOUS");
-              await setEveningNumber(1);
-              getNightProgram(null, 1);
+              getParams(1);
             }}
             className={`cursor-pointer ${
               evening && !journee ? "bg-color-blue text-white p-2" : ""
@@ -371,7 +361,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
         </div>
       )}
       {!journee && !bouquet && (
-        <div className="mt-5 flex justify-between px-5">
+        <div className="flex content-center justify-center w-11/12 py-5 m-auto">
           <div>
             <div className="flex mb-2 items-center space-x-1">
               <h1
@@ -417,7 +407,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 next={fetchMoreData}
                 hasMore={hasMore}
                 loader={<h4 className="p-2 text-gray-500">Loading...</h4>}
-                className="grid grid-cols-1 gap-2 xl:pl-14  sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-4  m-auto mb-5 border-t-2 w-11/12"
+                className="grid sm:grid-cols-1 gap-5  md:grid-cols-3 content-center
+                 xl:grid-cols-4  m-auto mb-5 border-t-2 w-full"
                 endMessage={
                   <p style={{ textAlign: "center" }}>
                     <b></b>
@@ -425,11 +416,19 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 }
               >
                 {genderProgram.map((chaine, index) => {
+                  let items = 4;
+                  if (width < 640) {
+                    items = 4;
+                  } else if (width < 1280) {
+                    items = 12;
+                  } else {
+                    items = 16;
+                  }
                   return (
                     <>
-                      {index != 0 && index % 16 === 0 ? (
+                      {index != 0 && index % items === 0 ? (
                         <>
-                          <div className="sm:grid-3 md:grid-4  m-auto my-5 ">
+                          <div className=" md:grid-3 xl:grid-4  m-auto my-5 ">
                             <Image
                               src="/static/banner3.png"
                               alt="banner"
@@ -437,222 +436,16 @@ function Grille({ genders, program, bf, bm, bmo }) {
                               height="70px"
                             />
                           </div>
-                          <div className="flex flex-col space-y-4 h-24">
-                            <div
-                              className="  py-1 text-center  flex  space-x-4 "
-                              key={chaine.id}
-                            >
-                              <div className="">
-                                <Image
-                                  src={chaine.logo_chaine}
-                                  alt="logo chaine"
-                                  width="40px"
-                                  height="40px"
-                                />
-                              </div>
-                              <div className="flex space-x-2 text-left ">
-                                <div className="w-2/3">
-                                  <h1 className="font-semibold text-xs">
-                                    {moment(chaine.date_start).format("HH:mm")}
-                                  </h1>
-                                  <h1 className="font-semibold text-xs dot w-40 text-blue-600">
-                                    {chaine.title_fr
-                                      ? chaine.title_fr
-                                      : chaine.title_ar}
-                                  </h1>
-                                  <h1 className="text-xs text-gray-500">
-                                    {chaine.gender}
-                                    <span>{` (${print_Time(
-                                      chaine.duration
-                                    )})`}</span>
-                                  </h1>
-                                </div>
-                                <div className="w-fit">
-                                  <Image
-                                    src={
-                                      chaine.thumbnail
-                                        ? chaine.thumbnail
-                                        : "/static/tvShowNo.jfif"
-                                    }
-                                    alt="logo chaine"
-                                    width="60px"
-                                    height="55px"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            <ProgressBar
-                              labelClassName={
-                                progressTime(
-                                  chaine.date_start,
-                                  chaine.duration,
-                                  oldTime
-                                ) < 10
-                                  ? `translateXs30 min-w ${
-                                      evening ? "hide" : ""
-                                    } font-semibold mb-5 ${
-                                      progressTime(
-                                        chaine.date_start,
-                                        chaine.duration,
-                                        oldTime
-                                      ) === 100
-                                        ? "hide"
-                                        : ""
-                                    } `
-                                  : `min-w translateXg30 ${
-                                      evening ? "hide" : ""
-                                    } font-semibold mb-5 ${
-                                      progressTime(
-                                        chaine.date_start,
-                                        chaine.duration,
-                                        oldTime
-                                      ) === 100
-                                        ? "hide"
-                                        : ""
-                                    } `
-                              }
-                              margin="auto"
-                              borderRadius="2px"
-                              labelSize="5px"
-                              customLabel={`${
-                                progressTime(
-                                  chaine.date_start,
-                                  chaine.duration,
-                                  oldTime
-                                ) > 0 &&
-                                progressTime(
-                                  chaine.date_start,
-                                  chaine.duration,
-                                  oldTime
-                                ) < 100
-                                  ? print_Time(
-                                      chaine.duration -
-                                        Math.floor(
-                                          (new Date(chaine.date_end).getTime() -
-                                            Date.now()) /
-                                            60000
-                                        )
-                                    )
-                                  : ""
-                              }`}
-                              height="5px"
-                              bgColor="#339FFF"
-                              completed={progressTime(
-                                chaine.date_start,
-                                chaine.duration,
-                                oldTime
-                              )}
-                            />
-                          </div>
+                          <ProgrammeGrille
+                            chaine={chaine}
+                            genderProgram={genderProgram}
+                          />
                         </>
                       ) : (
-                        <div className="flex flex-col space-y-4 h-24">
-                          <div
-                            className="  py-1 text-center  flex  space-x-4 "
-                            key={chaine.id}
-                          >
-                            <div className="">
-                              <Image
-                                src={chaine.logo_chaine}
-                                alt="logo chaine"
-                                width="40px"
-                                height="40px"
-                              />
-                            </div>
-                            <div className="flex space-x-2 text-left ">
-                              <div className="w-2/3">
-                                <h1 className="font-semibold text-xs">
-                                  {moment(chaine.date_start).format("HH:mm")}
-                                </h1>
-                                <h1 className="font-semibold text-xs dot w-40 text-blue-600">
-                                  {chaine.title_fr
-                                    ? chaine.title_fr
-                                    : chaine.title_ar}
-                                </h1>
-                                <h1 className="text-xs text-gray-500">
-                                  {chaine.gender}
-                                  <span>{` (${print_Time(
-                                    chaine.duration
-                                  )})`}</span>
-                                </h1>
-                              </div>
-                              <div className="w-fit">
-                                <Image
-                                  src={
-                                    chaine.thumbnail
-                                      ? chaine.thumbnail
-                                      : "/static/tvShowNo.jfif"
-                                  }
-                                  alt="logo chaine"
-                                  width="60px"
-                                  height="55px"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <ProgressBar
-                            labelClassName={
-                              progressTime(
-                                chaine.date_start,
-                                chaine.duration,
-                                oldTime
-                              ) < 10
-                                ? `translateXs30 min-w ${
-                                    evening ? "hide" : ""
-                                  } font-semibold mb-5 ${
-                                    progressTime(
-                                      chaine.date_start,
-                                      chaine.duration,
-                                      oldTime
-                                    ) === 100
-                                      ? "hide"
-                                      : ""
-                                  } `
-                                : `min-w translateXg30 ${
-                                    evening ? "hide" : ""
-                                  } font-semibold mb-5 ${
-                                    progressTime(
-                                      chaine.date_start,
-                                      chaine.duration,
-                                      oldTime
-                                    ) === 100
-                                      ? "hide"
-                                      : ""
-                                  } `
-                            }
-                            margin="auto"
-                            borderRadius="2px"
-                            labelSize="5px"
-                            customLabel={`${
-                              progressTime(
-                                chaine.date_start,
-                                chaine.duration,
-                                oldTime
-                              ) > 0 &&
-                              progressTime(
-                                chaine.date_start,
-                                chaine.duration,
-                                oldTime
-                              ) < 100
-                                ? print_Time(
-                                    chaine.duration -
-                                      Math.floor(
-                                        (new Date(chaine.date_end).getTime() -
-                                          Date.now()) /
-                                          60000
-                                      )
-                                  )
-                                : ""
-                            }`}
-                            height="5px"
-                            bgColor="#339FFF"
-                            completed={progressTime(
-                              chaine.date_start,
-                              chaine.duration,
-                              oldTime
-                            )}
-                          />
-                        </div>
+                        <ProgrammeGrille
+                          chaine={chaine}
+                          genderProgram={genderProgram}
+                        />
                       )}
                     </>
                   );

@@ -8,6 +8,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import Head from "next/head";
 
 function Login() {
   const [isLoadingFacebook, setIsLoadingFacebook] = useState(false);
@@ -21,13 +22,18 @@ function Login() {
   const { data: session } = useSession();
 
   const handleSubmit = async (e) => {
+    const formData = new FormData();
+    formData.append({ email: email }, { password: password });
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+
     e.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.post(`/login`, {
-        email,
-        password,
-      });
+      const { data } = await axios.post(`/login`, formData, config);
       if (data.status === "error") {
         toast.error(data.message);
         setLoading(false);
@@ -45,6 +51,11 @@ function Login() {
 
   return (
     <div className="py-14">
+      <Head>
+        <title>TV7</title>
+
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+      </Head>
       <div className="w-1/3 m-auto">
         <form>
           <div className="flex flex-col">

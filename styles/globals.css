@@ -82,6 +82,7 @@ a {
 }
 
 .dot {
+  width: 90px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
