@@ -23,7 +23,7 @@ function MyProgressBar({ date_start, duration, genderProgram }) {
     let progressInterval = window.setInterval(() => {
       let ti = time_step;
       setTime_step(ti + 1);
-    }, 60000);
+    }, 30000);
   }, []);
 
   return (

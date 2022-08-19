@@ -75,7 +75,7 @@ export const getPercentage = (startTime, duration) => {
   }
 
   if (progressValue <= 6 && progressValue > 0) {
-    progressValue = 25;
+    progressValue = 30;
   }
 
   if (progressValue > 100) {
