@@ -49,7 +49,7 @@ export async function getServerSideProps(context) {
       const { data } = await axios.get(
         `https://api.tv7guide.com/api/public/programs/atthemoment/${time}`
       );
-      console.log(time);
+
       return data.data;
     } catch (error) {
       console.log(error);

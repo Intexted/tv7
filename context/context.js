@@ -5,7 +5,7 @@ const IndexContext = createContext();
 const IndexProvider = ({ children }) => {
   const [state, setState] = useState({
     genderProgramApi: {},
-    chaine: {},
+    chaineProgramme: {},
   });
 
   // config axios

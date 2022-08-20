@@ -15,7 +15,7 @@ function MyProgressBar({ date_start, duration, genderProgram }) {
 
   useEffect(() => {
     updateProgressBar();
-    console.log(time_step);
+
     //
   }, [genderProgram, time_step]);
 

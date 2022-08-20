@@ -2,10 +2,15 @@ import Image from "next/image";
 import React from "react";
 import MyProgressBar from "./MyProgressBar";
 import { heureDebut, print_Time } from "./progressbar";
+import { useRouter } from "next/router";
 
 function ProgrammeGrille({ chaine, genderProgram }) {
+  const router = useRouter();
   return (
-    <div className="flex flex-col  ">
+    <div
+      onClick={() => router.push(`/details/${chaine.id}`)}
+      className="flex flex-col cursor-pointer "
+    >
       <div className="flex w-full h-2/3" key={chaine.id}>
         <div className="w-1/5">
           <Image
