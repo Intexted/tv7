@@ -74,7 +74,7 @@ export const getPercentage = (startTime, duration) => {
     progressLabel = "";
   }
 
-  if (progressValue <= 6 && progressValue > 0) {
+  if (progressValue <= 10 && progressValue > 0) {
     progressValue = 30;
   }
 
