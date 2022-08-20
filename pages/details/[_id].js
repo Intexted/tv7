@@ -3,25 +3,40 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
 import { SyncOutlined } from "@ant-design/icons";
+import moment from "moment";
 
 function Details() {
   const [programDetails, setProgramDetails] = useState();
+  const [programAll, setProgramAll] = useState();
   const router = useRouter();
-
-  //   useEffect(() => {
-  if (router.query._id != undefined && programDetails == undefined) {
-    try {
-      axios.get(`/public/programs/${router.query._id}`).then((data) => {
-        setProgramDetails(data.data.data[0]);
-        //   setDataApi({ chaineProgramme: "hi" });
-        console.log(programDetails);
-      });
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (router.query.channel != undefined && programAll == undefined) {
+      const time = moment(new Date()).format("yyyy/MM/DD");
+      try {
+        axios
+          .get(`/public/programs/channel/${router.query.channel}/${time}`)
+          .then((data) => {
+            setProgramAll(data.data.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }
+  }, [router.query.channel]);
 
-  if (programDetails == undefined) {
+  useEffect(() => {
+    if (router.query._id != undefined && programDetails == undefined) {
+      try {
+        axios.get(`/public/programs/${router.query._id}`).then((data) => {
+          setProgramDetails(data.data.data[0]);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [router.query._id]);
+
+  if (programDetails == undefined || programAll == undefined) {
     return <SyncOutlined spin className="py-1  " />;
   }
   return (
@@ -32,6 +47,7 @@ function Details() {
       <h1>Description : {programDetails.description_ar}</h1>
       <h1>Duration : {programDetails.duration} mn</h1>
       <h1>Genre : {programDetails.gender} </h1>
+      <h1>jjj : {programAll.length} </h1>
       <div>
         {" "}
         <h1>Image</h1>

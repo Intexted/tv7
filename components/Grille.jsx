@@ -40,24 +40,13 @@ function Grille({ genders, program, bf, bm, bmo }) {
 
   const [oldTime, setOldTime] = useState(Date.now());
 
-  const progressTime = (x, y, z) => {
-    const Time = Math.floor(((z - new Date(x).getTime()) / (y * 60000)) * 100);
-    if (Time < 0) {
-      return 0;
-    } else if (Time > 100) {
-      return 100;
-    } else {
-      return Time;
-    }
-  };
-
   useEffect(() => {
     setGenderProgram(program);
   }, []);
 
   const fetchMoreData = async () => {
     const time = moment(new Date()).format("yyyy/MM/DD");
-    console.log(page);
+
     try {
       const { data } = await axios.get(
         evening
@@ -79,23 +68,26 @@ function Grille({ genders, program, bf, bm, bmo }) {
     }
   };
 
-  const getParams = async (num) => {
+  const handleTous = () => {
+    evening ? getParams(eveningNumber) : setGenderProgram(program);
+  };
+
+  const getParams = (num) => {
     setEvening(true);
     setJournee(false);
-    setRedGender("TOUS");
     setEveningNumber(num);
-    await getNightProgram(num);
+    getNightProgram(num);
   };
 
   const getNightProgram = async (num) => {
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
-        `/public/programs/evening/pt${num}/${time} ${
-          redGender != "TOUS" ? `gender=${redGender}` : ""
-        } `
+        `/public/programs/evening/pt${num}/${time} ?gender=${redGender}
+         `
       );
-      await setGenderProgram(data.data);
+      setGenderProgram(data.data);
+      console.log(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -156,6 +148,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
             setBouquet(false);
             sethasMore(true);
             setpage(2);
+
             getParams(2);
           }}
           className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${
@@ -169,6 +162,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
             setBouquet(false);
             sethasMore(true);
             setpage(2);
+
             getParams(3);
           }}
           className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${
@@ -366,11 +360,9 @@ function Grille({ genders, program, bf, bm, bmo }) {
             <div className="flex mb-2 items-center space-x-1">
               <h1
                 onClick={() => {
-                  evening
-                    ? getNightProgram(null, eveningNumber)
-                    : setGenderProgram(program);
                   setRedGender("TOUS");
                   setpage(2);
+                  handleTous();
                 }}
                 className={`text-xs cursor-pointer ${
                   redGender === "TOUS"
