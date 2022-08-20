@@ -24,16 +24,35 @@ function Login() {
   const handleSubmit = async (e) => {
     const formData = new FormData();
     formData.append({ email: email }, { password: password });
+
+    const body = {
+      email: "lotfi@lotfi.com",
+      password: "password",
+    };
     const config = {
       headers: {
-        "content-type": "multipart/form-data",
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
       },
     };
 
+    const data = axios({
+      method: "post",
+      url: "/login",
+      data: {
+        email: "lotfi@lotfi.com",
+        password: "password",
+      },
+    });
+
+    console.log(data);
+
     e.preventDefault();
+
     try {
       setLoading(true);
-      const { data } = await axios.post(`/login`, formData, config);
+      //const { data } = await axios.post(`/login`, body, config);
+      console.log(data);
       if (data.status === "error") {
         toast.error(data.message);
         setLoading(false);

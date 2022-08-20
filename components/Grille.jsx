@@ -407,7 +407,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 next={fetchMoreData}
                 hasMore={hasMore}
                 loader={<h4 className="p-2 text-gray-500">Loading...</h4>}
-                className="grid sm:grid-cols-1 gap-5  md:grid-cols-3 content-center
+                className="grid pt-2 sm:grid-cols-1 gap-5  md:grid-cols-3 content-center
                  xl:grid-cols-4  m-auto mb-5 border-t-2 w-full"
                 endMessage={
                   <p style={{ textAlign: "center" }}>

@@ -5,9 +5,9 @@ import { heureDebut, print_Time } from "./progressbar";
 
 function ProgrammeGrille({ chaine, genderProgram }) {
   return (
-    <div className="flex flex-col  h-[85px] pt-1 ">
-      <div className="  py-1 text-center  flex  space-x-4 " key={chaine.id}>
-        <div className="">
+    <div className="flex flex-col  ">
+      <div className="flex w-full h-2/3" key={chaine.id}>
+        <div className="w-1/5">
           <Image
             src={chaine.logo_chaine}
             alt="logo chaine"
@@ -15,37 +15,41 @@ function ProgrammeGrille({ chaine, genderProgram }) {
             height="40px"
           />
         </div>
-        <div className="flex space-x-2 text-left ">
-          <div className="w-2/3">
+        <div className=" flex flex-col w-3/5 ">
+          <div className=" w-full">
             <h1 className="font-semibold text-xs">
               {/* {moment(chaine.date_start).format("HH:mm")} */}
               {heureDebut(chaine.date_start)}
             </h1>
-            <h1 className="font-semibold text-xs dot w-40 text-blue-600">
+          </div>
+          <div className="  my-0.5 w-full">
+            <h1 className="font-semibold text-xs text-blue-600">
               {chaine.title_fr ? chaine.title_fr : chaine.title_ar}
             </h1>
+          </div>
+          <div className=" w-full">
             <h1 className="text-xs text-gray-500">
               {chaine.gender}
               <span>{` (${print_Time(chaine.duration)})`}</span>
             </h1>
           </div>
-          <div className="w-fit">
-            <Image
-              src={
-                chaine.thumbnail ? chaine.thumbnail : "/static/tvShowNo.jfif"
-              }
-              alt="logo chaine"
-              width="60px"
-              height="55px"
-            />
-          </div>
+        </div>
+        <div className="w-1/5">
+          <Image
+            src={chaine.thumbnail ? chaine.thumbnail : "/static/tvShowNo.jfif"}
+            alt="logo chaine"
+            width="60px"
+            height="55px"
+          />
         </div>
       </div>
-      <MyProgressBar
-        date_start={chaine.date_start}
-        duration={chaine.duration}
-        genderProgram={genderProgram}
-      />
+      <div className=" h-1/3 mt-2">
+        <MyProgressBar
+          date_start={chaine.date_start}
+          duration={chaine.duration}
+          genderProgram={genderProgram}
+        />
+      </div>
     </div>
   );
 }
