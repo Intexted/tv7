@@ -4,6 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import { SyncOutlined } from "@ant-design/icons";
 import moment from "moment";
+import loading from "../../public/static/loading.svg";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -53,7 +54,19 @@ function Details() {
   }, [router.query._id]);
 
   if (programDetails == undefined || programAll == undefined) {
-    return <SyncOutlined spin className="py-1  " />;
+    return (
+      <div
+        className="h-40 absolute top-1/2 left-1/2 "
+        style={{ transform: " translate(-50% , -50%)" }}
+      >
+        <Image src={loading} alt="logo chaine" width="100px" height="100px" />
+      </div>
+      // <SyncOutlined
+      //   spin
+      //   className="h-40 absolute top-1/2 left-1/2 "
+      //   style={{ transform: " translate(-50% , -50%)" }}
+      // />
+    );
   }
   return (
     <div className=" w-4/5 m-auto">

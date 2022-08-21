@@ -375,7 +375,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
               >
                 TOUS
               </h1>
-              {genders.map((gender) => (
+              {genders?.map((gender) => (
                 <h1
                   onClick={() => {
                     setRedGender(gender.gender_fr);

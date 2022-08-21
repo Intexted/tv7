@@ -7,13 +7,85 @@ import moment from "moment";
 import Login from "./login";
 import { IndexContext } from "../context/context";
 import { getSession, useSession } from "next-auth/react";
+import Image from "next/image";
+import loading from "../public/static/loading.svg";
 
-export default function Home({ genders, program, bf, bm, bmo }) {
+export default function Home() {
   const [dataApi, setDataApi] = useContext(IndexContext);
   const { data: session } = useSession();
+  const [program, setProgram] = useState();
+  const [genders, setGenders] = useState();
+  const [bf, setBf] = useState();
+  const [bm, setBm] = useState();
+  const [bmo, setBmo] = useState();
   // if (!session) {
   //   return <Login />;
   // }
+  const getProgram = async () => {
+    const time = moment(new Date()).format("yyyy/MM/DD");
+    try {
+      const { data } = await axios.get(
+        `https://api.tv7guide.com/api/public/programs/atthemoment/${time}`
+      );
+      setProgram(data.data);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getGenders = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://api.tv7guide.com/api/public/genders"
+      );
+      setGenders(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getBouquet = async (num) => {
+    const time = moment(new Date()).format("yyyy/MM/DD");
+    try {
+      const res = await fetch(
+        `https://api.tv7guide.com/api/public/packages/channels/${num}/${time}`
+      );
+      const data = await res.json();
+      switch (num) {
+        case 1:
+          setBf(data.data);
+          break;
+        case 2:
+          setBm(data.data);
+          break;
+        case 3:
+          setBmo(data.data);
+          break;
+      }
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getGenders();
+    getProgram();
+    getBouquet(1);
+    getBouquet(2);
+    getBouquet(3);
+  }, []);
+
+  if (!program) {
+    return (
+      <div
+        className="h-40 absolute top-1/2 left-1/2 "
+        style={{ transform: " translate(-50% , -50%)" }}
+      >
+        <Image src={loading} alt="logo chaine" width="100px" height="100px" />
+      </div>
+    );
+  }
 
   return (
     <div className="">
@@ -28,57 +100,57 @@ export default function Home({ genders, program, bf, bm, bmo }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  process.env.TZ = "UTC";
-  const getBouquet = async (num) => {
-    const time = moment(new Date()).format("yyyy/MM/DD");
-    try {
-      const res = await fetch(
-        `https://api.tv7guide.com/api/public/packages/channels/${num}/${time}`
-      );
-      const data = await res.json();
-      return data.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const getProgram = async () => {
-    const time = moment(new Date()).format("yyyy/MM/DD");
-    try {
-      const { data } = await axios.get(
-        `https://api.tv7guide.com/api/public/programs/atthemoment/${time}`
-      );
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context);
+//   process.env.TZ = "UTC";
+//   const getBouquet = async (num) => {
+//     const time = moment(new Date()).format("yyyy/MM/DD");
+//     try {
+//       const res = await fetch(
+//         `https://api.tv7guide.com/api/public/packages/channels/${num}/${time}`
+//       );
+//       const data = await res.json();
+//       return data.data;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+//   const getProgram = async () => {
+//     const time = moment(new Date()).format("yyyy/MM/DD");
+//     try {
+//       const { data } = await axios.get(
+//         `https://api.tv7guide.com/api/public/programs/atthemoment/${time}`
+//       );
 
-      return data.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const getGenders = async () => {
-    try {
-      const { data } = await axios.get(
-        "https://api.tv7guide.com/api/public/genders"
-      );
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const dataGenders = await getGenders();
-  const dataProgram = await getProgram();
-  const bouquetFrancais = await getBouquet(1);
-  const bouquetMaroc = await getBouquet(2);
-  const bouquetMO = await getBouquet(3);
+//       return data.data;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+//   const getGenders = async () => {
+//     try {
+//       const { data } = await axios.get(
+//         "https://api.tv7guide.com/api/public/genders"
+//       );
+//       return data;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+//   const dataGenders = await getGenders();
+//   const dataProgram = await getProgram();
+//   const bouquetFrancais = await getBouquet(1);
+//   const bouquetMaroc = await getBouquet(2);
+//   const bouquetMO = await getBouquet(3);
 
-  return {
-    props: {
-      bf: bouquetFrancais,
-      genders: dataGenders,
-      program: dataProgram,
-      bm: bouquetMaroc,
-      bmo: bouquetMO,
-      session,
-    }, // will be passed to the page component as props
-  };
-}
+//   return {
+//     props: {
+//       // bf: bouquetFrancais,
+//       genders: dataGenders,
+//       program: dataProgram,
+//       // bm: bouquetMaroc,
+//       // bmo: bouquetMO,
+//       session,
+//     }, // will be passed to the page component as props
+//   };
+// }
