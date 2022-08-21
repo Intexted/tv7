@@ -71,9 +71,9 @@ export default function Home() {
   useEffect(() => {
     getGenders();
     getProgram();
-    // getBouquet(1);
-    // getBouquet(2);
-    // getBouquet(3);
+    getBouquet(1);
+    getBouquet(2);
+    getBouquet(3);
   }, []);
 
   if (!program) {
@@ -95,7 +95,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Grille genders={genders} program={program} bf={{}} bm={{}} bmo={{}} />
+      <Grille genders={genders} program={program} bf={bf} bm={bm} bmo={bmo} />
     </div>
   );
 }
