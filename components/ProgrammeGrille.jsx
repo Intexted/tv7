@@ -3,7 +3,6 @@ import React from "react";
 import MyProgressBar from "./MyProgressBar";
 import { heureDebut, print_Time } from "./progressbar";
 import { useRouter } from "next/router";
-import moment from "moment";
 
 function ProgrammeGrille({ chaine, genderProgram }) {
   const router = useRouter();
@@ -27,8 +26,8 @@ function ProgrammeGrille({ chaine, genderProgram }) {
         <div className=" flex flex-col w-3/5 ">
           <div className=" w-full">
             <h1 className="font-semibold text-xs">
-              {moment(chaine.date_start).format("dddd MMMM Do")}
-              {/* {heureDebut(chaine.date_start)} */}
+              {/* {moment(chaine.date_start).format("dddd MMMM Do")} */}
+              {heureDebut(chaine.date_start)}
             </h1>
           </div>
           <div className="  my-0.5 w-full">
