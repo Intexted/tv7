@@ -4,6 +4,8 @@ import axios from "axios";
 import Image from "next/image";
 import { SyncOutlined } from "@ant-design/icons";
 import moment from "moment";
+import "moment/locale/fr"; // without this line it didn't work
+moment.locale("fr");
 import loading from "../../public/static/loading.svg";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -69,7 +71,7 @@ function Details() {
     );
   }
   return (
-    <div className=" w-4/5 m-auto">
+    <div className=" w-4/5 mt-5 m-auto">
       <div className="flex space-x-5 items-center">
         <div>
           <Image
@@ -80,7 +82,9 @@ function Details() {
           />
         </div>
         <div>
-          <h1>Date Start : {programDetails.date_start}</h1>
+          <h1 className="font-semibold capitalize">
+            {moment(programDetails.date_start).format("dddd Do MMMM ")}
+          </h1>
           <h1 className="font-semibold ">
             {/* {moment(chaine.date_start).format("HH:mm")} */}
             {heureDebut(programDetails.date_start)}{" "}
@@ -89,7 +93,7 @@ function Details() {
         </div>
       </div>
 
-      <div className="w-full m-auto">
+      <div className="w-full mt-5 m-auto">
         <Image
           src={
             programDetails?.thumbnail
@@ -105,7 +109,9 @@ function Details() {
 
       <h1 className="mt-2 font-semibold"> {programDetails.description_fr}</h1>
 
-      <h1 className="mt-2 font-semibold">{programDetails.gender} </h1>
+      <h1 className="mt-2 capitalize font-semibold">
+        {programDetails.gender}{" "}
+      </h1>
 
       <h1 className="mt-2 mb-5 font-bold underline">
         A suivre sur cette chaine
