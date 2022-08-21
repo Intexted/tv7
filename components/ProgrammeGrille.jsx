@@ -11,7 +11,8 @@ function ProgrammeGrille({ chaine, genderProgram }) {
       onClick={() =>
         router.push(`/details/${chaine.id}?channel=${chaine.channel_id}`)
       }
-      className="flex flex-col cursor-pointer "
+      className="flex flex-col cursor-pointer h-[90px]
+      "
     >
       <div className="flex w-full h-2/3" key={chaine.id}>
         <div className="w-1/5">

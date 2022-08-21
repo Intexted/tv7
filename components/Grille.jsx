@@ -50,12 +50,12 @@ function Grille({ genders, program, bf, bm, bmo }) {
     try {
       const { data } = await axios.get(
         evening
-          ? `/public/programs/evening/pt${eveningNumber}/${time} ? ${
-              redGender != "TOUS" ? `gender=${redGender}&` : ""
+          ? `/public/programs/evening/pt${eveningNumber}/${time} ? 
+              ${`gender=${redGender}&`}
             }page=${page} `
-          : `/public/programs/atthemoment/${time} ? ${
-              redGender != "TOUS" ? `gender=${redGender}&` : ""
-            }page=${page}`
+          : `/public/programs/atthemoment/${time} ? 
+          ${`gender=${redGender}&`}
+            page=${page}`
       );
       setGenderProgram([...genderProgram, ...data.data]);
       if (data.data.length === 0) {
@@ -69,17 +69,19 @@ function Grille({ genders, program, bf, bm, bmo }) {
   };
 
   const handleTous = () => {
-    evening ? getParams(eveningNumber) : setGenderProgram(program);
+    evening
+      ? getGenderProgram("TOUS", eveningNumber)
+      : setGenderProgram(program);
   };
 
   const getParams = (num) => {
     setEvening(true);
     setJournee(false);
     setEveningNumber(num);
-    getNightProgram(num);
+    getNightProgram(num, redGender);
   };
 
-  const getNightProgram = async (num) => {
+  const getNightProgram = async (num, redGender) => {
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
@@ -87,13 +89,12 @@ function Grille({ genders, program, bf, bm, bmo }) {
          `
       );
       setGenderProgram(data.data);
-      console.log(data.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getGenderProgram = async (gender = "", num) => {
+  const getGenderProgram = async (gender, num) => {
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
@@ -101,7 +102,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
           ? `/public/programs/evening/pt${num}/${time} ?gender=${gender} `
           : `/public/programs/atthemoment/${time} ?gender=${gender}`
       );
-      await setGenderProgram(data.data);
+      setGenderProgram(data.data);
 
       // setEvening(false);
     } catch (error) {
@@ -360,9 +361,11 @@ function Grille({ genders, program, bf, bm, bmo }) {
             <div className="flex mb-2 items-center space-x-1">
               <h1
                 onClick={() => {
+                  console.log("clicked");
                   setRedGender("TOUS");
-                  setpage(2);
                   handleTous();
+                  sethasMore(true);
+                  setpage(2);
                 }}
                 className={`text-xs cursor-pointer ${
                   redGender === "TOUS"
@@ -375,8 +378,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
               {genders.map((gender) => (
                 <h1
                   onClick={() => {
-                    getGenderProgram(gender.gender_fr, eveningNumber);
                     setRedGender(gender.gender_fr);
+                    getGenderProgram(gender.gender_fr, eveningNumber);
                     sethasMore(true);
                     setpage(2);
                   }}
@@ -428,16 +431,24 @@ function Grille({ genders, program, bf, bm, bmo }) {
                               height="70px"
                             />
                           </div>
-                          <ProgrammeGrille
-                            chaine={chaine}
-                            genderProgram={genderProgram}
-                          />
+                          <Swiper slidesPerView={1} className="w-full ">
+                            <SwiperSlide key={chaine.id}>
+                              <ProgrammeGrille
+                                chaine={chaine}
+                                genderProgram={genderProgram}
+                              />
+                            </SwiperSlide>
+                          </Swiper>
                         </>
                       ) : (
-                        <ProgrammeGrille
-                          chaine={chaine}
-                          genderProgram={genderProgram}
-                        />
+                        <Swiper slidesPerView={1} className="w-full ">
+                          <SwiperSlide key={chaine.id}>
+                            <ProgrammeGrille
+                              chaine={chaine}
+                              genderProgram={genderProgram}
+                            />
+                          </SwiperSlide>
+                        </Swiper>
                       )}
                     </>
                   );
