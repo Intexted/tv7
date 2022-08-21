@@ -3,6 +3,7 @@ import React from "react";
 import MyProgressBar from "./MyProgressBar";
 import { heureDebut, print_Time } from "./progressbar";
 import { useRouter } from "next/router";
+import moment from "moment";
 
 function ProgrammeGrille({ chaine, genderProgram }) {
   const router = useRouter();
