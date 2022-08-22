@@ -114,7 +114,12 @@ function Grille({ genders, program, bf, bm, bmo }) {
 
   return (
     <>
-      <PhoneHeader setBouquet={setBouquet} setEvening={setEvening} />
+      <PhoneHeader
+        setBouquet={setBouquet}
+        setEvening={setEvening}
+        setBouquetChoisi={setBouquetChoisi}
+        bf={bf}
+      />
       <BottomBar
         setGenderProgram={setGenderProgram}
         setRedGender={setRedGender}

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-function PhoneHeader({ setBouquet, setEvening }) {
+function PhoneHeader({ setBouquet, setEvening, setBouquetChoisi, bf }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   return (
@@ -20,6 +20,7 @@ function PhoneHeader({ setBouquet, setEvening }) {
               menuOpen ? setMenuOpen(false) : setMenuOpen(true);
               setBouquet(true);
               setEvening(false);
+              setBouquetChoisi(bf);
             }}
             className="cursor-pointer tracking-tight  font-bold bg-color-blue text-white p-1"
           >
