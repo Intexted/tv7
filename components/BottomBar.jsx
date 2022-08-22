@@ -29,6 +29,7 @@ function BottomBar({
               setpage(2);
               setEvening(false);
               setJournee(false);
+              setBouquet(false);
             }}
             className={`cursor-pointer ${
               !evening && !journee ? "bg-color-blue text-white p-2" : "ml-2"
@@ -44,6 +45,7 @@ function BottomBar({
             onClick={() => {
               setJournee(true);
               setEvening(false);
+              setBouquet(false);
             }}
             className={`cursor-pointer ${
               !evening && journee ? "bg-color-blue text-white p-2" : ""

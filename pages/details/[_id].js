@@ -96,13 +96,19 @@ function Details() {
           </div>
         </div>
 
-        <div className="w-full mt-5 m-auto">
+        <div className="w-full flex mt-5 m-auto">
           <Image
             src={
               programDetails?.thumbnail
                 ? programDetails?.thumbnail
                 : "/static/tvShowNo.jfif"
             }
+            alt="logo chaine"
+            width="600px"
+            height="300px"
+          />
+          <Image
+            src="/static/banner2.png"
             alt="logo chaine"
             width="600px"
             height="300px"

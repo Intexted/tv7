@@ -127,6 +127,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
         setBouquet={setBouquet}
         getParams={getParams}
         program={program}
+        setBouquetChoisi={setBouquetChoisi}
+        bf={bf}
       />
 
       <div className="md:mt-5">
@@ -201,6 +203,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
             onClick={() => {
               setBouquet(true);
               setEvening(false);
+              setBouquetChoisi(bf);
             }}
             className="cursor-pointer tracking-tight  font-bold bg-color-blue text-white p-1"
           >
@@ -209,12 +212,12 @@ function Grille({ genders, program, bf, bm, bmo }) {
         </div>
         {bouquet && (
           <>
-            <div className="flex justify-center items-center mt-2 space-x-4 md:space-x-12">
+            <div className="flex md:justify-center px-5 md:items-center mt-2 space-x-4 md:space-x-12">
               <h1
                 onClick={() => {
                   setBouquetChoisi(bf);
                 }}
-                className={`cursor-pointer text-xs ${
+                className={`cursor-pointer text-center text-xs ${
                   bouquetChoisi === bf
                     ? "bg-blue-800 text-white p-1"
                     : " hover:bg-slate-400 hover:text-white hover:p-1"
@@ -226,7 +229,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 onClick={() => {
                   setBouquetChoisi(bm);
                 }}
-                className={`cursor-pointer text-xs ${
+                className={`cursor-pointer text-center text-xs ${
                   bouquetChoisi === bm
                     ? "bg-blue-800 text-white p-1"
                     : " hover:bg-slate-400 hover:text-white hover:p-1"
@@ -238,7 +241,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 onClick={() => {
                   setBouquetChoisi(bmo);
                 }}
-                className={`cursor-pointer text-xs ${
+                className={`cursor-pointer text-center text-xs ${
                   bouquetChoisi === bmo
                     ? "bg-blue-800 text-white p-1"
                     : " hover:bg-slate-400 hover:text-white hover:p-1"
@@ -247,7 +250,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 BOUQUET MOYEN-ORIENT
               </h1>
             </div>
-            <div className="grid grid-cols-4 md:grid-cols-8 px-20 my-10 gap-2">
+            <div className="grid grid-cols-5 md:grid-cols-8 px-5 md:px-20 my-10 gap-2">
               {bouquetChoisi?.map((chaine) => (
                 <div
                   className="border-2  rounded-md h-16 bg-gray-100 flex items-center justify-center"
