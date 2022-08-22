@@ -11,11 +11,11 @@ function ProgrammeGrille({ chaine, genderProgram }) {
       onClick={() =>
         router.push(`/details/${chaine.id}?channel=${chaine.channel_id}`)
       }
-      className="flex flex-col cursor-pointer h-[90px]
+      className="flex flex-col  cursor-pointer h-[90px]
       "
     >
       <div className="flex w-full h-2/3" key={chaine.id}>
-        <div className="w-1/5">
+        <div className="w-1/5  text-center">
           <Image
             src={chaine.logo_chaine}
             alt="logo chaine"
@@ -46,8 +46,8 @@ function ProgrammeGrille({ chaine, genderProgram }) {
           <Image
             src={chaine.thumbnail ? chaine.thumbnail : "/static/tvShowNo.jfif"}
             alt="logo chaine"
-            width="60px"
-            height="55px"
+            width="110px"
+            height="80px"
           />
         </div>
       </div>

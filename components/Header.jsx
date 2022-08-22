@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getSession, useSession } from "next-auth/react";
 import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import PhoneHeader from "./PhoneHeader";
 
 function Header({ details }) {
   const [value, setValue] = useState("FR");
@@ -17,7 +18,7 @@ function Header({ details }) {
 
   return (
     <>
-      <div className="p-5 px-10 flex justify-between items-center ">
+      <div className="p-5 px-10 hidden md:flex justify-between items-center ">
         <div onClick={() => router.push("/")} className="cursor-pointer">
           <Image
             src="/static/logo.png"
@@ -82,7 +83,7 @@ function Header({ details }) {
         </div>
       </div>
       {details && (
-        <div>
+        <div className="hidden md:inline">
           {session ? (
             <div
               onClick={() => signOut({ redirect: false, callbackUrl: "/" })}
