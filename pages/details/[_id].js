@@ -18,6 +18,7 @@ import "swiper/css";
 import "swiper/css";
 import "swiper/css/navigation";
 import { heureDebut, print_Time } from "../../components/progressbar";
+import Header from "../../components/Header";
 
 function Details() {
   const [programDetails, setProgramDetails] = useState();
@@ -71,88 +72,91 @@ function Details() {
     );
   }
   return (
-    <div className=" w-4/5 mt-5 m-auto">
-      <div className="flex space-x-5 items-center">
-        <div>
+    <>
+      <Header details={false} />
+      <div className=" w-4/5 mt-5 m-auto">
+        <div className="flex space-x-5 items-center">
+          <div>
+            <Image
+              src={programAll[0].logo_chaine}
+              alt="logo chaine"
+              width="90px"
+              height="90px"
+            />
+          </div>
+          <div>
+            <h1 className="font-semibold capitalize">
+              {moment(programDetails.date_start).format("dddd Do MMMM ")}
+            </h1>
+            <h1 className="font-semibold ">
+              {/* {moment(chaine.date_start).format("HH:mm")} */}
+              {heureDebut(programDetails.date_start)}{" "}
+              <span>{`| ${print_Time(programDetails.duration)}`}</span>
+            </h1>
+          </div>
+        </div>
+
+        <div className="w-full mt-5 m-auto">
           <Image
-            src={programAll[0].logo_chaine}
+            src={
+              programDetails?.thumbnail
+                ? programDetails?.thumbnail
+                : "/static/tvShowNo.jfif"
+            }
             alt="logo chaine"
-            width="100px"
-            height="100px"
+            width="600px"
+            height="300px"
           />
         </div>
-        <div>
-          <h1 className="font-semibold capitalize">
-            {moment(programDetails.date_start).format("dddd Do MMMM ")}
-          </h1>
-          <h1 className="font-semibold ">
-            {/* {moment(chaine.date_start).format("HH:mm")} */}
-            {heureDebut(programDetails.date_start)}{" "}
-            <span>{`| ${print_Time(programDetails.duration)}`}</span>
-          </h1>
-        </div>
-      </div>
+        <h1 className="mt-2 font-bold">{programDetails.title_fr}</h1>
 
-      <div className="w-full mt-5 m-auto">
-        <Image
-          src={
-            programDetails?.thumbnail
-              ? programDetails?.thumbnail
-              : "/static/tvShowNo.jfif"
-          }
-          alt="logo chaine"
-          width="600px"
-          height="300px"
-        />
-      </div>
-      <h1 className="mt-2 font-bold">{programDetails.title_fr}</h1>
+        <h1 className="mt-2 font-semibold"> {programDetails.description_fr}</h1>
 
-      <h1 className="mt-2 font-semibold"> {programDetails.description_fr}</h1>
+        <h1 className="mt-2 capitalize font-semibold">
+          {programDetails.gender}{" "}
+        </h1>
 
-      <h1 className="mt-2 capitalize font-semibold">
-        {programDetails.gender}{" "}
-      </h1>
+        <h1 className="mt-2 mb-5 font-bold underline">
+          A suivre sur cette chaine
+        </h1>
 
-      <h1 className="mt-2 mb-5 font-bold underline">
-        A suivre sur cette chaine
-      </h1>
-
-      <Swiper
-        slidesPerView={6.5}
-        className="mb-5"
-        spaceBetween={2}
-        initialSlide={index + 1}
-      >
-        {programAll.map((chaine) => (
-          <SwiperSlide key={chaine.id}>
-            <div className="border-2 p-2 text-center  h-[195px]">
-              <div className="">
-                <Image
-                  src={
-                    chaine.thumbnail
-                      ? chaine.thumbnail
-                      : "/static/tvShowNo.jfif"
-                  }
-                  alt="logo chaine"
-                  width="200px"
-                  height="150px"
-                />
-                <div className="mt-2">
-                  <h1 className="font-semibold text-xs">
-                    {heureDebut(chaine.date_start)}
-                  </h1>
-                </div>
-                <div className="mt-2">
-                  <h1 className="font-semibold text-xs ">
-                    {chaine.title_fr ? chaine.title_fr : chaine.title_ar}
-                  </h1>
+        <Swiper
+          slidesPerView={6.5}
+          className="mb-5"
+          spaceBetween={2}
+          initialSlide={index + 1}
+        >
+          {programAll.map((chaine) => (
+            <SwiperSlide key={chaine.id}>
+              <div className="border-2 p-2 text-center  h-[195px]">
+                <div className="">
+                  <Image
+                    src={
+                      chaine.thumbnail
+                        ? chaine.thumbnail
+                        : "/static/tvShowNo.jfif"
+                    }
+                    alt="logo chaine"
+                    width="200px"
+                    height="150px"
+                  />
+                  <div className="mt-2">
+                    <h1 className="font-semibold text-xs">
+                      {heureDebut(chaine.date_start)}
+                    </h1>
+                  </div>
+                  <div className="mt-2">
+                    <h1 className="font-semibold text-xs ">
+                      {chaine.title_fr ? chaine.title_fr : chaine.title_ar}
+                    </h1>
+                  </div>
                 </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </>
   );
 }
 

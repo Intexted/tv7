@@ -4,18 +4,21 @@ import { IndexContext } from "../context/context";
 import Link from "next/link";
 import { getSession, useSession } from "next-auth/react";
 import { signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
-function Header() {
+function Header({ details }) {
   const [value, setValue] = useState("FR");
   const [dropDown, setDropDown] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [data, setData] = useContext(IndexContext);
   const { data: session } = useSession();
 
+  const router = useRouter();
+
   return (
     <>
       <div className="p-5 px-10 flex justify-between items-center ">
-        <div className="cursor-pointer">
+        <div onClick={() => router.push("/")} className="cursor-pointer">
           <Image
             src="/static/logo.png"
             alt="banner"
@@ -78,25 +81,29 @@ function Header() {
           </div>
         </div>
       </div>
-      {session ? (
-        <div
-          onClick={() => signOut({ redirect: false, callbackUrl: "/" })}
-          className="text-right mb-2 pr-20 cursor-pointer"
-        >
-          <h1 className="font-semibold hover:font-bold text-sm">
-            Se Deconnecter
-          </h1>
-        </div>
-      ) : (
-        <Link href="/login">
-          <a>
-            <div className="text-right mb-2 pr-20 cursor-pointer">
+      {details && (
+        <div>
+          {session ? (
+            <div
+              onClick={() => signOut({ redirect: false, callbackUrl: "/" })}
+              className="text-right mb-2 pr-20 cursor-pointer"
+            >
               <h1 className="font-semibold hover:font-bold text-sm">
-                S&apos;IDENTIFIER
+                Se Deconnecter
               </h1>
             </div>
-          </a>
-        </Link>
+          ) : (
+            <Link href="/login">
+              <a>
+                <div className="text-right mb-2 pr-20 cursor-pointer">
+                  <h1 className="font-semibold hover:font-bold text-sm">
+                    S&apos;IDENTIFIER
+                  </h1>
+                </div>
+              </a>
+            </Link>
+          )}
+        </div>
       )}
     </>
   );
