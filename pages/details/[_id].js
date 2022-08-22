@@ -19,8 +19,10 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { heureDebut, print_Time } from "../../components/progressbar";
 import Header from "../../components/Header";
+import useWindowDimensions from "../../components/hooks/useWindowDimensions";
 
 function Details() {
+  const { width } = useWindowDimensions();
   const [programDetails, setProgramDetails] = useState();
   const [programAll, setProgramAll] = useState();
   const router = useRouter();
@@ -64,15 +66,29 @@ function Details() {
       >
         <Image src={loading} alt="logo chaine" width="100px" height="100px" />
       </div>
-      // <SyncOutlined
-      //   spin
-      //   className="h-40 absolute top-1/2 left-1/2 "
-      //   style={{ transform: " translate(-50% , -50%)" }}
-      // />
     );
   }
   return (
     <>
+      <div
+        onClick={() => router.push("/")}
+        className="p-4 flex md:hidden sticky top-0 z-50 bg-slate-50"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          />
+        </svg>
+      </div>
       <Header details={false} />
       <div className=" w-4/5 mt-5 m-auto">
         <div className="flex space-x-5 items-center">
@@ -96,23 +112,27 @@ function Details() {
           </div>
         </div>
 
-        <div className="w-full flex mt-5 m-auto">
-          <Image
-            src={
-              programDetails?.thumbnail
-                ? programDetails?.thumbnail
-                : "/static/tvShowNo.jfif"
-            }
-            alt="logo chaine"
-            width="600px"
-            height="300px"
-          />
-          <Image
-            src="/static/banner2.png"
-            alt="logo chaine"
-            width="600px"
-            height="300px"
-          />
+        <div className="w-full flex space-x-5 md:space-x-20 mt-5 m-auto">
+          <div className="w-2/3">
+            <Image
+              src={
+                programDetails?.thumbnail
+                  ? programDetails?.thumbnail
+                  : "/static/tvShowNo.jfif"
+              }
+              alt="logo chaine"
+              width="600px"
+              height="300px"
+            />
+          </div>
+          <div className="w-1/3">
+            <Image
+              src="/static/banner2.png"
+              alt="logo chaine"
+              width="300px"
+              height="300px"
+            />
+          </div>
         </div>
         <h1 className="mt-2 font-bold">{programDetails.title_fr}</h1>
 
@@ -127,7 +147,7 @@ function Details() {
         </h1>
 
         <Swiper
-          slidesPerView={6.5}
+          slidesPerView={width > 600 ? 6.5 : 3.5}
           className="mb-5"
           spaceBetween={2}
           initialSlide={index + 1}
