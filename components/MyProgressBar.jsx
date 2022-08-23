@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getPercentage } from "./progressbar";
 
-function MyProgressBar({ date_start, duration, genderProgram, setSlideIndex }) {
+function MyProgressBar({
+  date_start,
+  duration,
+  genderProgram,
+  setSlideIndex,
+  swipe_to,
+  index,
+}) {
   const [percentage, setPercentage] = useState("0%");
   const [progressLabel, setProgressLabel] = useState("");
   const [labelPosition, setLabelPosition] = useState("0%");
@@ -9,9 +16,11 @@ function MyProgressBar({ date_start, duration, genderProgram, setSlideIndex }) {
 
   const updateProgressBar = () => {
     let progress = getPercentage(date_start, duration);
-    // if (progress.percentage >= 100) {
-    //   setSlideIndex(slideIndex++);
-    // }
+    if (progress.percentage >= 100) {
+      // setSlideIndex(slideIndex++);
+
+      swipe_to(index);
+    }
     setPercentage(progress.percentage + "%");
     setProgressLabel(progress.progressLabel);
     setLabelPosition(progress.labelPosition + "%");

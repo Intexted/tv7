@@ -2,7 +2,7 @@ import Image from "next/image";
 import moment from "moment";
 import axios from "axios";
 import Link from "next/link";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { IndexContext } from "../context/context";
 import useWindowDimensions from "./hooks/useWindowDimensions";
 import { useRouter } from "next/router";
@@ -24,6 +24,7 @@ import MyProgressBar from "./MyProgressBar";
 import ProgrammeGrille from "./ProgrammeGrille";
 import PhoneHeader from "./PhoneHeader";
 import BottomBar from "./BottomBar";
+import Swip from "./Swip";
 
 function Grille({ genders, program, bf, bm, bmo }) {
   const { width } = useWindowDimensions();
@@ -46,16 +47,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
   useEffect(() => {
     setGenderProgram(program);
   }, []);
-  //yr
-  // let ti = time_step;
-  // useEffect(() => {
-  //   let progressInterval = window.setInterval(() => {
-  //     ti = ti++;
-  //     setTime_step(ti);
-  //     console.log(time_step);
-  //   }, 5000);
-  //   // return clearInterval(progressInterval);
-  // }, [time_step]);
+
   const fetchMoreData = async () => {
     const time = moment(new Date()).format("yyyy/MM/DD");
 
@@ -461,6 +453,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 >
                   {genderProgram.map((chaine, index) => {
                     let items = 4;
+
                     if (width < 640) {
                       items = 4;
                     } else if (width < 1280) {
@@ -481,48 +474,13 @@ function Grille({ genders, program, bf, bm, bmo }) {
                                 height="70px"
                               />
                             </div>
-                            <Swiper
-                              slidesPerView={1}
-                              className="w-full "
-                              initialSlide={slideIndex}
-                            >
-                              <SwiperSlide key={chaine.id}>
-                                <ProgrammeGrille
-                                  chaine={chaine}
-                                  genderProgram={genderProgram}
-                                  slideIndex={slideIndex}
-                                  setSlideIndex={setSlideIndex}
-                                />
-                              </SwiperSlide>
-                              {chaine.nextPrograms?.map((chaine) => (
-                                <SwiperSlide key={chaine.id}>
-                                  <ProgrammeGrille
-                                    chaine={chaine}
-                                    genderProgram={genderProgram}
-                                    slideIndex={slideIndex}
-                                    setSlideIndex={setSlideIndex}
-                                  />
-                                </SwiperSlide>
-                              ))}
-                            </Swiper>
+                            <Swip
+                              chaine={chaine}
+                              genderProgram={genderProgram}
+                            />
                           </>
                         ) : (
-                          <Swiper slidesPerView={1} className="w-full ">
-                            <SwiperSlide key={chaine.id}>
-                              <ProgrammeGrille
-                                chaine={chaine}
-                                genderProgram={genderProgram}
-                              />
-                            </SwiperSlide>
-                            {chaine.nextPrograms?.map((chaine) => (
-                              <SwiperSlide key={chaine.id}>
-                                <ProgrammeGrille
-                                  chaine={chaine}
-                                  genderProgram={genderProgram}
-                                />
-                              </SwiperSlide>
-                            ))}
-                          </Swiper>
+                          <Swip chaine={chaine} genderProgram={genderProgram} />
                         )}
                       </>
                     );

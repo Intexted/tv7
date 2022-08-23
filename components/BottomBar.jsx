@@ -20,7 +20,7 @@ function BottomBar({
     <>
       {evening && (
         <div
-          className="flex md:hidden bg-white border-2 w-full z-50 fixed left-0 bottom-10 space-x-4 mt-2  md:ml-1 
+          className="flex md:hidden bg-white border-2 w-full z-30 fixed left-0 bottom-10 space-x-4 mt-2  md:ml-1 
         items-center "
         >
           <div className="text-center w-full text-sm">
