@@ -37,15 +37,25 @@ function Grille({ genders, program, bf, bm, bmo }) {
   const [bouquet, setBouquet] = useState(false);
   const [page, setpage] = useState(2);
   const [hasMore, sethasMore] = useState(true);
+  const [slideIndex, setSlideIndex] = useState(0);
 
   const router = useRouter();
 
   const [oldTime, setOldTime] = useState(Date.now());
-
+  // let [time_step, setTime_step] = useState(0); //yr
   useEffect(() => {
     setGenderProgram(program);
   }, []);
-
+  //yr
+  // let ti = time_step;
+  // useEffect(() => {
+  //   let progressInterval = window.setInterval(() => {
+  //     ti = ti++;
+  //     setTime_step(ti);
+  //     console.log(time_step);
+  //   }, 5000);
+  //   // return clearInterval(progressInterval);
+  // }, [time_step]);
   const fetchMoreData = async () => {
     const time = moment(new Date()).format("yyyy/MM/DD");
 
@@ -119,6 +129,13 @@ function Grille({ genders, program, bf, bm, bmo }) {
         setEvening={setEvening}
         setBouquetChoisi={setBouquetChoisi}
         bf={bf}
+        genders={genders}
+        setRedGender={setRedGender}
+        getGenderProgram={getGenderProgram}
+        eveningNumber={eveningNumber}
+        sethasMore={sethasMore}
+        setpage={setpage}
+        redGender={redGender}
       />
       <BottomBar
         setGenderProgram={setGenderProgram}
@@ -134,6 +151,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
         program={program}
         setBouquetChoisi={setBouquetChoisi}
         bf={bf}
+        eveningNumber={eveningNumber}
       />
 
       <div className="md:mt-5">
@@ -393,7 +411,6 @@ function Grille({ genders, program, bf, bm, bmo }) {
               <div className="md:flex hidden mb-2 items-center space-x-1">
                 <h1
                   onClick={() => {
-                    console.log("clicked");
                     setRedGender("TOUS");
                     handleTous();
                     sethasMore(true);
@@ -451,6 +468,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                     } else {
                       items = 16;
                     }
+
                     return (
                       <>
                         {index != 0 && index % items === 0 ? (
@@ -463,13 +481,29 @@ function Grille({ genders, program, bf, bm, bmo }) {
                                 height="70px"
                               />
                             </div>
-                            <Swiper slidesPerView={1} className="w-full ">
+                            <Swiper
+                              slidesPerView={1}
+                              className="w-full "
+                              initialSlide={slideIndex}
+                            >
                               <SwiperSlide key={chaine.id}>
                                 <ProgrammeGrille
                                   chaine={chaine}
                                   genderProgram={genderProgram}
+                                  slideIndex={slideIndex}
+                                  setSlideIndex={setSlideIndex}
                                 />
                               </SwiperSlide>
+                              {chaine.nextPrograms?.map((chaine) => (
+                                <SwiperSlide key={chaine.id}>
+                                  <ProgrammeGrille
+                                    chaine={chaine}
+                                    genderProgram={genderProgram}
+                                    slideIndex={slideIndex}
+                                    setSlideIndex={setSlideIndex}
+                                  />
+                                </SwiperSlide>
+                              ))}
                             </Swiper>
                           </>
                         ) : (
@@ -480,6 +514,14 @@ function Grille({ genders, program, bf, bm, bmo }) {
                                 genderProgram={genderProgram}
                               />
                             </SwiperSlide>
+                            {chaine.nextPrograms?.map((chaine) => (
+                              <SwiperSlide key={chaine.id}>
+                                <ProgrammeGrille
+                                  chaine={chaine}
+                                  genderProgram={genderProgram}
+                                />
+                              </SwiperSlide>
+                            ))}
                           </Swiper>
                         )}
                       </>

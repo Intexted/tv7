@@ -4,7 +4,7 @@ import MyProgressBar from "./MyProgressBar";
 import { heureDebut, print_Time } from "./progressbar";
 import { useRouter } from "next/router";
 
-function ProgrammeGrille({ chaine, genderProgram }) {
+function ProgrammeGrille({ chaine, genderProgram, setSlideIndex, slideIndex }) {
   const router = useRouter();
   return (
     <div
@@ -56,6 +56,8 @@ function ProgrammeGrille({ chaine, genderProgram }) {
           date_start={chaine.date_start}
           duration={chaine.duration}
           genderProgram={genderProgram}
+          setSlideIndex={setSlideIndex}
+          slideIndex={slideIndex}
         />
       </div>
     </div>

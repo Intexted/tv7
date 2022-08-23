@@ -29,7 +29,6 @@ export default function Home() {
         `https://api.tv7guide.com/api/public/programs/atthemoment/${time}`
       );
       setProgram(data.data);
-      return data.data;
     } catch (error) {
       console.log(error);
     }
@@ -40,7 +39,6 @@ export default function Home() {
         "https://api.tv7guide.com/api/public/genders"
       );
       setGenders(data);
-      return data;
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +61,6 @@ export default function Home() {
           setBmo(data.data);
           break;
       }
-      return data.data;
     } catch (error) {
       console.log(error);
     }
