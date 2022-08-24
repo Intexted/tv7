@@ -11,15 +11,14 @@ function MyProgressBar({
   const [percentage, setPercentage] = useState("0%");
   const [progressLabel, setProgressLabel] = useState("");
   const [labelPosition, setLabelPosition] = useState("0%");
+  const [finished, setfinished] = useState(false);
   let [time_step, setTime_step] = useState(0);
-
-  let finished = false;
 
   const updateProgressBar = () => {
     let progress = getPercentage(date_start, duration);
     if (progress.percentage >= 100 && finished == false) {
       swipe_to(index);
-      finished = true;
+      setfinished(true);
     }
     setPercentage(progress.percentage + "%");
     setProgressLabel(progress.progressLabel);
