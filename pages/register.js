@@ -17,7 +17,7 @@ function Register() {
   }
   return (
     <div className="py-14">
-      <div className="w-1/3 m-auto">
+      <div className="w-full md:w-1/3 px-10 md:px-0 md:m-auto">
         <form>
           <div className="flex flex-col">
             <h1 className="text-xl font-semibold roboto mb-2">Inscription</h1>
@@ -52,7 +52,7 @@ function Register() {
             </h1>
           </div>
         </form>
-        <h1 className="text-sm text-center">
+        <h1 className="text-sm mb-5 text-center">
           Vous avez déja un compte ?
           <span
             onClick={() => router.push("/login")}
@@ -62,7 +62,7 @@ function Register() {
             Se Connecter
           </span>
         </h1>
-        <div className="mt-10 w-4/5 m-auto">
+        <div className="mt-10 w-full md:w-4/5 md:m-auto">
           <div
             onClick={() => {
               signIn("facebook", { callbackUrl: "/" });
