@@ -17,6 +17,8 @@ function PhoneHeader({
   sethasMore,
   setpage,
   redGender,
+  setHasMoreBouquet,
+  setPageBouquet,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [genderOpen, setGenderOpen] = useState(false);
@@ -82,6 +84,9 @@ function PhoneHeader({
         >
           <h1
             onClick={() => {
+              setState({ ...state, title: "BOUQUET" });
+              setHasMoreBouquet(true);
+              setPageBouquet(2);
               menuOpen ? setMenuOpen(false) : setMenuOpen(true);
               setBouquet(true);
               setEvening(false);

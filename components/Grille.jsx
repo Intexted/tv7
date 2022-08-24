@@ -1,13 +1,11 @@
 import Image from "next/image";
 import moment from "moment";
 import axios from "axios";
-import Link from "next/link";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { IndexContext } from "../context/context";
 import useWindowDimensions from "./hooks/useWindowDimensions";
 import { useRouter } from "next/router";
 import InfiniteScroll from "react-infinite-scroll-component";
-import ProgressBar from "@ramonak/react-progress-bar";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -19,16 +17,14 @@ import "swiper/css";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import { getPercentage, heureDebut } from "./progressbar";
-import MyProgressBar from "./MyProgressBar";
-import ProgrammeGrille from "./ProgrammeGrille";
+
 import PhoneHeader from "./PhoneHeader";
 import BottomBar from "./BottomBar";
 import Swip from "./Swip";
 
 function Grille({ genders, program, bf, bm, bmo }) {
   const { width } = useWindowDimensions();
-  const [dataApi, setDataApi] = useContext(IndexContext);
+  const [state, setState] = useContext(IndexContext);
   const [genderProgram, setGenderProgram] = useState([]);
   const [redGender, setRedGender] = useState("TOUS");
   const [evening, setEvening] = useState(false);
@@ -38,12 +34,12 @@ function Grille({ genders, program, bf, bm, bmo }) {
   const [bouquet, setBouquet] = useState(false);
   const [page, setpage] = useState(2);
   const [hasMore, sethasMore] = useState(true);
-  const [slideIndex, setSlideIndex] = useState(0);
+  const [pageBouquet, setPageBouquet] = useState(2);
+  const [hasMoreBouquet, setHasMoreBouquet] = useState(true);
+  const [bouquetChoisiNumero, setBouquetChoisiNumero] = useState(1);
 
   const router = useRouter();
 
-  const [oldTime, setOldTime] = useState(Date.now());
-  // let [time_step, setTime_step] = useState(0); //yr
   useEffect(() => {
     setGenderProgram(program);
   }, []);
@@ -67,6 +63,23 @@ function Grille({ genders, program, bf, bm, bmo }) {
         setpage(2);
       }
       setpage(page + 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchData = async () => {
+    const time = moment(new Date()).format("yyyy/MM/DD");
+
+    try {
+      const { data } = await axios.get(
+        `/public/packages/channels/1/${time} ?page=${pageBouquet}`
+      );
+      setBouquetChoisi([...bouquetChoisi, ...data.data]);
+      if (data.data.length === 0) {
+        setHasMoreBouquet(false);
+        setPageBouquet(2);
+      }
+      setPageBouquet(pageBouquet + 1);
     } catch (error) {
       console.log(error);
     }
@@ -128,6 +141,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
         sethasMore={sethasMore}
         setpage={setpage}
         redGender={redGender}
+        setHasMoreBouquet={setHasMoreBouquet}
+        setPageBouquet={setPageBouquet}
       />
       <BottomBar
         setGenderProgram={setGenderProgram}
@@ -144,6 +159,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
         setBouquetChoisi={setBouquetChoisi}
         bf={bf}
         eveningNumber={eveningNumber}
+        bouquet={bouquet}
       />
 
       <div className="md:mt-5">
@@ -216,6 +232,9 @@ function Grille({ genders, program, bf, bm, bmo }) {
 
           <h1
             onClick={() => {
+              setState({ ...state, title: "BOUQUET" });
+              setHasMoreBouquet(true);
+              setPageBouquet(2);
               setBouquet(true);
               setEvening(false);
               setBouquetChoisi(bf);
@@ -227,14 +246,17 @@ function Grille({ genders, program, bf, bm, bmo }) {
         </div>
         {bouquet && (
           <>
-            <div className="flex md:justify-center px-5 md:items-center mt-2 space-x-4 md:space-x-12">
+            <div className="flex md:justify-center px-5 pt-5 md:items-center mt-2 space-x-4 md:space-x-12">
               <h1
                 onClick={() => {
+                  setHasMoreBouquet(true);
+                  setPageBouquet(2);
+                  setBouquetChoisiNumero(1);
                   setBouquetChoisi(bf);
                 }}
-                className={`cursor-pointer text-center text-xs ${
-                  bouquetChoisi === bf
-                    ? "bg-blue-800 text-white p-1"
+                className={`cursor-pointer text-center text-xs md:text-lg ${
+                  bouquetChoisiNumero === 1
+                    ? "bg-color-blue text-white p-1"
                     : " hover:bg-slate-400 hover:text-white hover:p-1"
                 } font-semibold `}
               >
@@ -242,11 +264,13 @@ function Grille({ genders, program, bf, bm, bmo }) {
               </h1>
               <h1
                 onClick={() => {
+                  setBouquetChoisiNumero(2);
                   setBouquetChoisi(bm);
+                  setHasMoreBouquet(false);
                 }}
-                className={`cursor-pointer text-center text-xs ${
-                  bouquetChoisi === bm
-                    ? "bg-blue-800 text-white p-1"
+                className={`cursor-pointer text-center text-xs md:text-lg ${
+                  bouquetChoisiNumero === 2
+                    ? "bg-color-blue text-white p-1"
                     : " hover:bg-slate-400 hover:text-white hover:p-1"
                 } font-semibold `}
               >
@@ -254,31 +278,46 @@ function Grille({ genders, program, bf, bm, bmo }) {
               </h1>
               <h1
                 onClick={() => {
+                  setBouquetChoisiNumero(3);
                   setBouquetChoisi(bmo);
+                  setHasMoreBouquet(false);
                 }}
-                className={`cursor-pointer text-center text-xs ${
-                  bouquetChoisi === bmo
-                    ? "bg-blue-800 text-white p-1"
+                className={`cursor-pointer text-center text-xs md:text-lg ${
+                  bouquetChoisiNumero === 3
+                    ? "bg-color-blue text-white p-1"
                     : " hover:bg-slate-400 hover:text-white hover:p-1"
                 } font-semibold `}
               >
                 BOUQUET MOYEN-ORIENT
               </h1>
             </div>
-            <div className="grid grid-cols-5 md:grid-cols-8 px-5 md:px-20 my-10 gap-2">
-              {bouquetChoisi?.map((chaine) => (
-                <div
-                  className="border-2  rounded-md h-16 bg-gray-100 flex items-center justify-center"
-                  key={chaine.id}
-                >
-                  <Image
-                    src={chaine.logo_chaine}
-                    alt="logo chaine"
-                    width="50px"
-                    height="50px"
-                  />
-                </div>
-              ))}
+            <div>
+              <InfiniteScroll
+                dataLength={bouquetChoisi.length} //This is important field to render the next data
+                next={fetchData}
+                hasMore={hasMoreBouquet}
+                loader={<h4>Loading...</h4>}
+                className="grid grid-cols-3 md:grid-cols-4 px-5 md:px-20 my-10 gap-4"
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b></b>
+                  </p>
+                }
+              >
+                {bouquetChoisi?.map((chaine) => (
+                  <div
+                    className="border-2  rounded-md h-16 bg-gray-100 flex items-center justify-center"
+                    key={chaine.id}
+                  >
+                    <Image
+                      src={chaine.logo_chaine}
+                      alt="logo chaine"
+                      width="50px"
+                      height="50px"
+                    />
+                  </div>
+                ))}
+              </InfiniteScroll>
             </div>
           </>
         )}

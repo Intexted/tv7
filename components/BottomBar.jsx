@@ -14,6 +14,7 @@ function BottomBar({
   getParams,
   program,
   eveningNumber,
+  bouquet,
 }) {
   const [state, setState] = useContext(IndexContext);
   return (
@@ -88,6 +89,7 @@ function BottomBar({
             {" "}
             <h1
               onClick={() => {
+                window.scrollTo(0, 0);
                 setState({ ...state, title: "ACTUELLEMENT" });
                 setGenderProgram(program);
                 setRedGender("TOUS");
@@ -98,7 +100,9 @@ function BottomBar({
                 setBouquet(false);
               }}
               className={`cursor-pointer ${
-                !evening && !journee ? "bg-color-blue text-white p-2" : "ml-2"
+                !evening && !journee && !bouquet
+                  ? "bg-color-blue text-white p-2"
+                  : "ml-2 p-2"
               }   font-semibold `}
             >
               ACTUELLEMENT
@@ -109,6 +113,7 @@ function BottomBar({
             {" "}
             <h1
               onClick={() => {
+                window.scrollTo(0, 0);
                 setState({ ...state, title: "JOURNEE" });
                 setJournee(true);
                 setEvening(false);
@@ -126,6 +131,7 @@ function BottomBar({
             {" "}
             <h1
               onClick={() => {
+                window.scrollTo(0, 0);
                 setState({ ...state, title: "SOIREE" });
                 setBouquet(false);
                 sethasMore(true);

@@ -5,7 +5,6 @@ function MyProgressBar({
   date_start,
   duration,
   genderProgram,
-  setSlideIndex,
   swipe_to,
   index,
 }) {
@@ -14,12 +13,13 @@ function MyProgressBar({
   const [labelPosition, setLabelPosition] = useState("0%");
   let [time_step, setTime_step] = useState(0);
 
+  let finished = false;
+
   const updateProgressBar = () => {
     let progress = getPercentage(date_start, duration);
-    if (progress.percentage >= 100) {
-      // setSlideIndex(slideIndex++);
-
+    if (progress.percentage >= 100 && finished == false) {
       swipe_to(index);
+      finished = true;
     }
     setPercentage(progress.percentage + "%");
     setProgressLabel(progress.progressLabel);
