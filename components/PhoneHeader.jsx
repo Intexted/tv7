@@ -19,6 +19,7 @@ function PhoneHeader({
   redGender,
   setHasMoreBouquet,
   setPageBouquet,
+  handleTous,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [genderOpen, setGenderOpen] = useState(false);

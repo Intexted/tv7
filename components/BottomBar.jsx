@@ -28,7 +28,7 @@ function BottomBar({
             <h1
               onClick={async () => {
                 setBouquet(false);
-                sethasMore(true);
+                sethasMore(false);
                 setpage(2);
                 getParams(1);
               }}
@@ -46,7 +46,7 @@ function BottomBar({
             <h1
               onClick={() => {
                 setBouquet(false);
-                sethasMore(true);
+                sethasMore(false);
                 setpage(2);
 
                 getParams(2);
@@ -65,7 +65,7 @@ function BottomBar({
             <h1
               onClick={async () => {
                 setBouquet(false);
-                sethasMore(true);
+                sethasMore(false);
                 setpage(2);
                 getParams(3);
               }}
@@ -120,7 +120,9 @@ function BottomBar({
                 setBouquet(false);
               }}
               className={`cursor-pointer ${
-                !evening && journee ? "bg-color-blue text-white p-2" : ""
+                !evening && !bouquet && journee
+                  ? "bg-color-blue text-white p-2"
+                  : ""
               }   font-semibold `}
             >
               JOURNEE
@@ -134,12 +136,14 @@ function BottomBar({
                 window.scrollTo(0, 0);
                 setState({ ...state, title: "SOIREE" });
                 setBouquet(false);
-                sethasMore(true);
-                setpage(2);
                 getParams(1);
+                sethasMore(false);
+                setpage(2);
               }}
               className={`cursor-pointer ${
-                evening && !journee ? "bg-color-blue text-white p-2" : ""
+                evening && !journee && !bouquet
+                  ? "bg-color-blue text-white p-2"
+                  : ""
               }   font-semibold `}
             >
               SOIREE

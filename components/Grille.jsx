@@ -57,6 +57,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
           ${`gender=${redGender}&`}
             page=${page}`
       );
+
       setGenderProgram([...genderProgram, ...data.data]);
       if (data.data.length === 0) {
         sethasMore(false);
@@ -143,6 +144,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
         redGender={redGender}
         setHasMoreBouquet={setHasMoreBouquet}
         setPageBouquet={setPageBouquet}
+        handleTous={handleTous}
       />
       <BottomBar
         setGenderProgram={setGenderProgram}
@@ -185,9 +187,9 @@ function Grille({ genders, program, bf, bm, bmo }) {
           <h1
             onClick={async () => {
               setBouquet(false);
-              sethasMore(true);
-              setpage(2);
               getParams(1);
+              sethasMore(false);
+              setpage(2);
             }}
             className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${
               evening && eveningNumber === 1
@@ -200,10 +202,9 @@ function Grille({ genders, program, bf, bm, bmo }) {
           <h1
             onClick={() => {
               setBouquet(false);
-              sethasMore(true);
-              setpage(2);
-
               getParams(2);
+              sethasMore(false);
+              setpage(2);
             }}
             className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${
               evening && eveningNumber === 2
@@ -216,10 +217,9 @@ function Grille({ genders, program, bf, bm, bmo }) {
           <h1
             onClick={async () => {
               setBouquet(false);
-              sethasMore(true);
-              setpage(2);
-
               getParams(3);
+              sethasMore(false);
+              setpage(2);
             }}
             className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${
               evening && eveningNumber === 3
@@ -438,7 +438,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
         )}
         {!journee && !bouquet && (
           <div className="flex content-center  justify-center md:w-11/12 md:py-5 w-full md:m-auto">
-            <div>
+            <div className="w-full">
               <div className="md:flex hidden mb-2 items-center space-x-1">
                 <h1
                   onClick={() => {
@@ -476,14 +476,14 @@ function Grille({ genders, program, bf, bm, bmo }) {
                   </h1>
                 ))}
               </div>
-              <div className="">
+              <div>
                 <InfiniteScroll
                   dataLength={genderProgram.length}
                   next={fetchMoreData}
                   hasMore={hasMore}
-                  loader={<h4 className="md:p-2 text-gray-500">Loading...</h4>}
+                  loader={<h4 className="md:p-2 text-gray-500"></h4>}
                   className="grid pt-2 sm:grid-cols-1 gap-1 md:gap-5  md:grid-cols-3 content-center
-                 xl:grid-cols-4  m-auto mb-5 border-t-2 w-full"
+                 xl:grid-cols-4  m-auto mb-10 border-t-2 w-full"
                   endMessage={
                     <p style={{ textAlign: "center" }}>
                       <b></b>
@@ -505,7 +505,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                       <>
                         {index != 0 && index % items === 0 ? (
                           <>
-                            <div className=" md:grid-3 xl:grid-4  m-auto my-5 ">
+                            <div className=" md:grid-3 xl:grid-4  m-auto my-5  ">
                               <Image
                                 src="/static/banner3.png"
                                 alt="banner"
@@ -525,6 +525,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                     );
                   })}
                 </InfiniteScroll>
+                <div className="h-10"></div>
               </div>
             </div>
           </div>

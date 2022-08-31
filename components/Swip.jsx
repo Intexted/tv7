@@ -18,7 +18,7 @@ function Swip({ chaine, genderProgram }) {
   };
 
   return (
-    <Swiper slidesPerView={1} ref={swiperRef} className="w-full ">
+    <Swiper slidesPerView={1} ref={swiperRef} className="w-full">
       <SwiperSlide key={chaine.id}>
         <ProgrammeGrille
           index={1}
