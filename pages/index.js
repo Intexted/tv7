@@ -19,9 +19,7 @@ export default function Home() {
   const [bf, setBf] = useState();
   const [bm, setBm] = useState();
   const [bmo, setBmo] = useState();
-  // if (!session) {
-  //   return <Login />;
-  // }
+
   const getProgram = async () => {
     const time = moment(new Date()).format("yyyy/MM/DD");
     try {
@@ -73,6 +71,10 @@ export default function Home() {
     getBouquet(2);
     getBouquet(3);
   }, []);
+
+  if (!session) {
+    return <Login />;
+  }
 
   if (!program) {
     return (

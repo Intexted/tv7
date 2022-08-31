@@ -4,10 +4,10 @@ export default function middleware(req) {
   let verify = req.cookies.get("loggedin");
   let url = req.url;
 
-  // if (
-  //   (verify && url === "http://localhost:3000/login") ||
-  //   (verify && url === "http://localhost:3000/register")
-  // ) {
-  //   return NextResponse.redirect("http://localhost:3000");
-  // }
+  if (
+    (verify && url === "http://localhost:3000/login") ||
+    (verify && url === "http://localhost:3000/register")
+  ) {
+    return NextResponse.redirect("http://localhost:3000");
+  }
 }

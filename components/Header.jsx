@@ -12,7 +12,7 @@ function Header({ details }) {
   const [dropDown, setDropDown] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [data, setData] = useContext(IndexContext);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const router = useRouter();
 
@@ -84,7 +84,7 @@ function Header({ details }) {
       </div>
       {details && (
         <div className="hidden md:inline">
-          {session ? (
+          {status === "authenticated" ? (
             <div
               onClick={() => signOut({ redirect: false, callbackUrl: "/" })}
               className="text-right mb-2 pr-20 cursor-pointer"

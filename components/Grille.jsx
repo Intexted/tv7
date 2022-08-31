@@ -52,7 +52,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
         evening
           ? `/public/programs/evening/pt${eveningNumber}/${time} ? 
               ${`gender=${redGender}&`}
-            }page=${page} `
+            page=${page} `
           : `/public/programs/atthemoment/${time} ? 
           ${`gender=${redGender}&`}
             page=${page}`
@@ -185,10 +185,10 @@ function Grille({ genders, program, bf, bm, bmo }) {
             ACTUELLEMENT
           </h1>
           <h1
-            onClick={async () => {
+            onClick={() => {
               setBouquet(false);
               getParams(1);
-              sethasMore(false);
+              sethasMore(true);
               setpage(2);
             }}
             className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${
@@ -203,7 +203,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
             onClick={() => {
               setBouquet(false);
               getParams(2);
-              sethasMore(false);
+              sethasMore(true);
               setpage(2);
             }}
             className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${
@@ -215,10 +215,10 @@ function Grille({ genders, program, bf, bm, bmo }) {
             MILIEU DE SOIREE
           </h1>
           <h1
-            onClick={async () => {
+            onClick={() => {
               setBouquet(false);
               getParams(3);
-              sethasMore(false);
+              sethasMore(true);
               setpage(2);
             }}
             className={`cursor-pointer tracking-tight roboto font-bold hover:bg-slate-400 hover:p-1 hover:text-white ${

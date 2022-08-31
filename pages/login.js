@@ -22,36 +22,34 @@ function Login() {
   const { data: session } = useSession();
 
   const handleSubmit = async (e) => {
-    const formData = new FormData();
-    formData.append({ email: email }, { password: password });
+    // const formData = new FormData();
+    // formData.append({ email: email }, { password: password });
 
-    const body = {
-      email: "lotfi@lotfi.com",
-      password: "password",
-    };
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "no-cache",
-      },
-    };
-
-    const data = axios({
-      method: "post",
-      url: "/login",
-      data: {
-        email: "lotfi@lotfi.com",
-        password: "password",
-      },
-    });
-
-    console.log(data);
-
+    // const body = {
+    //   email: "lotfi@lotfi.com",
+    //   password: "password",
+    // };
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Cache-Control": "no-cache",
+    //   },
+    // };
     e.preventDefault();
-
     try {
       setLoading(true);
-      //const { data } = await axios.post(`/login`, body, config);
+
+      const data = axios({
+        method: "post",
+        url: "/login",
+        data: {
+          email,
+          password,
+        },
+      });
+
+      console.log(data);
+
       console.log(data);
       if (data.status === "error") {
         toast.error(data.message);

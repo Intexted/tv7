@@ -28,7 +28,7 @@ function BottomBar({
             <h1
               onClick={async () => {
                 setBouquet(false);
-                sethasMore(false);
+                sethasMore(true);
                 setpage(2);
                 getParams(1);
               }}
@@ -46,7 +46,7 @@ function BottomBar({
             <h1
               onClick={() => {
                 setBouquet(false);
-                sethasMore(false);
+                sethasMore(true);
                 setpage(2);
 
                 getParams(2);
@@ -65,7 +65,7 @@ function BottomBar({
             <h1
               onClick={async () => {
                 setBouquet(false);
-                sethasMore(false);
+                sethasMore(true);
                 setpage(2);
                 getParams(3);
               }}
@@ -137,7 +137,7 @@ function BottomBar({
                 setState({ ...state, title: "SOIREE" });
                 setBouquet(false);
                 getParams(1);
-                sethasMore(false);
+                sethasMore(true);
                 setpage(2);
               }}
               className={`cursor-pointer ${
