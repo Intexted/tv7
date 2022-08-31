@@ -72,9 +72,9 @@ export default function Home() {
     getBouquet(3);
   }, []);
 
-  if (!session) {
-    return <Login />;
-  }
+  // if (!session) {
+  //   return <Login />;
+  // }
 
   if (!program) {
     return (
