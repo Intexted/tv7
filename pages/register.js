@@ -12,9 +12,7 @@ function Register() {
   const [isLoadingTwitter, setIsLoadingTwitter] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
-  if (session) {
-    router.push("/");
-  }
+
   return (
     <div className="py-14">
       <div className="w-full md:w-1/3 px-10 md:px-0 md:m-auto">

@@ -22,19 +22,6 @@ function Login() {
   const { data: session } = useSession();
 
   const handleSubmit = async (e) => {
-    // const formData = new FormData();
-    // formData.append({ email: email }, { password: password });
-
-    // const body = {
-    //   email: "lotfi@lotfi.com",
-    //   password: "password",
-    // };
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Cache-Control": "no-cache",
-    //   },
-    // };
     e.preventDefault();
     try {
       setLoading(true);
@@ -46,21 +33,23 @@ function Login() {
           email,
           password,
         },
-      });
-
-      console.log(data);
-
-      console.log(data);
-      if (data.status === "error") {
-        toast.error(data.message);
-        setLoading(false);
-      } else {
-        setEmail("");
-        setPassword("");
-        setLoading(false);
-        Cookies.set("loggedin", "true");
-        router.push("/");
-      }
+      })
+        .then((res) => {
+          console.log(res);
+          if (!res.data.token) {
+            setEmail("");
+            setPassword("");
+            toast.error(data.message);
+            setLoading(false);
+          } else {
+            setEmail("");
+            setPassword("");
+            setLoading(false);
+            Cookies.set("loggedin", "true");
+            router.push("/");
+          }
+        })
+        .catch((err) => console.log(err));
     } catch (error) {
       console.log(error);
     }
