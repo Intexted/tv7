@@ -5,7 +5,9 @@ import Link from "next/link";
 import { getSession, useSession } from "next-auth/react";
 import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import PhoneHeader from "./PhoneHeader";
+import Cookies from "js-cookie";
+
+import logo from "../public/static/logo.png";
 
 function Header({ details }) {
   const [value, setValue] = useState("FR");
@@ -15,17 +17,12 @@ function Header({ details }) {
   const { data: session, status } = useSession();
 
   const router = useRouter();
-
+  const token = Cookies.get("token");
   return (
     <>
       <div className="p-5 px-10 hidden md:flex justify-between items-center ">
         <div onClick={() => router.push("/")} className="cursor-pointer">
-          <Image
-            src="/static/logo.png"
-            alt="banner"
-            width="150px"
-            height="100px"
-          />
+          <Image src={logo} alt="banner" width="150px" height="90px" />
         </div>
         <div className="cursor-pointer">
           <Image
@@ -84,9 +81,13 @@ function Header({ details }) {
       </div>
       {details && (
         <div className="hidden md:inline">
-          {status === "authenticated" ? (
+          {token ? (
             <div
-              onClick={() => signOut({ redirect: false, callbackUrl: "/" })}
+              onClick={() => {
+                signOut({ redirect: false, callbackUrl: "/" });
+                Cookies.set("token", "");
+                router.push("/login");
+              }}
               className="text-right mb-2 pr-20 cursor-pointer"
             >
               <h1 className="font-semibold hover:font-bold text-sm">

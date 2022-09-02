@@ -4,13 +4,30 @@ import MyProgressBar from "./MyProgressBar";
 import { heureDebut, print_Time } from "./progressbar";
 import { useRouter } from "next/router";
 
-function ProgrammeGrille({ chaine, genderProgram, swipe_to, index }) {
+function ProgrammeGrille({
+  chaine,
+  genderProgram,
+  swipe_to,
+  index,
+  setDetails,
+  setEvening,
+  setBouquet,
+  setJournee,
+  setChaineId,
+  setChannelId,
+}) {
   const router = useRouter();
   return (
     <div
-      onClick={() =>
-        router.push(`/details/${chaine.id}?channel=${chaine.channel_id}`)
-      }
+      onClick={() => {
+        // router.push(`/details/${chaine.id}?channel=${chaine.channel_id}`)
+        setChaineId(chaine.id);
+        setChannelId(chaine.channel_id);
+        setEvening(false);
+        setBouquet(false);
+        setJournee(false);
+        setDetails(true);
+      }}
       className="flex flex-col  cursor-pointer h-[90px]
       "
     >

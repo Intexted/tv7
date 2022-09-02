@@ -10,7 +10,16 @@ import "swiper/css";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-function Swip({ chaine, genderProgram }) {
+function Swip({
+  chaine,
+  genderProgram,
+  setDetails,
+  setEvening,
+  setBouquet,
+  setJournee,
+  setChaineId,
+  setChannelId,
+}) {
   let swiperRef = useRef(null);
 
   const swipe_to = (i) => {
@@ -25,6 +34,12 @@ function Swip({ chaine, genderProgram }) {
           chaine={chaine}
           genderProgram={genderProgram}
           swipe_to={swipe_to}
+          setDetails={setDetails}
+          setJournee={setJournee}
+          setEvening={setEvening}
+          setBouquet={setBouquet}
+          setChaineId={setChaineId}
+          setChannelId={setChannelId}
         />
       </SwiperSlide>
       {chaine.nextPrograms?.map((chaine, i) => (
@@ -34,6 +49,12 @@ function Swip({ chaine, genderProgram }) {
             chaine={chaine}
             genderProgram={genderProgram}
             swipe_to={swipe_to}
+            setDetails={setDetails}
+            setJournee={setJournee}
+            setEvening={setEvening}
+            setBouquet={setBouquet}
+            setChaineId={setChaineId}
+            setChannelId={setChannelId}
           />
         </SwiperSlide>
       ))}

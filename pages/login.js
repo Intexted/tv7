@@ -21,8 +21,23 @@ function Login() {
   const router = useRouter();
   const { data: session } = useSession();
 
+  const token = Cookies.get("token");
+  if (token) {
+    router.push("/");
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!email) {
+      alert("Email required §!");
+      return;
+    }
+    if (!password) {
+      alert("Password required §!");
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -35,7 +50,6 @@ function Login() {
         },
       })
         .then((res) => {
-          console.log(res);
           if (!res.data.token) {
             setEmail("");
             setPassword("");
@@ -45,8 +59,8 @@ function Login() {
             setEmail("");
             setPassword("");
             setLoading(false);
-            Cookies.set("loggedin", "true");
-            router.push("/");
+            Cookies.set("token", res.data.token, { expires: 7 });
+            // router.push("/");
           }
         })
         .catch((err) => console.log(err));
@@ -72,6 +86,7 @@ function Login() {
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
               className="p-2 border-2 mb-2"
+              required={"required"}
             />
 
             <input
@@ -80,6 +95,7 @@ function Login() {
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               className="p-2 border-2 mb-2"
+              required={"required"}
             />
             <button
               onClick={(e) => handleSubmit(e)}

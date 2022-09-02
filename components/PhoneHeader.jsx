@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { IndexContext } from "../context/context";
+import Cookies from "js-cookie";
+import { signIn, signOut } from "next-auth/react";
 
 function PhoneHeader({
   setBouquet,
@@ -17,14 +19,13 @@ function PhoneHeader({
   sethasMore,
   setpage,
   redGender,
-  setHasMoreBouquet,
-  setPageBouquet,
   handleTous,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [genderOpen, setGenderOpen] = useState(false);
   const [state, setState] = useContext(IndexContext);
   const router = useRouter();
+  const token = Cookies.get("token");
   return (
     <>
       {(menuOpen || genderOpen) && (
@@ -85,18 +86,30 @@ function PhoneHeader({
         >
           <h1
             onClick={() => {
-              setState({ ...state, title: "BOUQUET" });
-              setHasMoreBouquet(true);
-              setPageBouquet(2);
-              menuOpen ? setMenuOpen(false) : setMenuOpen(true);
-              setBouquet(true);
-              setEvening(false);
-              setBouquetChoisi(bf);
+              if (token) {
+                setState({ ...state, title: "BOUQUET" });
+                menuOpen ? setMenuOpen(false) : setMenuOpen(true);
+                setBouquet(true);
+                setEvening(false);
+                setBouquetChoisi(bf);
+              } else {
+                router.push("/login");
+              }
             }}
             className="cursor-pointer tracking-tight  font-bold bg-color-blue text-white p-1"
           >
             MON TV7 GUIDE
           </h1>
+          <div
+            onClick={() => {
+              signOut({ redirect: false, callbackUrl: "/" });
+              Cookies.set("token", "");
+              router.push("/login");
+            }}
+            className="cursor-pointer tracking-tight mt-2 font-bold bg-color-blue text-white p-1"
+          >
+            <h1 className="">{token ? "Se Deconnecter " : "Se Connecter"}</h1>
+          </div>
         </div>
       )}
 

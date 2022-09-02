@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
-import { SyncOutlined } from "@ant-design/icons";
+
 import moment from "moment";
 import "moment/locale/fr"; // without this line it didn't work
 moment.locale("fr");
-import loading from "../../public/static/loading.svg";
+import loading from "../public/static/loading.svg";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -17,12 +17,11 @@ import "swiper/css";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import { heureDebut, print_Time } from "../../components/progressbar";
-import Header from "../../components/Header";
-import useWindowDimensions from "../../components/hooks/useWindowDimensions";
-import Navbar from "../../components/Navbar";
+import { heureDebut, print_Time } from "./progressbar";
 
-function Details() {
+import useWindowDimensions from "./hooks/useWindowDimensions";
+
+function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   const { width } = useWindowDimensions();
   const [programDetails, setProgramDetails] = useState();
   const [programAll, setProgramAll] = useState();
@@ -33,11 +32,11 @@ function Details() {
     programAll.findIndex((item) => item.id === programDetails?.id);
 
   useEffect(() => {
-    if (router.query.channel != undefined && programAll == undefined) {
+    if (channelId != undefined) {
       const time = moment(new Date()).format("yyyy/MM/DD");
       try {
         axios
-          .get(`/public/programs/channel/${router.query.channel}/${time}`)
+          .get(`/public/programs/channel/${channelId}/${time}`)
           .then((data) => {
             setProgramAll(data.data.data);
           });
@@ -45,19 +44,19 @@ function Details() {
         console.log(error);
       }
     }
-  }, [router.query.channel]);
+  }, [channelId]);
 
   useEffect(() => {
-    if (router.query._id != undefined && programDetails == undefined) {
+    if (chaineId != undefined) {
       try {
-        axios.get(`/public/programs/${router.query._id}`).then((data) => {
+        axios.get(`/public/programs/${chaineId}`).then((data) => {
           setProgramDetails(data.data.data[0]);
         });
       } catch (error) {
         console.log(error);
       }
     }
-  }, [router.query._id]);
+  }, [chaineId]);
 
   if (programDetails == undefined || programAll == undefined) {
     return (
@@ -71,28 +70,6 @@ function Details() {
   }
   return (
     <>
-      <div
-        onClick={() => router.push("/")}
-        className="p-4 flex md:hidden sticky top-0 z-50 bg-slate-50"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          />
-        </svg>
-      </div>
-
-      <Header details={false} />
-      <Navbar />
       <div className=" w-4/5 mt-5 m-auto">
         <div className="flex space-x-5 items-center">
           <div>
@@ -119,14 +96,23 @@ function Details() {
           <div className="w-2/3">
             <Image
               src={
-                programDetails?.thumbnail
-                  ? programDetails?.thumbnail
+                programDetails?.cover
+                  ? programDetails?.cover
                   : "../../static/tvShowNo.jfif"
               }
               alt="logo chaine"
               width="600px"
               height="300px"
             />
+            <h1 className="mt-2 font-bold">{programDetails.title_fr}</h1>
+
+            <h1 className="mt-2 font-semibold">
+              {programDetails.description_fr}
+            </h1>
+
+            <h1 className="mt-2 capitalize font-semibold">
+              {programDetails.gender}{" "}
+            </h1>
           </div>
           <div className="w-1/3">
             <Image
@@ -137,13 +123,6 @@ function Details() {
             />
           </div>
         </div>
-        <h1 className="mt-2 font-bold">{programDetails.title_fr}</h1>
-
-        <h1 className="mt-2 font-semibold"> {programDetails.description_fr}</h1>
-
-        <h1 className="mt-2 capitalize font-semibold">
-          {programDetails.gender}{" "}
-        </h1>
 
         <h1 className="mt-2 mb-5 font-bold underline">
           A suivre sur cette chaine
@@ -157,7 +136,13 @@ function Details() {
         >
           {programAll.map((chaine) => (
             <SwiperSlide key={chaine.id}>
-              <div className="border-2 p-2 text-center  h-[195px]">
+              <div
+                onClick={() => {
+                  setChaineId(chaine.id);
+                  setChannelId(chaine.channel_id);
+                }}
+                className="cursor-pointer border-2 p-2 text-center  h-[195px]"
+              >
                 <div className="">
                   <Image
                     src={
@@ -189,10 +174,4 @@ function Details() {
   );
 }
 
-export default Details;
-
-// useEffect(() => {
-//     axios.get(`${process.env.REACT_APP_API}/product`).then((res) => {
-//       dispatch(updateData(res.data));
-//     });
-//   }, []);
+export default DetailsPage;
