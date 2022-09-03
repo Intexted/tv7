@@ -1,0 +1,38 @@
+POST  https://api.tv7guide.com/api/login
+Content-Type: application/json
+
+{
+    "email":"lotfi@lotfi.com",
+    "password":"password"
+}
+
+###
+
+GET  https://api.tv7guide.com/api/favorite/channels?page=2
+Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
+Content-Type: application/json
+
+
+###
+
+DELETE   https://api.tv7guide.com/api/favorite/channels/delete/79
+Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
+Content-Type: application/json
+ 
+###
+
+POST    https://api.tv7guide.com/api/favorite/channels/post/79
+Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
+Content-Type: application/json
+
+###
+
+DELETE     https://api.tv7guide.com/api/favorite/packages/channels/delete/3
+Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
+Content-Type: application/json
+
+###
+
+POST     https://api.tv7guide.com/api/favorite/packages/channels/post/3
+Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
+Content-Type: application/json

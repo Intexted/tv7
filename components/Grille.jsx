@@ -147,6 +147,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
         bf={bf}
         eveningNumber={eveningNumber}
         bouquet={bouquet}
+        setDetails={setDetails}
       />
 
       <div className="md:mt-5">
@@ -205,8 +206,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
                       <Image
                         src={chaine.logo_chaine}
                         alt="logo chaine"
-                        width="70px"
-                        height="80px"
+                        width="50px"
+                        height="60px"
                       />
                     </div>
 
@@ -266,8 +267,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
                       <Image
                         src={chaine.logo_chaine}
                         alt="logo chaine"
-                        width="70px"
-                        height="80px"
+                        width="50px"
+                        height="60px"
                       />
                     </div>
 
@@ -327,8 +328,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
                       <Image
                         src={chaine.logo_chaine}
                         alt="logo chaine"
-                        width="70px"
-                        height="80px"
+                        width="50px"
+                        height="60px"
                       />
                     </div>
 

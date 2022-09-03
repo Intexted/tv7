@@ -5,9 +5,9 @@ export default function middleware(req) {
   let url = req.url;
 
   if (
-    (verify && url === "http://127.0.0.1:3000/login") ||
-    (verify && url === "http://127.0.0.1:3000/register")
+    (verify && url === "https://tv7app.herokuapp.com/login") ||
+    (verify && url === "https://tv7app.herokuapp.com/register")
   ) {
-    return NextResponse.redirect("http://127.0.0.1:3000");
+    return NextResponse.redirect("https://tv7app.herokuapp.com");
   }
 }

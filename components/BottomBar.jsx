@@ -15,6 +15,7 @@ function BottomBar({
   program,
   eveningNumber,
   bouquet,
+  setDetails,
 }) {
   const [state, setState] = useContext(IndexContext);
   return (
@@ -28,6 +29,7 @@ function BottomBar({
             <h1
               onClick={async () => {
                 setBouquet(false);
+                setDetails(false);
                 sethasMore(true);
                 setpage(2);
                 getParams(1);
@@ -46,6 +48,7 @@ function BottomBar({
             <h1
               onClick={() => {
                 setBouquet(false);
+                setDetails(false);
                 sethasMore(true);
                 setpage(2);
 
@@ -65,6 +68,7 @@ function BottomBar({
             <h1
               onClick={async () => {
                 setBouquet(false);
+                setDetails(false);
                 sethasMore(true);
                 setpage(2);
                 getParams(3);
@@ -93,6 +97,7 @@ function BottomBar({
                 setState({ ...state, title: "ACTUELLEMENT" });
                 setGenderProgram(program);
                 setRedGender("TOUS");
+                setDetails(false);
                 sethasMore(true);
                 setpage(2);
                 setEvening(false);
@@ -115,6 +120,7 @@ function BottomBar({
               onClick={() => {
                 window.scrollTo(0, 0);
                 setState({ ...state, title: "JOURNEE" });
+                setDetails(false);
                 setJournee(true);
                 setEvening(false);
                 setBouquet(false);
@@ -136,6 +142,7 @@ function BottomBar({
                 window.scrollTo(0, 0);
                 setState({ ...state, title: "SOIREE" });
                 setBouquet(false);
+                setDetails(false);
                 getParams(1);
                 sethasMore(true);
                 setpage(2);

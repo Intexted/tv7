@@ -113,6 +113,51 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
             <h1 className="mt-2 capitalize font-semibold">
               {programDetails.gender}{" "}
             </h1>
+            <h1 className="mt-2 mb-5 font-bold underline">
+              A suivre sur cette chaine
+            </h1>
+
+            <Swiper
+              slidesPerView={width > 600 ? 3.5 : 2.5}
+              className="mb-5"
+              spaceBetween={2}
+              initialSlide={index + 1}
+            >
+              {programAll.map((chaine) => (
+                <SwiperSlide key={chaine.id}>
+                  <div
+                    onClick={() => {
+                      setChaineId(chaine.id);
+                      setChannelId(chaine.channel_id);
+                    }}
+                    className="cursor-pointer border-2 p-2 text-center  h-[195px]"
+                  >
+                    <div className="">
+                      <Image
+                        src={
+                          chaine.thumbnail
+                            ? chaine.thumbnail
+                            : "../../static/tvShowNo.jfif"
+                        }
+                        alt="logo chaine"
+                        width="200px"
+                        height="150px"
+                      />
+                      <div className="mt-2">
+                        <h1 className="font-semibold text-xs">
+                          {heureDebut(chaine.date_start)}
+                        </h1>
+                      </div>
+                      <div className="mt-2">
+                        <h1 className="font-semibold text-xs ">
+                          {chaine.title_fr ? chaine.title_fr : chaine.title_ar}
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
           <div className="w-1/3">
             <Image
@@ -123,52 +168,6 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
             />
           </div>
         </div>
-
-        <h1 className="mt-2 mb-5 font-bold underline">
-          A suivre sur cette chaine
-        </h1>
-
-        <Swiper
-          slidesPerView={width > 600 ? 6.5 : 3.5}
-          className="mb-5"
-          spaceBetween={2}
-          initialSlide={index + 1}
-        >
-          {programAll.map((chaine) => (
-            <SwiperSlide key={chaine.id}>
-              <div
-                onClick={() => {
-                  setChaineId(chaine.id);
-                  setChannelId(chaine.channel_id);
-                }}
-                className="cursor-pointer border-2 p-2 text-center  h-[195px]"
-              >
-                <div className="">
-                  <Image
-                    src={
-                      chaine.thumbnail
-                        ? chaine.thumbnail
-                        : "../../static/tvShowNo.jfif"
-                    }
-                    alt="logo chaine"
-                    width="200px"
-                    height="150px"
-                  />
-                  <div className="mt-2">
-                    <h1 className="font-semibold text-xs">
-                      {heureDebut(chaine.date_start)}
-                    </h1>
-                  </div>
-                  <div className="mt-2">
-                    <h1 className="font-semibold text-xs ">
-                      {chaine.title_fr ? chaine.title_fr : chaine.title_ar}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
       </div>
     </>
   );
