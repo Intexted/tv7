@@ -17,15 +17,21 @@ function Header({ details }) {
   const { data: session, status } = useSession();
 
   const router = useRouter();
+  console.log(router.basePath);
   const token = Cookies.get("token");
   return (
     <>
       <div className="p-5 px-10 hidden md:flex justify-between items-center ">
         <div onClick={() => router.push("/")} className="cursor-pointer">
-          <Image src={logo} alt="banner" width="150px" height="90px" />
+          <img
+            src="/static/logo.png"
+            alt="banner"
+            width="150px"
+            height="90px"
+          />
         </div>
         <div className="cursor-pointer">
-          <Image
+          <img
             src="/static/banner.png"
             alt="banner"
             width="600px"
@@ -40,7 +46,7 @@ function Header({ details }) {
             className={`cursor-pointer flex border-2   items-center space-x-2 px-0.5`}
           >
             <h1 className="font-bold">{value}</h1>
-            <Image
+            <img
               src="/static/arrow_drop_down.svg"
               alt="banner"
               width="30px"

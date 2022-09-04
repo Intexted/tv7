@@ -6,7 +6,7 @@ import Image from "next/image";
 import moment from "moment";
 import "moment/locale/fr"; // without this line it didn't work
 moment.locale("fr");
-import loading from "../public/static/loading.svg";
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -65,7 +65,12 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
         className="h-40 absolute top-1/2 left-1/2 "
         style={{ transform: " translate(-50% , -50%)" }}
       >
-        <Image src={loading} alt="logo chaine" width="100px" height="100px" />
+        <img
+          src="/static/loading.svg"
+          alt="logo chaine"
+          width="100px"
+          height="100px"
+        />
       </div>
     );
   }
@@ -98,7 +103,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
         md:space-x-20 mt-5 "
         >
           <div className="w-full md:w-1/2">
-            <Image
+            <img
               src={
                 programDetails?.cover
                   ? programDetails?.cover
@@ -138,7 +143,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                     className="cursor-pointer border-2 p-2 text-center  h-[195px]"
                   >
                     <div className="">
-                      <Image
+                      <img
                         src={
                           chaine.thumbnail
                             ? chaine.thumbnail
@@ -165,7 +170,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
             </Swiper>
           </div>
           <div className="w-11/12 m-auto mb-20 md:m-0  md:w-1/2">
-            <Image
+            <img
               src="/static/banner2.png"
               alt="logo chaine"
               width="300px"

@@ -73,6 +73,27 @@ a {
   display: none;
 } */
 
+.swiper-vertical > .swiper-button-next::after,
+.swiper-vertical > .swiper-button-prev::after {
+  font-size: 30px !important;
+  transform: rotate(90deg);
+}
+
+.swiper-vertical > .swiper-button-next {
+  top: calc(100% - 20px) !important;
+  /* left: 50%; */
+  left: 0 !important;
+  width: 100% !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  /* tr */
+}
+.swiper-vertical > .swiper-button-prev {
+  top: 20px !important;
+  width: 100% !important;
+  left: 0 !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
 .swiper-horizontal > .swiper-button-next {
   top: 30px !important;
 }

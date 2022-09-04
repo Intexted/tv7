@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import loading from "../public/static/loading.svg";
 
 export default function Home() {
   const router = useRouter();
@@ -15,7 +14,12 @@ export default function Home() {
       className="h-40 absolute top-1/2 left-1/2 "
       style={{ transform: " translate(-50% , -50%)" }}
     >
-      <Image src={loading} alt="logo chaine" width="100px" height="100px" />
+      <img
+        src="/static/loading.svg"
+        alt="logo chaine"
+        width="100px"
+        height="100px"
+      />
     </div>
   );
 }
