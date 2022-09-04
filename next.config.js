@@ -3,9 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    loader: "akamai",
-    path: "",
-    unoptimized: true,
+    // loader: "akamai",
+    // path: "",
+    // unoptimized: true,
     domains: [
       "www.svgrepo.com",
       "api.tv7guide.com",

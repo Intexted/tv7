@@ -51,6 +51,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
       try {
         axios.get(`/public/programs/${chaineId}`).then((data) => {
           setProgramDetails(data.data.data[0]);
+          console.log(data.data.data[0]);
         });
       } catch (error) {
         console.log(error);
@@ -92,22 +93,27 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
           </div>
         </div>
 
-        <div className="w-full flex space-x-5 md:space-x-20 mt-5 m-auto">
-          <div className="w-2/3">
+        <div
+          className=" flex flex-col md:flex-row  space-x-5 
+        md:space-x-20 mt-5 "
+        >
+          <div className="w-full md:w-1/2">
             <Image
               src={
                 programDetails?.cover
                   ? programDetails?.cover
-                  : "../../static/tvShowNo.jfif"
+                  : "/static/tvShowNo.jfif"
               }
               alt="logo chaine"
-              width="600px"
-              height="300px"
+              width="800px"
+              height="400px"
             />
             <h1 className="mt-2 font-bold">{programDetails.title_fr}</h1>
 
             <h1 className="mt-2 font-semibold">
-              {programDetails.description_fr}
+              {programDetails.description_fr
+                ? programDetails.description_fr
+                : programDetails.description_ar}
             </h1>
 
             <h1 className="mt-2 capitalize font-semibold">
@@ -127,8 +133,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 <SwiperSlide key={chaine.id}>
                   <div
                     onClick={() => {
-                      setChaineId(chaine.id);
-                      setChannelId(chaine.channel_id);
+                      router.push(`/details/${chaine.id}/${chaine.channel_id}`);
                     }}
                     className="cursor-pointer border-2 p-2 text-center  h-[195px]"
                   >
@@ -137,7 +142,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                         src={
                           chaine.thumbnail
                             ? chaine.thumbnail
-                            : "../../static/tvShowNo.jfif"
+                            : "/static/tvShowNo.jfif"
                         }
                         alt="logo chaine"
                         width="200px"
@@ -159,9 +164,9 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               ))}
             </Swiper>
           </div>
-          <div className="w-1/3">
+          <div className="w-11/12 m-auto mb-20 md:m-0  md:w-1/2">
             <Image
-              src="../../static/banner2.png"
+              src="/static/banner2.png"
               alt="logo chaine"
               width="300px"
               height="300px"

@@ -21,23 +21,24 @@ function ProgrammeGrille({
     <div
       onClick={() => {
         // router.push(`/details/${chaine.id}?channel=${chaine.channel_id}`)
-        setChaineId(chaine.id);
-        setChannelId(chaine.channel_id);
-        setEvening(false);
-        setBouquet(false);
-        setJournee(false);
-        setDetails(true);
+        // setChaineId(chaine.id);
+        // setChannelId(chaine.channel_id);
+        // setEvening(false);
+        // setDetails(true);
+        // setBouquet(false);
+        // setJournee(false);
+        router.push(`/details/${chaine.id}/${chaine.channel_id}`);
       }}
       className="flex flex-col  cursor-pointer h-[90px]
       "
     >
       <div className="flex w-full h-2/3" key={chaine.id}>
-        <div className="w-1/5  text-center">
+        <div className="w-1/5 mr-2 text-center">
           <Image
             src={chaine.logo_chaine}
             alt="logo chaine"
-            width="40px"
-            height="40px"
+            width="60px"
+            height="50px"
           />
         </div>
         <div className=" flex flex-col w-3/5 ">
@@ -59,14 +60,18 @@ function ProgrammeGrille({
             </h1>
           </div>
         </div>
-        <div className="w-1/5">
-          <Image
-            src={chaine.thumbnail ? chaine.thumbnail : "/static/tvShowNo.jfif"}
-            alt="logo chaine"
-            width="110px"
-            height="80px"
-          />
-        </div>
+        {chaine.thumbnail && (
+          <div className="w-1/5">
+            <Image
+              src={
+                chaine.thumbnail ? chaine.thumbnail : "/static/tvShowNo.jfif"
+              }
+              alt="logo chaine"
+              width="110px"
+              height="80px"
+            />
+          </div>
+        )}
       </div>
       <div className=" h-1/3 mt-2">
         <MyProgressBar

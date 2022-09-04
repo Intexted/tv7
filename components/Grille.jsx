@@ -6,7 +6,8 @@ import { IndexContext } from "../context/context";
 import useWindowDimensions from "./hooks/useWindowDimensions";
 import { useRouter } from "next/router";
 import InfiniteScroll from "react-infinite-scroll-component";
-
+import Cookies from "js-cookie";
+import loading from "../public/static/loading.svg";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -43,6 +44,96 @@ function Grille({ genders, program, bf, bm, bmo }) {
   const [channelId, setChannelId] = useState();
 
   const router = useRouter();
+  let { id } = router.query;
+  const token = Cookies.get("token");
+
+  useEffect(() => {
+    if (id?.length > 0 && id[0] === "actuellement") {
+      sethasMore(true);
+      setpage(2);
+      setDetails(false);
+      setBouquet(false);
+      setEvening(false);
+      setJournee(false);
+      if (!id[1]) {
+        setGenderProgram(program);
+      } else {
+        setRedGender(id[1]);
+        getGenderProgram(id[1], null, false);
+        console.log(eveningNumber);
+      }
+    } else if (id?.length > 0 && id[0] === "bouquet") {
+      if (token) {
+        setDetails(false);
+        setBouquet(true);
+        setEvening(false);
+
+        if (id[1] === "2") {
+          setBouquetChoisi(bm);
+          setBouquetChoisiNumero(2);
+        } else if (id[1] === "3") {
+          setBouquetChoisi(bmo);
+          setBouquetChoisiNumero(3);
+        } else {
+          setBouquetChoisi(bf);
+          setBouquetChoisiNumero(1);
+        }
+      } else {
+        router.push("/login");
+      }
+    } else if (id[0] === "journee") {
+      setJournee(true);
+      setEvening(false);
+      setDetails(false);
+      setBouquet(false);
+    } else if (id?.length > 0 && id[0] === "soiree") {
+      window.scrollTo(0, 0);
+      setState({ ...state, title: "SOIREE" });
+      setDetails(false);
+      setBouquet(false);
+      sethasMore(true);
+      setpage(2);
+
+      if (id[2] === "2") {
+        setRedGender(id[1]);
+        setEveningNumber(2);
+        getParams(id[1], 2);
+        // setDetails(false);
+        // setBouquet(false);
+        // getParams(2);
+        // sethasMore(true);
+        // setpage(2);
+      } else if (id[2] === "3") {
+        setRedGender(id[1]);
+        setEveningNumber(3);
+        getParams(id[1], 3);
+        // setDetails(false);
+        // setBouquet(false);
+        // getParams(3);
+        // sethasMore(true);
+        // setpage(2);
+      } else if (id[2] === "1") {
+        setRedGender(id[1]);
+        setEveningNumber(1);
+        getParams(id[1], 1);
+
+        // setDetails(false);
+        // setBouquet(false);
+        // getParams(1);
+        // sethasMore(true);
+        // setpage(2);
+      }
+    } else if (id?.length > 0 && id[0] === "details") {
+      setChaineId(id[1]);
+      setChannelId(id[2]);
+      setEvening(false);
+      setDetails(true);
+      setBouquet(false);
+      setJournee(false);
+    } else {
+      return;
+    }
+  }, [id, bf, bm, bmo, token, eveningNumber, evening]);
 
   useEffect(() => {
     setGenderProgram(program);
@@ -79,18 +170,19 @@ function Grille({ genders, program, bf, bm, bmo }) {
       : setGenderProgram(program);
   };
 
-  const getParams = (num) => {
+  const getParams = (gender, num) => {
     setEvening(true);
     setJournee(false);
     setEveningNumber(num);
-    getNightProgram(num, redGender);
+    getNightProgram(num, gender);
   };
 
   const getNightProgram = async (num, redGender) => {
+    console.log(num);
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
-        `/public/programs/evening/pt${num}/${time} ?gender=${redGender}
+        `/public/programs/evening/pt${num}/${time}?gender=${redGender}
          `
       );
       setGenderProgram(data.data);
@@ -99,13 +191,14 @@ function Grille({ genders, program, bf, bm, bmo }) {
     }
   };
 
-  const getGenderProgram = async (gender, num) => {
+  const getGenderProgram = async (gender, num, evening = evening) => {
+    const genderTrim = gender.trim();
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
         evening
-          ? `/public/programs/evening/pt${num}/${time} ?gender=${gender} `
-          : `/public/programs/atthemoment/${time} ?gender=${gender}`
+          ? `/public/programs/evening/pt${num}/${time} ?gender=${genderTrim} `
+          : `/public/programs/atthemoment/${time} ?gender=${genderTrim}`
       );
       setGenderProgram(data.data);
 
@@ -114,6 +207,17 @@ function Grille({ genders, program, bf, bm, bmo }) {
       console.log(error);
     }
   };
+
+  if (!bm) {
+    return (
+      <div
+        className="h-40 absolute top-1/2 left-1/2 "
+        style={{ transform: " translate(-50% , -50%)" }}
+      >
+        <Image src={loading} alt="logo chaine" width="100px" height="100px" />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -148,6 +252,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
         eveningNumber={eveningNumber}
         bouquet={bouquet}
         setDetails={setDetails}
+        redGender={redGender}
       />
 
       <div className="md:mt-5">
@@ -168,6 +273,8 @@ function Grille({ genders, program, bf, bm, bmo }) {
           bouquet={bouquet}
           setRedGender={setRedGender}
           eveningNumber={eveningNumber}
+          redGender={redGender}
+          details={details}
         />
         {bouquet && (
           <Bouquet
@@ -184,12 +291,12 @@ function Grille({ genders, program, bf, bm, bmo }) {
         {journee && !bouquet && (
           <div className="mt-5  border-2 border-slate-100 px-5">
             <Swiper
-              navigation
+              navigation={true}
               modules={[Navigation]}
-              slidesPerView={width / 110}
+              slidesPerView={width / 160}
               className=""
             >
-              {bm.map((chaine) => {
+              {bm?.map((chaine) => {
                 let index = chaine.programDay.findIndex(
                   (item) => new Date(item.date_start).getTime() > Date.now()
                 );
@@ -200,14 +307,14 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 return (
                   <SwiperSlide key={chaine.id}>
                     <div
-                      className=" w-20 ml-2 flex text-center items-center justify-center"
+                      className=" w-20  m-auto flex mb-4 text-center items-center justify-center"
                       key={chaine.id}
                     >
                       <Image
                         src={chaine.logo_chaine}
                         alt="logo chaine"
-                        width="50px"
-                        height="60px"
+                        width="40px"
+                        height="40px"
                       />
                     </div>
 
@@ -216,7 +323,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                       style={{ height: `${string.toString()}px` }}
                     >
                       <Swiper
-                        className="mySwiper2 swiper-v h-2/3"
+                        className="mySwiper2 w-24 swiper-v h-2/3"
                         direction={"vertical"}
                         slidesPerView={"auto"}
                         draggable={true}
@@ -226,9 +333,17 @@ function Grille({ genders, program, bf, bm, bmo }) {
                         <div className="">
                           {chaine?.programDay.map((item) => {
                             return (
-                              <SwiperSlide className="" key={item.id}>
+                              <SwiperSlide
+                                onClick={() =>
+                                  router.push(
+                                    `/details/${item.id}/${item.channel_id}`
+                                  )
+                                }
+                                className="cursor-pointer"
+                                key={item.id}
+                              >
                                 <div
-                                  className="border-2 h-fit border-l-0 border-slate-100 p-2"
+                                  className="border-2 h-fit  border-slate-100 p-2"
                                   key={item.id}
                                 >
                                   <h1 className="font-bold text-xs">
@@ -250,7 +365,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                   </SwiperSlide>
                 );
               })}
-              {bmo.map((chaine) => {
+              {bmo?.map((chaine) => {
                 let index = chaine.programDay.findIndex(
                   (item) => new Date(item.date_start).getTime() > Date.now()
                 );
@@ -261,14 +376,14 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 return (
                   <SwiperSlide key={chaine.id}>
                     <div
-                      className=" w-20 ml-2 flex text-center items-center justify-center"
+                      className=" w-20 m-auto mb-4  flex text-center items-center justify-center"
                       key={chaine.id}
                     >
                       <Image
                         src={chaine.logo_chaine}
                         alt="logo chaine"
-                        width="50px"
-                        height="60px"
+                        width="40px"
+                        height="40px"
                       />
                     </div>
 
@@ -277,7 +392,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                       style={{ height: `${string.toString()}px` }}
                     >
                       <Swiper
-                        className="mySwiper2 swiper-v h-2/3"
+                        className="mySwiper2 w-24 swiper-v h-2/3"
                         direction={"vertical"}
                         slidesPerView={"auto"}
                         draggable={true}
@@ -287,9 +402,17 @@ function Grille({ genders, program, bf, bm, bmo }) {
                         <div className="">
                           {chaine?.programDay.map((item) => {
                             return (
-                              <SwiperSlide className="" key={item.id}>
+                              <SwiperSlide
+                                onClick={() =>
+                                  router.push(
+                                    `/details/${item.id}/${item.channel_id}`
+                                  )
+                                }
+                                className="cursor-pointer"
+                                key={item.id}
+                              >
                                 <div
-                                  className="border-2 h-fit border-l-0 border-slate-100 p-2"
+                                  className="border-2 h-fit border-slate-100 p-2"
                                   key={item.id}
                                 >
                                   <h1 className="font-bold text-xs">
@@ -311,7 +434,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                   </SwiperSlide>
                 );
               })}
-              {bf.map((chaine) => {
+              {bf?.map((chaine) => {
                 let index = chaine.programDay.findIndex(
                   (item) => new Date(item.date_start).getTime() > Date.now()
                 );
@@ -322,14 +445,14 @@ function Grille({ genders, program, bf, bm, bmo }) {
                 return (
                   <SwiperSlide key={chaine.id}>
                     <div
-                      className=" w-20 ml-2 flex text-center items-center justify-center"
+                      className=" w-20 m-auto mb-4  flex text-center items-center justify-center"
                       key={chaine.id}
                     >
                       <Image
                         src={chaine.logo_chaine}
                         alt="logo chaine"
-                        width="50px"
-                        height="60px"
+                        width="40px"
+                        height="40px"
                       />
                     </div>
 
@@ -338,7 +461,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                       style={{ height: `${string.toString()}px` }}
                     >
                       <Swiper
-                        className="mySwiper2 swiper-v h-2/3"
+                        className="mySwiper2 w-24 swiper-v h-2/3"
                         direction={"vertical"}
                         slidesPerView={"auto"}
                         draggable={true}
@@ -348,9 +471,17 @@ function Grille({ genders, program, bf, bm, bmo }) {
                         <div className="">
                           {chaine?.programDay.map((item) => {
                             return (
-                              <SwiperSlide className="" key={item.id}>
+                              <SwiperSlide
+                                onClick={() =>
+                                  router.push(
+                                    `/details/${item.id}/${item.channel_id}`
+                                  )
+                                }
+                                className="cursor-pointer"
+                                key={item.id}
+                              >
                                 <div
-                                  className="border-2 h-fit border-l-0 border-slate-100 p-2"
+                                  className="border-2 h-fit  border-slate-100 p-2"
                                   key={item.id}
                                 >
                                   <h1 className="font-bold text-xs">
@@ -381,38 +512,69 @@ function Grille({ genders, program, bf, bm, bmo }) {
               <div className="md:flex hidden mb-2 items-center space-x-1">
                 <h1
                   onClick={() => {
-                    setRedGender("TOUS");
-                    handleTous();
-                    sethasMore(true);
-                    setpage(2);
+                    // setRedGender("TOUS");
+                    // handleTous();
+                    // sethasMore(true);
+                    // setpage(2);
+
+                    evening
+                      ? router.push(
+                          `/soiree/TOUS/${eveningNumber}`,
+                          undefined,
+                          {
+                            shallow: true,
+                          }
+                        )
+                      : router.push(`/actuellement/TOUS`, undefined, {
+                          shallow: true,
+                        });
                   }}
                   className={`text-xs cursor-pointer ${
                     redGender === "TOUS"
-                      ? "bg-red-600 text-white p-0.5"
+                      ? "bg-color-blue text-white p-0.5"
                       : "hover:bg-slate-400 hover:text-white hover:p-1 text-blue-300"
                   }`}
                 >
                   TOUS
                 </h1>
                 {genders?.map((gender) => (
-                  <h1
-                    onClick={() => {
-                      setRedGender(gender.gender_fr);
-                      getGenderProgram(gender.gender_fr, eveningNumber);
-                      sethasMore(true);
-                      setpage(2);
-                    }}
-                    className={`text-xs cursor-pointer
+                  <>
+                    <h1 className="text-slate-200 mx-1">|</h1>
+                    <h1
+                      onClick={() => {
+                        // setRedGender(gender.gender_fr);
+                        console.log(gender.gender_fr.trim());
+                        // getGenderProgram(gender.gender_fr, eveningNumber);
+                        // sethasMore(true);
+                        // setpage(2);
+                        evening
+                          ? router.push(
+                              `/soiree/${gender.gender_fr.trim()}/${eveningNumber}`,
+                              undefined,
+                              {
+                                shallow: true,
+                              }
+                            )
+                          : router.push(
+                              `/actuellement/${gender.gender_fr.trim()}`,
+                              undefined,
+                              {
+                                shallow: true,
+                              }
+                            );
+                      }}
+                      className={`text-xs cursor-pointer
                  
                  ${
-                   redGender === gender.gender_fr
-                     ? "bg-red-600 text-white p-0.5"
+                   redGender === gender.gender_fr.trim()
+                     ? "bg-color-blue text-white p-0.5"
                      : "hover:bg-slate-400 hover:text-white hover:p-1 text-blue-300"
                  }`}
-                    key={gender.id}
-                  >
-                    {gender.gender_fr}
-                  </h1>
+                      key={gender.id}
+                    >
+                      {gender.gender_fr.trim()}
+                    </h1>
+                  </>
                 ))}
               </div>
               <div>

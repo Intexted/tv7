@@ -1,23 +1,10 @@
+import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { IndexContext } from "../context/context";
 
-function BottomBar({
-  setGenderProgram,
-  setRedGender,
-  sethasMore,
-  setpage,
-  setEvening,
-  setJournee,
-  evening,
-  journee,
-  setBouquet,
-  getParams,
-  program,
-  eveningNumber,
-  bouquet,
-  setDetails,
-}) {
+function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
   const [state, setState] = useContext(IndexContext);
+  const router = useRouter();
   return (
     <>
       {evening && (
@@ -28,11 +15,14 @@ function BottomBar({
           <div className="text-center w-full text-sm">
             <h1
               onClick={async () => {
-                setBouquet(false);
-                setDetails(false);
-                sethasMore(true);
-                setpage(2);
-                getParams(1);
+                // setBouquet(false);
+                // setDetails(false);
+                // sethasMore(true);
+                // setpage(2);
+                // getParams(1);
+                router.push(`/soiree/${redGender}/1`, undefined, {
+                  shallow: true,
+                });
               }}
               className={`cursor-pointer tracking-tight roboto font-bold  ${
                 evening && eveningNumber === 1
@@ -47,12 +37,15 @@ function BottomBar({
           <div className="text-center w-full text-sm">
             <h1
               onClick={() => {
-                setBouquet(false);
-                setDetails(false);
-                sethasMore(true);
-                setpage(2);
+                // setBouquet(false);
+                // setDetails(false);
+                // sethasMore(true);
+                // setpage(2);
 
-                getParams(2);
+                // getParams(2);
+                router.push(`/soiree/${redGender}/2`, undefined, {
+                  shallow: true,
+                });
               }}
               className={`cursor-pointer tracking-tight roboto font-bold  ${
                 evening && eveningNumber === 2
@@ -67,11 +60,14 @@ function BottomBar({
           <div className="text-center w-full text-sm">
             <h1
               onClick={async () => {
-                setBouquet(false);
-                setDetails(false);
-                sethasMore(true);
-                setpage(2);
-                getParams(3);
+                // setBouquet(false);
+                // setDetails(false);
+                // sethasMore(true);
+                // setpage(2);
+                // getParams(3);
+                router.push(`/soiree/${redGender}/3`, undefined, {
+                  shallow: true,
+                });
               }}
               className={`cursor-pointer tracking-tight roboto font-bold  ${
                 evening && eveningNumber === 3
@@ -95,14 +91,15 @@ function BottomBar({
               onClick={() => {
                 window.scrollTo(0, 0);
                 setState({ ...state, title: "ACTUELLEMENT" });
-                setGenderProgram(program);
-                setRedGender("TOUS");
-                setDetails(false);
-                sethasMore(true);
-                setpage(2);
-                setEvening(false);
-                setJournee(false);
-                setBouquet(false);
+                // setGenderProgram(program);
+                // setRedGender("TOUS");
+                // setDetails(false);
+                // sethasMore(true);
+                // setpage(2);
+                // setEvening(false);
+                // setJournee(false);
+                // setBouquet(false);
+                router.push(`/actuellement/${redGender}`);
               }}
               className={`cursor-pointer ${
                 !evening && !journee && !bouquet
@@ -120,10 +117,11 @@ function BottomBar({
               onClick={() => {
                 window.scrollTo(0, 0);
                 setState({ ...state, title: "JOURNEE" });
-                setDetails(false);
-                setJournee(true);
-                setEvening(false);
-                setBouquet(false);
+                // setDetails(false);
+                // setJournee(true);
+                // setEvening(false);
+                // setBouquet(false);
+                router.push("/journee");
               }}
               className={`cursor-pointer ${
                 !evening && !bouquet && journee
@@ -139,13 +137,16 @@ function BottomBar({
             {" "}
             <h1
               onClick={() => {
-                window.scrollTo(0, 0);
-                setState({ ...state, title: "SOIREE" });
-                setBouquet(false);
-                setDetails(false);
-                getParams(1);
-                sethasMore(true);
-                setpage(2);
+                // window.scrollTo(0, 0);
+                // setState({ ...state, title: "SOIREE" });
+                // setBouquet(false);
+                // setDetails(false);
+                // getParams(1);
+                // sethasMore(true);
+                // setpage(2);
+                router.push(`/soiree/${redGender}/1`, undefined, {
+                  shallow: true,
+                });
               }}
               className={`cursor-pointer ${
                 evening && !journee && !bouquet

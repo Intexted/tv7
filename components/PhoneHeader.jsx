@@ -86,15 +86,16 @@ function PhoneHeader({
         >
           <h1
             onClick={() => {
-              if (token) {
-                setState({ ...state, title: "BOUQUET" });
-                menuOpen ? setMenuOpen(false) : setMenuOpen(true);
-                setBouquet(true);
-                setEvening(false);
-                setBouquetChoisi(bf);
-              } else {
-                router.push("/login");
-              }
+              setState({ ...state, title: "BOUQUET" });
+              router.push("/bouquet");
+              // if (token) {
+              //   menuOpen ? setMenuOpen(false) : setMenuOpen(true);
+              //   setBouquet(true);
+              //   setEvening(false);
+              //   setBouquetChoisi(bf);
+              // } else {
+              //   router.push("/login");
+              // }
             }}
             className="cursor-pointer tracking-tight  font-bold bg-color-blue text-white p-1"
           >

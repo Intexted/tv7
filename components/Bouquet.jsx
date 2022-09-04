@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 
 function Bouquet({
@@ -10,6 +11,7 @@ function Bouquet({
   bouquetChoisiNumero,
   bouquetChoisi,
 }) {
+  const router = useRouter();
   return (
     <>
       <div className="flex md:justify-center px-5 pt-5 md:items-center mt-2 space-x-4 md:space-x-12">
@@ -17,6 +19,7 @@ function Bouquet({
           onClick={() => {
             setBouquetChoisiNumero(1);
             setBouquetChoisi(bf);
+            router.push("/bouquet/1");
           }}
           className={`cursor-pointer text-center text-xs md:text-lg ${
             bouquetChoisiNumero === 1
@@ -30,6 +33,7 @@ function Bouquet({
           onClick={() => {
             setBouquetChoisiNumero(2);
             setBouquetChoisi(bm);
+            router.push("/bouquet/2");
           }}
           className={`cursor-pointer text-center text-xs md:text-lg ${
             bouquetChoisiNumero === 2
@@ -43,6 +47,7 @@ function Bouquet({
           onClick={() => {
             setBouquetChoisiNumero(3);
             setBouquetChoisi(bmo);
+            router.push("/bouquet/3");
           }}
           className={`cursor-pointer text-center text-xs md:text-lg ${
             bouquetChoisiNumero === 3
