@@ -17,7 +17,7 @@ function Header({ details }) {
   const { data: session, status } = useSession();
 
   const router = useRouter();
-  console.log(router.basePath);
+
   const token = Cookies.get("token");
   return (
     <>

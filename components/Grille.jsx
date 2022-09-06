@@ -26,7 +26,17 @@ import Navbar from "./Navbar";
 import Bouquet from "./Bouquet";
 import DetailsPage from "./DetailsPage";
 
-function Grille({ genders, program, bf, bm, bmo }) {
+function Grille({
+  genders,
+  program,
+  bf,
+  bm,
+  bmo,
+  bouquetApi,
+  setBouquetApi,
+  bouquetFavoris,
+  setBouquetFavoris,
+}) {
   const { width } = useWindowDimensions();
   const [state, setState] = useContext(IndexContext);
   const [genderProgram, setGenderProgram] = useState([]);
@@ -285,6 +295,10 @@ function Grille({ genders, program, bf, bm, bmo }) {
             bmo={bmo}
             bouquetChoisiNumero={bouquetChoisiNumero}
             bouquetChoisi={bouquetChoisi}
+            bouquetApi={bouquetApi}
+            setBouquetApi={setBouquetApi}
+            bouquetFavoris={bouquetFavoris}
+            setBouquetFavoris={setBouquetFavoris}
           />
         )}
 
@@ -609,7 +623,7 @@ function Grille({ genders, program, bf, bm, bmo }) {
                         {index != 0 && index % items === 0 ? (
                           <>
                             <div className=" md:grid-3 xl:grid-4  m-auto my-5  ">
-                              <Image
+                              <img
                                 src="/static/banner3.png"
                                 alt="banner"
                                 width="800px"

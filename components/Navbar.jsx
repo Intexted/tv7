@@ -40,7 +40,7 @@ function Navbar({
             // setJournee(false);
             router.push(`/actuellement/${redGender}`);
           }}
-          className={`cursor-pointer tracking-tight roboto font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
+          className={`cursor-pointer tracking-tight  font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
             !evening && !journee && !bouquet && !details
               ? "bg-color-blue p-1 text-white"
               : ""
@@ -56,7 +56,7 @@ function Navbar({
             // setBouquet(false);
             router.push("/journee");
           }}
-          className={`cursor-pointer tracking-tight roboto font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
+          className={`cursor-pointer tracking-tight  font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
             !evening && !bouquet && journee
               ? "bg-color-blue p-1 text-white"
               : ""
@@ -75,7 +75,7 @@ function Navbar({
               shallow: true,
             });
           }}
-          className={`cursor-pointer tracking-tight roboto font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
+          className={`cursor-pointer tracking-tight  font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
             evening && eveningNumber === 1 ? "bg-color-blue p-1 text-white" : ""
           }`}
         >
@@ -92,7 +92,7 @@ function Navbar({
               shallow: true,
             });
           }}
-          className={`cursor-pointer tracking-tight roboto font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
+          className={`cursor-pointer tracking-tight  font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
             evening && eveningNumber === 2 ? "bg-color-blue p-1 text-white" : ""
           }`}
         >
@@ -109,7 +109,7 @@ function Navbar({
               shallow: true,
             });
           }}
-          className={`cursor-pointer tracking-tight roboto font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
+          className={`cursor-pointer tracking-tight  font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
             evening && eveningNumber === 3 ? "bg-color-blue p-1 text-white" : ""
           }`}
         >
@@ -120,9 +120,10 @@ function Navbar({
           onClick={() => {
             router.push("/bouquet");
           }}
-          className="cursor-pointer tracking-tight  font-bold bg-color-blue text-white p-1"
+          className="cursor-pointer tracking-tight 
+           font-bold bg-color-blue text-white p-1"
         >
-          MON TV7 GUIDE
+          MON TV GUIDE
         </h1>
       </div>
     </div>

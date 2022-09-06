@@ -21,10 +21,29 @@ export default function Home() {
   const [bf, setBf] = useState();
   const [bm, setBm] = useState();
   const [bmo, setBmo] = useState();
+  const [bouquetApi, setBouquetApi] = useState();
+  const [bouquetFavoris, setBouquetFavoris] = useState();
 
   const router = useRouter();
   const token = Cookies.get("token");
   let { id } = router.query;
+
+  const getAndFilter = async () => {
+    try {
+      const { data } = await axios.get("https://api.tv7guide.com/api/channels");
+      setBouquetApi(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getFavBouquet = async () => {
+    try {
+      const { data } = await axios.get("https://api.tv7guide.com/api/packages");
+      setBouquetFavoris(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getProgram = async () => {
     const time = moment(new Date()).format("yyyy/MM/DD");
@@ -73,7 +92,10 @@ export default function Home() {
   useEffect(() => {
     getGenders();
     getProgram();
-
+    if (token) {
+      getAndFilter();
+      getFavBouquet();
+    }
     getBouquet(2);
     getBouquet(1);
     getBouquet(3);
@@ -85,7 +107,7 @@ export default function Home() {
     return;
   }
 
-  if (!program) {
+  if (!program || !bouquetFavoris) {
     return (
       <div
         className="h-40 absolute top-1/2 left-1/2 "
@@ -110,7 +132,17 @@ export default function Home() {
       </Head>
 
       <Header details={true} />
-      <Grille genders={genders} program={program} bf={bf} bm={bm} bmo={bmo} />
+      <Grille
+        genders={genders}
+        bouquetApi={bouquetApi}
+        program={program}
+        bf={bf}
+        bm={bm}
+        bmo={bmo}
+        setBouquetApi={setBouquetApi}
+        bouquetFavoris={bouquetFavoris}
+        setBouquetFavoris={setBouquetFavoris}
+      />
     </div>
   );
 }

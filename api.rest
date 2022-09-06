@@ -36,3 +36,20 @@ Content-Type: application/json
 POST     https://api.tv7guide.com/api/favorite/packages/channels/post/3
 Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
 Content-Type: application/json
+
+###
+
+GET https://api.tv7guide.com/api/public/packages/channels/2/2022/09/04
+
+
+
+###
+
+GET  https://api.tv7guide.com/api/packages
+Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
+Content-Type: application/json
+
+### 
+GET  https://api.tv7guide.com/api/channels
+Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
+Content-Type: application/json

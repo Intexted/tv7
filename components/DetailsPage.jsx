@@ -76,8 +76,8 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   }
   return (
     <>
-      <div className=" w-4/5 mt-5 m-auto">
-        <div className="flex space-x-5 items-center">
+      <div className=" mt-5 ">
+        <div className="flex space-x-5 items-center px-5">
           <div>
             <Image
               src={programAll[0].logo_chaine}
@@ -99,10 +99,10 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
         </div>
 
         <div
-          className=" flex flex-col md:flex-row  space-x-5 
+          className="w-11/12 m-auto flex flex-col md:flex-row  space-x-5 
         md:space-x-20 mt-5 "
         >
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-2/3">
             <img
               src={
                 programDetails?.cover
@@ -169,7 +169,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               ))}
             </Swiper>
           </div>
-          <div className="w-11/12 m-auto mb-20 md:m-0  md:w-1/2">
+          <div className="w-11/12 m-auto mb-20 md:m-0  md:w-1/3">
             <img
               src="/static/banner2.png"
               alt="logo chaine"
