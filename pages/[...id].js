@@ -103,11 +103,11 @@ export default function Home() {
 
   if (!token && id?.length > 0 && id[0] === "bouquet") {
     // return <Login />;
-    router.push("/login");
+    router.push("/login?page=guide");
     return;
   }
 
-  if (!program || !bouquetFavoris) {
+  if (!program) {
     return (
       <div
         className="h-40 absolute top-1/2 left-1/2 "

@@ -9,6 +9,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import Head from "next/head";
+import Header from "../components/Header";
+import Navbar from "../components/Navbar";
 
 function Login() {
   const [isLoadingFacebook, setIsLoadingFacebook] = useState(false);
@@ -20,12 +22,13 @@ function Login() {
 
   const router = useRouter();
   const { data: session } = useSession();
+  console.log(router.query.page);
 
   const token = Cookies.get("token");
-  if (token) {
-    router.push("/");
-  }
 
+  // if (token) {
+  //   router.push("/");
+  // }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -60,7 +63,9 @@ function Login() {
             setPassword("");
             setLoading(false);
             Cookies.set("token", res.data.token, { expires: 7 });
-            // router.push("/");
+            router.query.page === "guide"
+              ? router.push("/bouquet")
+              : router.push("/");
           }
         })
         .catch((err) => console.log(err));
@@ -70,13 +75,15 @@ function Login() {
   };
 
   return (
-    <div className="py-14">
+    <div className="">
       <Head>
         <title>TV7</title>
 
         <meta name="csrf-token" content="{{ csrf_token() }}" />
       </Head>
-      <div className="w-full md:w-1/3 px-10 md:px-0 md:m-auto">
+      <Header />
+      <Navbar login={true} />
+      <div className="w-full md:w-1/3 py-5 px-10 md:px-0 md:m-auto">
         <form>
           <div className="flex flex-col">
             <h1 className="text-xl font-semibold roboto mb-2">Login</h1>

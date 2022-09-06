@@ -89,7 +89,7 @@ function Grille({
           setBouquetChoisiNumero(1);
         }
       } else {
-        router.push("/login");
+        router.push("/login?page=guide");
       }
     } else if (id[0] === "journee") {
       setJournee(true);
@@ -267,21 +267,9 @@ function Grille({
 
       <div className="md:mt-5">
         <Navbar
-          setDetails={setDetails}
-          program={program}
-          setGenderProgram={setGenderProgram}
-          sethasMore={sethasMore}
-          setpage={setpage}
-          setBouquet={setBouquet}
-          setEvening={setEvening}
-          setJournee={setJournee}
-          getParams={getParams}
-          setBouquetChoisi={setBouquetChoisi}
-          bf={bf}
           evening={evening}
           journee={journee}
           bouquet={bouquet}
-          setRedGender={setRedGender}
           eveningNumber={eveningNumber}
           redGender={redGender}
           details={details}

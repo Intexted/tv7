@@ -3,24 +3,13 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 
 function Navbar({
-  program,
-  setGenderProgram,
-  sethasMore,
-  setRedGender,
-  setpage,
-  setBouquet,
-  setEvening,
-  setJournee,
-  getParams,
-  setBouquetChoisi,
-  bf,
   evening,
   journee,
   bouquet,
   eveningNumber,
-  setDetails,
-  redGender,
+  redGender = "TOUS",
   details,
+  login,
 }) {
   const router = useRouter();
   const token = Cookies.get("token");
@@ -41,7 +30,7 @@ function Navbar({
             router.push(`/actuellement/${redGender}`);
           }}
           className={`cursor-pointer tracking-tight  font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
-            !evening && !journee && !bouquet && !details
+            !evening && !journee && !bouquet && !details && !login
               ? "bg-color-blue p-1 text-white"
               : ""
           }`}

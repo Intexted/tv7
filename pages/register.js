@@ -7,6 +7,8 @@ import { getSession, useSession } from "next-auth/react";
 import { SyncOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
 import axios from "axios";
+import Header from "../components/Header";
+import Navbar from "../components/Navbar";
 
 function Register() {
   const [isLoadingFacebook, setIsLoadingFacebook] = useState(false);
@@ -85,8 +87,10 @@ function Register() {
   };
 
   return (
-    <div className="py-14">
-      <div className="w-full md:w-1/3 px-10 md:px-0 md:m-auto">
+    <div className="">
+      <Header />
+      <Navbar login={true} />
+      <div className="w-full md:w-1/3 py-5 px-10 md:px-0 md:m-auto">
         <form>
           <div className="flex flex-col">
             <h1 className="text-xl font-semibold roboto mb-2">Inscription</h1>

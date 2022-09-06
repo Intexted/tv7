@@ -74,6 +74,21 @@ function Bouquet({
       console.log(error);
     }
   };
+  if (!bouquetFavoris || !bouquetApi) {
+    return (
+      <div
+        className="h-40 absolute top-1/2 left-1/2 "
+        style={{ transform: " translate(-50% , -50%)" }}
+      >
+        <img
+          src="/static/loading.svg"
+          alt="logo chaine"
+          width="100px"
+          height="100px"
+        />
+      </div>
+    );
+  }
   return (
     <>
       <div className="flex md:justify-center px-5 pt-5 md:items-center mt-2 space-x-4 md:space-x-12">
