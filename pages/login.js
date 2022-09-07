@@ -22,22 +22,25 @@ function Login() {
 
   const router = useRouter();
   const { data: session } = useSession();
-  console.log(router.query.page);
 
   const token = Cookies.get("token");
 
-  // if (token) {
-  //   router.push("/");
-  // }
+  if (token && router.query.page === "guide") {
+    router.push("/bouquet");
+    return;
+  } else if (token) {
+    router.push("/");
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email) {
-      alert("Email required §!");
+      alert("Email required !");
       return;
     }
     if (!password) {
-      alert("Password required §!");
+      alert("Password required !");
       return;
     }
 
