@@ -6,7 +6,9 @@ import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
 import { SyncOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Cookies from "js-cookie";
 import Head from "next/head";
 import Header from "../components/Header";
@@ -47,33 +49,55 @@ function Login() {
     try {
       setLoading(true);
 
-      const data = axios({
-        method: "post",
-        url: "/login",
-        data: {
-          email,
-          password,
-        },
-      })
-        .then((res) => {
-          if (!res.data.token) {
-            setEmail("");
-            setPassword("");
-            toast.error(data.message);
-            setLoading(false);
-          } else {
-            setEmail("");
-            setPassword("");
-            setLoading(false);
-            Cookies.set("token", res.data.token, { expires: 7 });
-            router.query.page === "guide"
-              ? router.push("/bouquet")
-              : router.push("/");
-          }
-        })
-        .catch((err) => console.log(err));
+      // const { data } = axios({
+      //   method: "post",
+      //   url: "/login",
+      //   data: {
+      //     email,
+      //     password,
+      //   },
+      // })
+      //   .then((res) => {
+      //     console.log(res);
+      //     if (!res.data.token) {
+      //       setEmail("");
+      //       setPassword("");
+      //       toast.error(data.message);
+      //       setLoading(false);
+      //     } else {
+      //       setEmail("");
+      //       setPassword("");
+      //       setLoading(false);
+      //       Cookies.set("token", res.data.token, { expires: 7 });
+      //       router.query.page === "guide"
+      //         ? router.push("/bouquet")
+      //         : router.push("/");
+      //     }
+      //   })
+      //   .catch((err) => console.log(err));
+      // console.log(data);
+      const { data, status, message } = await axios.post("/login", {
+        email,
+        password,
+      });
+      if (data?.token) {
+        toast.success("Login Succesful");
+        setEmail("");
+        setPassword("");
+        setLoading(false);
+        Cookies.set("token", data.token, { expires: 7 });
+        router.query.page === "guide"
+          ? router.push("/bouquet")
+          : router.push("/");
+      } else {
+        console.log(status);
+      }
     } catch (error) {
-      console.log(error);
+      console.log(error?.response?.data?.message);
+      setEmail("");
+      setPassword("");
+      setLoading(false);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -86,6 +110,7 @@ function Login() {
       </Head>
       <Header />
       <Navbar login={true} />
+      <ToastContainer />
       <div className="w-full md:w-1/3 py-5 px-10 md:px-0 md:m-auto">
         <form>
           <div className="flex flex-col">

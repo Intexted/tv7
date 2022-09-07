@@ -20,7 +20,10 @@ function Bouquet({
 
   const addToFav = async (chaine, index) => {
     setBouquetApi([...bouquetApi, (bouquetApi[index].favoris = "true")]);
-
+    setBouquetFavoris([
+      ...bouquetFavoris,
+      (bouquetFavoris[bouquetApi[index]?.package_id - 1].favoris = "true"),
+    ]);
     try {
       await axios.post(
         `https://api.tv7guide.com/api/favorite/channels/post/${chaine.id}`
@@ -31,6 +34,7 @@ function Bouquet({
   };
   const removeFromFav = async (chaine, index) => {
     setBouquetApi([...bouquetApi, (bouquetApi[index].favoris = "false")]);
+
     try {
       await axios.delete(
         `https://api.tv7guide.com/api/favorite/channels/delete/${chaine.id}`
@@ -65,6 +69,11 @@ function Bouquet({
       ...bouquetFavoris,
       (bouquetFavoris[index - 1].favoris = "false"),
     ]);
+    bouquetApi.map((b, i) =>
+      b.package_id === index
+        ? setBouquetApi([...bouquetApi, (bouquetApi[i].favoris = "false")])
+        : ""
+    );
     // console.log("remove", bouquetFavoris);
     try {
       await axios.delete(
@@ -229,10 +238,9 @@ function Bouquet({
                 width="50px"
                 height="50px"
               />
-              {bouquetFavoris[bouquetChoisiNumero - 1].favoris === "true" &&
-                chaine.favoris === "true" && (
-                  <div className="h-full w-full bg-blue-700/10 absolute"></div>
-                )}
+              {chaine.favoris === "true" && (
+                <div className="h-full w-full bg-blue-700/10 absolute"></div>
+              )}
             </div>
           ) : (
             ""

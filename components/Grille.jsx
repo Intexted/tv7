@@ -69,8 +69,11 @@ function Grille({
         setGenderProgram(program);
       } else {
         setRedGender(id[1]);
-        getGenderProgram(id[1], null, false);
-        console.log(eveningNumber);
+        if (token) {
+          getGenderProgramWithToken(id[1], null, false);
+        } else {
+          getGenderProgram(id[1], null, false);
+        }
       }
     } else if (id?.length > 0 && id[0] === "bouquet") {
       if (token) {
@@ -149,6 +152,31 @@ function Grille({
     setGenderProgram(program);
   }, []);
 
+  const fetchMoreDataWithToken = async () => {
+    const time = moment(new Date()).format("yyyy/MM/DD");
+
+    try {
+      const { data } = await axios.post(
+        evening
+          ? `/favorite/channels/programs/evening/pt${eveningNumber}/${time} ? 
+              ${`gender=${redGender}&`}
+            page=${page} `
+          : `/favorite/channels/programs/atthemoment/${time} ? 
+           ${redGender === "TOUS" ? "" : `gender=${redGender}&`}
+            page=${page}`
+      );
+
+      setGenderProgram([...genderProgram, ...data.data]);
+      if (data.data.length === 0) {
+        sethasMore(false);
+        setpage(2);
+      }
+      setpage(page + 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchMoreData = async () => {
     const time = moment(new Date()).format("yyyy/MM/DD");
 
@@ -184,16 +212,16 @@ function Grille({
     setEvening(true);
     setJournee(false);
     setEveningNumber(num);
-    getNightProgram(num, gender);
+    token
+      ? getNightProgramWithToken(num, gender)
+      : getNightProgram(num, gender);
   };
 
-  const getNightProgram = async (num, redGender) => {
-    console.log(num);
+  const getNightProgramWithToken = async (num, redGender) => {
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
-      const { data } = await axios.get(
-        `/public/programs/evening/pt${num}/${time}?gender=${redGender}
-         `
+      const { data } = await axios.post(
+        `/favorite/channels/programs/evening/pt${num}/${time}?gender=${redGender}`
       );
       setGenderProgram(data.data);
     } catch (error) {
@@ -201,6 +229,41 @@ function Grille({
     }
   };
 
+  const getNightProgram = async (num, redGender) => {
+    console.log(num);
+    try {
+      const time = moment(new Date()).format("yyyy/MM/DD");
+      const { data } = await axios.get(
+        token
+          ? `/favorite/channels/programs/evening/pt${num}/${time}?gender=${redGender}`
+          : `/public/programs/evening/pt${num}/${time}?gender=${redGender}`
+      );
+      setGenderProgram(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getGenderProgramWithToken = async (gender, num, evening = evening) => {
+    console.log("trigger");
+    console.log(evening);
+
+    try {
+      const time = moment(new Date()).format("yyyy/MM/DD");
+      const { data } = await axios.post(
+        evening
+          ? `/favorite/channels/programs/evening/pt${num}/${time}?gender=${gender} `
+          : `/favorite/channels/programs/atthemoment/${time} ${
+              gender === "TOUS" ? "" : `?gender=${gender}`
+            }`
+      );
+      setGenderProgram(data.data);
+      console.log(data.data);
+
+      // setEvening(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getGenderProgram = async (gender, num, evening = evening) => {
     const genderTrim = gender.trim();
     try {
@@ -584,9 +647,9 @@ function Grille({
               <div>
                 <InfiniteScroll
                   dataLength={genderProgram.length}
-                  next={fetchMoreData}
+                  next={token ? fetchMoreDataWithToken : fetchMoreData}
                   hasMore={hasMore}
-                  loader={<h4 className="md:p-2 text-gray-500"></h4>}
+                  loader={<h4 className="md:p-2 text-gray-500">Loading ...</h4>}
                   className="grid pt-2 sm:grid-cols-1 gap-1 md:gap-5  md:grid-cols-3 content-center
                  xl:grid-cols-4  m-auto mb-10 border-t-2 w-full"
                   endMessage={

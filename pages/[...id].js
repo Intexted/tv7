@@ -45,6 +45,18 @@ export default function Home() {
     }
   };
 
+  const getProgramWithToken = async () => {
+    const time = moment(new Date()).format("yyyy/MM/DD");
+    try {
+      const { data } = await axios.post(
+        `https://api.tv7guide.com/api/favorite/channels/programs/atthemoment/${time}`
+      );
+      setProgram(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getProgram = async () => {
     const time = moment(new Date()).format("yyyy/MM/DD");
     try {
@@ -66,11 +78,35 @@ export default function Home() {
       console.log(error);
     }
   };
+  const getBouquetWithToken = async (num) => {
+    const time = moment(new Date()).format("yyyy/MM/DD");
+    try {
+      const { data } = await axios.get(
+        `https://api.tv7guide.com/api/packages/channels/${num}/${time}`
+      );
+
+      switch (num) {
+        case 1:
+          setBf(data.data);
+          break;
+        case 2:
+          setBm(data.data);
+          break;
+        case 3:
+          setBmo(data.data);
+          break;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getBouquet = async (num) => {
     const time = moment(new Date()).format("yyyy/MM/DD");
     try {
       const res = await fetch(
-        `https://api.tv7guide.com/api/public/packages/channels/${num}/${time}`
+        token
+          ? `https://api.tv7guide.com/api/packages/channels/${num}/${time}`
+          : `https://api.tv7guide.com/api/public/packages/channels/${num}/${time}`
       );
       const data = await res.json();
       switch (num) {
@@ -91,14 +127,19 @@ export default function Home() {
 
   useEffect(() => {
     getGenders();
-    getProgram();
     if (token) {
+      getProgramWithToken();
       getAndFilter();
       getFavBouquet();
+      getBouquetWithToken(2);
+      getBouquetWithToken(1);
+      getBouquetWithToken(3);
+    } else {
+      getProgram();
+      getBouquet(2);
+      getBouquet(1);
+      getBouquet(3);
     }
-    getBouquet(2);
-    getBouquet(1);
-    getBouquet(3);
   }, []);
 
   if (!token && id?.length > 0 && id[0] === "bouquet") {
