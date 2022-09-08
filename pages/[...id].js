@@ -142,7 +142,7 @@ export default function Home() {
     }
   }, []);
 
-  if (!token && id?.length > 0 && id[0] === "bouquet") {
+  if (!token && id?.length > 0 && id[0] === "bouquets") {
     // return <Login />;
     router.push("/login?page=guide");
     return;

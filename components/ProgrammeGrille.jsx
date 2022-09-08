@@ -20,20 +20,13 @@ function ProgrammeGrille({
   return (
     <div
       onClick={() => {
-        // router.push(`/details/${chaine.id}?channel=${chaine.channel_id}`)
-        // setChaineId(chaine.id);
-        // setChannelId(chaine.channel_id);
-        // setEvening(false);
-        // setDetails(true);
-        // setBouquet(false);
-        // setJournee(false);
         router.push(`/details/${chaine.id}/${chaine.channel_id}`);
       }}
       className="flex flex-col  cursor-pointer h-[90px]
       "
     >
       <div className="flex w-full h-2/3" key={chaine.id}>
-        <div className="w-1/5 mr-2 text-center">
+        <div className="w-1/5  mr-2 text-center">
           <Image
             src={chaine.logo_chaine}
             alt="logo chaine"
@@ -61,7 +54,17 @@ function ProgrammeGrille({
           </div>
         </div>
         {chaine.thumbnail && (
-          <div className="w-1/5">
+          <div className="w-1/5 relative">
+            {chaine.video && (
+              <div className="absolute top-1 left-1 text-center rounded-full z-10 bg-gray-100">
+                <img
+                  src="/static/play.svg"
+                  alt="banner"
+                  width="15px"
+                  height="15px"
+                />
+              </div>
+            )}
             <Image
               src={
                 chaine.thumbnail ? chaine.thumbnail : "/static/tvShowNo.jfif"

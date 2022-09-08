@@ -75,7 +75,7 @@ function Grille({
           getGenderProgram(id[1], null, false);
         }
       }
-    } else if (id?.length > 0 && id[0] === "bouquet") {
+    } else if (id?.length > 0 && id[0] === "bouquets") {
       if (token) {
         setDetails(false);
         setBouquet(true);
@@ -111,30 +111,14 @@ function Grille({
         setRedGender(id[1]);
         setEveningNumber(2);
         getParams(id[1], 2);
-        // setDetails(false);
-        // setBouquet(false);
-        // getParams(2);
-        // sethasMore(true);
-        // setpage(2);
       } else if (id[2] === "3") {
         setRedGender(id[1]);
         setEveningNumber(3);
         getParams(id[1], 3);
-        // setDetails(false);
-        // setBouquet(false);
-        // getParams(3);
-        // sethasMore(true);
-        // setpage(2);
       } else if (id[2] === "1") {
         setRedGender(id[1]);
         setEveningNumber(1);
         getParams(id[1], 1);
-
-        // setDetails(false);
-        // setBouquet(false);
-        // getParams(1);
-        // sethasMore(true);
-        // setpage(2);
       }
     } else if (id?.length > 0 && id[0] === "details") {
       setChaineId(id[1]);
@@ -217,27 +201,26 @@ function Grille({
       : getNightProgram(num, gender);
   };
 
-  const getNightProgramWithToken = async (num, redGender) => {
+  const getNightProgramWithToken = async (num, redGender = redGender) => {
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.post(
         `/favorite/channels/programs/evening/pt${num}/${time}?gender=${redGender}`
       );
+      console.log(data.data);
       setGenderProgram(data.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getNightProgram = async (num, redGender) => {
-    console.log(num);
+  const getNightProgram = async (num, redGender = redGender) => {
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
-        token
-          ? `/favorite/channels/programs/evening/pt${num}/${time}?gender=${redGender}`
-          : `/public/programs/evening/pt${num}/${time}?gender=${redGender}`
+        `/public/programs/evening/pt${num}/${time}?gender=${redGender}`
       );
+      console.log(data.data);
       setGenderProgram(data.data);
     } catch (error) {
       console.log(error);

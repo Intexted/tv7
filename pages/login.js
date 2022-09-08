@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import Head from "next/head";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
+import { IndexContext } from "../context/context";
 
 function Login() {
   const [isLoadingFacebook, setIsLoadingFacebook] = useState(false);
@@ -21,6 +22,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [state, setState] = useContext(IndexContext);
 
   const router = useRouter();
   const { data: session } = useSession();
@@ -28,7 +30,7 @@ function Login() {
   const token = Cookies.get("token");
 
   if (token && router.query.page === "guide") {
-    router.push("/bouquet");
+    router.push("/bouquets");
     return;
   } else if (token) {
     router.push("/");
@@ -38,59 +40,33 @@ function Login() {
     e.preventDefault();
 
     if (!email) {
-      alert("Email required !");
+      toast.error("Email required !");
       return;
     }
     if (!password) {
-      alert("Password required !");
+      toast.error("Password required !");
       return;
     }
 
     try {
       setLoading(true);
 
-      // const { data } = axios({
-      //   method: "post",
-      //   url: "/login",
-      //   data: {
-      //     email,
-      //     password,
-      //   },
-      // })
-      //   .then((res) => {
-      //     console.log(res);
-      //     if (!res.data.token) {
-      //       setEmail("");
-      //       setPassword("");
-      //       toast.error(data.message);
-      //       setLoading(false);
-      //     } else {
-      //       setEmail("");
-      //       setPassword("");
-      //       setLoading(false);
-      //       Cookies.set("token", res.data.token, { expires: 7 });
-      //       router.query.page === "guide"
-      //         ? router.push("/bouquet")
-      //         : router.push("/");
-      //     }
-      //   })
-      //   .catch((err) => console.log(err));
-      // console.log(data);
-      const { data, status, message } = await axios.post("/login", {
+      const { data } = await axios.post("/login", {
         email,
         password,
       });
+      // console.log(data);
+      // setState([...state, { user: data.user, token: data.token }]);
       if (data?.token) {
         toast.success("Login Succesful");
         setEmail("");
         setPassword("");
         setLoading(false);
         Cookies.set("token", data.token, { expires: 7 });
+        Cookies.set("auth", JSON.stringify(data.user), { expires: 7 });
         router.query.page === "guide"
-          ? router.push("/bouquet")
+          ? router.push("/bouquets")
           : router.push("/");
-      } else {
-        console.log(status);
       }
     } catch (error) {
       console.log(error?.response?.data?.message);

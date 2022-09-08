@@ -100,19 +100,25 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
 
         <div
           className="w-11/12 m-auto flex flex-col md:flex-row  space-x-5 
-        md:space-x-20 mt-5 "
+        md:space-x-20 mt-2 "
         >
           <div className="w-full md:w-2/3">
-            <img
-              src={
-                programDetails?.cover
-                  ? programDetails?.cover
-                  : "/static/tvShowNo.jfif"
-              }
-              alt="logo chaine"
-              width="800px"
-              height="400px"
-            />
+            {programDetails?.video ? (
+              <video controls style={{ width: "800px" }}>
+                <source src={programDetails?.video} />
+              </video>
+            ) : (
+              <img
+                src={
+                  programDetails?.cover
+                    ? programDetails?.cover
+                    : "/static/tvShowNo.jfif"
+                }
+                alt="logo chaine"
+                width="800px"
+                height="400px"
+              />
+            )}
             <h1 className="mt-2 font-bold">{programDetails.title_fr}</h1>
 
             <h1 className="mt-2 font-semibold">

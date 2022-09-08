@@ -107,7 +107,7 @@ function Navbar({
 
         <h1
           onClick={() => {
-            router.push("/bouquet");
+            router.push("/bouquets");
           }}
           className="cursor-pointer tracking-tight 
            font-bold bg-color-blue text-white p-1"

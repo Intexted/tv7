@@ -6,6 +6,8 @@ const IndexContext = createContext();
 const IndexProvider = ({ children }) => {
   const [state, setState] = useState({
     title: "ACTUELLEMENT",
+    user: {},
+    token: "",
   });
   const token = Cookies.get("token");
   // config axios

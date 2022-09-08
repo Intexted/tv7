@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Image from "next/image";
 import { IndexContext } from "../context/context";
 import Link from "next/link";
@@ -13,12 +13,15 @@ function Header({ details }) {
   const [value, setValue] = useState("FR");
   const [dropDown, setDropDown] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [token, setToken] = useState(false);
   const [data, setData] = useContext(IndexContext);
   const { data: session, status } = useSession();
 
   const router = useRouter();
+  useEffect(() => {
+    setToken(Cookies.get("token") ? Cookies.get("token") : "");
+  }, [token]);
 
-  const token = Cookies.get("token");
   return (
     <>
       <div className="p-5 px-10 hidden md:flex justify-between items-center ">
@@ -85,34 +88,53 @@ function Header({ details }) {
           </div>
         </div>
       </div>
-      {details && (
-        <div className="hidden md:inline">
-          {token ? (
-            <div
-              onClick={() => {
-                signOut({ redirect: false, callbackUrl: "/" });
-                Cookies.set("token", "");
-                router.push("/login");
-              }}
-              className="text-right mb-2 pr-20 cursor-pointer"
-            >
-              <h1 className="font-semibold hover:font-bold text-sm">
-                Se Deconnecter
-              </h1>
-            </div>
-          ) : (
-            <Link href="/login">
-              <a>
-                <div className="text-right mb-2 pr-20 cursor-pointer">
-                  <h1 className="font-semibold hover:font-bold text-sm">
-                    S&apos;IDENTIFIER
-                  </h1>
-                </div>
-              </a>
-            </Link>
-          )}
-        </div>
-      )}
+      <div className="hidden mb-2 md:flex justify-end space-x-5 items-center">
+        {token && (
+          <div
+            onClick={() => {
+              router.push("/profile");
+            }}
+            className="hidden  hover:font-bold  md:flex items-center cursor-pointer"
+          >
+            <img
+              src="/static/user.svg"
+              alt="banner"
+              width="20px"
+              height="20px"
+            />
+            <h1>Mon profil</h1>
+          </div>
+        )}
+        {details && (
+          <div className="hidden md:flex">
+            {token ? (
+              <div
+                onClick={() => {
+                  signOut({ redirect: false, callbackUrl: "/" });
+                  Cookies.remove("token");
+                  Cookies.remove("auth");
+                  router.push("/login");
+                }}
+                className="text-right pr-20 cursor-pointer"
+              >
+                <h1 className="font-semibold hover:font-bold ">
+                  Se Deconnecter
+                </h1>
+              </div>
+            ) : (
+              <Link href="/login">
+                <a>
+                  <div className="text-right pr-20 cursor-pointer">
+                    <h1 className="font-semibold hover:font-bold ">
+                      S&apos;IDENTIFIER
+                    </h1>
+                  </div>
+                </a>
+              </Link>
+            )}
+          </div>
+        )}
+      </div>
     </>
   );
 }

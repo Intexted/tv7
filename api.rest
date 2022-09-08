@@ -2,7 +2,7 @@ POST  https://api.tv7guide.com/api/login
 Content-Type: application/json
 
 {
-    "email":"lotfi@lotfi.com",
+    "email":"lotfi@lotfi.co",
     "password":"password"
 }
 
@@ -74,3 +74,15 @@ Content-Type: application/json
 # api/favorite/search/{key_word}
 # profile
 # api/user/profile/update
+
+###
+POST     https://api.tv7guide.com/api/user/profile/update
+
+Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
+Content-Type: application/json
+{
+    "name":"lotfi",
+    "email":"lotfi@lotfi.com",
+    "password":"password1",
+    "password_confirmation":"password1",
+}
