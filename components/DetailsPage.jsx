@@ -126,6 +126,21 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 ? programDetails.description_fr
                 : programDetails.description_ar}
             </h1>
+            <h1 className="mt-2 font-semibold">
+              {programDetails.acteurSerieOrMovie}
+            </h1>
+            <h1 className="mt-2 font-semibold">
+              {programDetails.nationaliteSerieOrMovie}
+            </h1>
+            <h1 className="mt-2 font-semibold">
+              {programDetails.anneeRealisationSerieOrMovie}
+            </h1>
+            <h1 className="mt-2 font-semibold">
+              {programDetails.titreSerieOrMovie}
+            </h1>
+            <h1 className="mt-2 font-semibold">
+              {programDetails.saisonSerieOrMovie}
+            </h1>
 
             <h1 className="mt-2 capitalize font-semibold">
               {programDetails.gender}{" "}

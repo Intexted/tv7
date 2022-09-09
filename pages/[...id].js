@@ -73,6 +73,7 @@ export default function Home() {
       const { data } = await axios.get(
         "https://api.tv7guide.com/api/public/genders"
       );
+
       setGenders(data);
     } catch (error) {
       console.log(error);

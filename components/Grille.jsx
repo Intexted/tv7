@@ -52,6 +52,7 @@ function Grille({
   const [details, setDetails] = useState(false);
   const [chaineId, setChaineId] = useState();
   const [channelId, setChannelId] = useState();
+  const [searchValue, setSearchValue] = useState("");
 
   const router = useRouter();
   let { id } = router.query;
@@ -65,6 +66,7 @@ function Grille({
       setBouquet(false);
       setEvening(false);
       setJournee(false);
+      setState({ ...state, title: "ACTUELLEMENT" });
       if (!id[1]) {
         setGenderProgram(program);
       } else {
@@ -143,7 +145,7 @@ function Grille({
       const { data } = await axios.post(
         evening
           ? `/favorite/channels/programs/evening/pt${eveningNumber}/${time} ? 
-              ${`gender=${redGender}&`}
+          ${redGender === "TOUS" ? "" : `gender=${redGender}&`}
             page=${page} `
           : `/favorite/channels/programs/atthemoment/${time} ? 
            ${redGender === "TOUS" ? "" : `gender=${redGender}&`}
@@ -168,10 +170,10 @@ function Grille({
       const { data } = await axios.get(
         evening
           ? `/public/programs/evening/pt${eveningNumber}/${time} ? 
-              ${`gender=${redGender}&`}
+             ${redGender === "TOUS" ? "" : `gender=${redGender}&`}
             page=${page} `
           : `/public/programs/atthemoment/${time} ? 
-          ${`gender=${redGender}&`}
+         ${redGender === "TOUS" ? "" : `gender=${redGender}&`}
             page=${page}`
       );
 
@@ -205,7 +207,9 @@ function Grille({
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.post(
-        `/favorite/channels/programs/evening/pt${num}/${time}?gender=${redGender}`
+        `/favorite/channels/programs/evening/pt${num}/${time}${
+          redGender === "TOUS" ? "" : `?gender=${redGender}`
+        }`
       );
       console.log(data.data);
       setGenderProgram(data.data);
@@ -218,29 +222,29 @@ function Grille({
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
-        `/public/programs/evening/pt${num}/${time}?gender=${redGender}`
+        `/public/programs/evening/pt${num}/${time}${
+          redGender === "TOUS" ? "" : `?gender=${redGender}`
+        }`
       );
-      console.log(data.data);
+
       setGenderProgram(data.data);
     } catch (error) {
       console.log(error);
     }
   };
   const getGenderProgramWithToken = async (gender, num, evening = evening) => {
-    console.log("trigger");
-    console.log(evening);
-
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.post(
         evening
-          ? `/favorite/channels/programs/evening/pt${num}/${time}?gender=${gender} `
+          ? `/favorite/channels/programs/evening/pt${num}/${time}${
+              gender === "TOUS" ? "" : `?gender=${gender}`
+            }`
           : `/favorite/channels/programs/atthemoment/${time} ${
               gender === "TOUS" ? "" : `?gender=${gender}`
             }`
       );
       setGenderProgram(data.data);
-      console.log(data.data);
 
       // setEvening(false);
     } catch (error) {
@@ -253,12 +257,28 @@ function Grille({
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
         evening
-          ? `/public/programs/evening/pt${num}/${time} ?gender=${genderTrim} `
-          : `/public/programs/atthemoment/${time} ?gender=${genderTrim}`
+          ? `/public/programs/evening/pt${num}/${time} ${
+              genderTrim === "TOUS" ? "" : `?gender=${genderTrim}`
+            } `
+          : `/public/programs/atthemoment/${time} ${
+              genderTrim === "TOUS" ? "" : `?gender=${genderTrim}`
+            }`
       );
       setGenderProgram(data.data);
 
       // setEvening(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSearch = async () => {
+    if (!searchValue) {
+      return;
+    }
+    try {
+      const { data } = await axios.get(`/favorite/search/${searchValue}`);
+      setGenderProgram(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -290,6 +310,7 @@ function Grille({
         setpage={setpage}
         redGender={redGender}
         handleTous={handleTous}
+        setGenderProgram={setGenderProgram}
       />
       <BottomBar
         setGenderProgram={setGenderProgram}
@@ -626,13 +647,56 @@ function Grille({
                     </h1>
                   </>
                 ))}
+                <div className="hidden md:flex items-center space-x-1 mb-2 ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 cursor-pointer ml-20 "
+                    fill="none"
+                    viewBox="0 0 20 20"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                  <form className="flex space-x-1 items-center">
+                    <input
+                      type="text"
+                      value={searchValue}
+                      placeholder=""
+                      onChange={(e) => setSearchValue(e.target.value)}
+                      className="p-2 border-b-2 h-5 w-24 "
+                      required={"required"}
+                    />
+                    <div onClick={() => handleSearch()}>
+                      <img
+                        src="https://www.svgrepo.com/show/168844/play-button.svg"
+                        alt=""
+                        height="20px"
+                        width="20px"
+                        className="cursor-pointer"
+                      />
+                    </div>
+                  </form>
+                </div>
               </div>
               <div>
                 <InfiniteScroll
                   dataLength={genderProgram.length}
                   next={token ? fetchMoreDataWithToken : fetchMoreData}
                   hasMore={hasMore}
-                  loader={<h4 className="md:p-2 text-gray-500">Loading ...</h4>}
+                  loader={
+                    genderProgram.length > 0 ? (
+                      <h4 className="md:p-2 ml-2 text-gray-500">Loading ...</h4>
+                    ) : (
+                      <h4 className="md:p-2 ml-2 font-semibold text-center text-gray-500">
+                        Rien a afficher dans ce genre
+                      </h4>
+                    )
+                  }
                   className="grid pt-2 sm:grid-cols-1 gap-1 md:gap-5  md:grid-cols-3 content-center
                  xl:grid-cols-4  m-auto mb-10 border-t-2 w-full"
                   endMessage={

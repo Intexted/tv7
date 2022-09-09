@@ -13,6 +13,7 @@ import { IndexContext } from "../context/context";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PhoneHeader from "../components/PhoneHeader";
+import BottomBar from "../components/BottomBar";
 
 function Profile() {
   const [state, setState] = useContext(IndexContext);
@@ -99,6 +100,7 @@ function Profile() {
     <div className="">
       <ToastContainer />
       <PhoneHeader />
+
       <Header details={true} />
       <Navbar login={true} />
       <div className="w-full md:w-1/3 py-5 px-10 md:px-0 md:m-auto">
@@ -176,6 +178,9 @@ function Profile() {
             </button>
           </div>
         </form>
+      </div>
+      <div onClick={() => router.back()} className="flex md:hidden w-10 m-auto">
+        <img src="/static/back.svg" alt="banner" width="30px" height="30px" />
       </div>
     </div>
   );

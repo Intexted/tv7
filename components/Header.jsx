@@ -14,7 +14,7 @@ function Header({ details }) {
   const [dropDown, setDropDown] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [token, setToken] = useState(false);
-  const [data, setData] = useContext(IndexContext);
+  const [state, setState] = useContext(IndexContext);
   const { data: session, status } = useSession();
 
   const router = useRouter();
@@ -92,6 +92,7 @@ function Header({ details }) {
         {token && (
           <div
             onClick={() => {
+              setState({ ...state, title: "Mettre a jour profile" });
               router.push("/profile");
             }}
             className="hidden  hover:font-bold  md:flex items-center cursor-pointer"
@@ -113,7 +114,7 @@ function Header({ details }) {
                   signOut({ redirect: false, callbackUrl: "/" });
                   Cookies.remove("token");
                   Cookies.remove("auth");
-                  router.push("/login");
+                  router.push("/");
                 }}
                 className="text-right pr-20 cursor-pointer"
               >

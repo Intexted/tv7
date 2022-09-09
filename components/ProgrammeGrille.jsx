@@ -56,12 +56,12 @@ function ProgrammeGrille({
         {chaine.thumbnail && (
           <div className="w-1/5 relative">
             {chaine.video && (
-              <div className="absolute top-1 left-1 text-center rounded-full z-10 bg-gray-100">
+              <div className="absolute top-1 left-1 text-center rounded-full z-10">
                 <img
                   src="/static/play.svg"
                   alt="banner"
-                  width="15px"
-                  height="15px"
+                  width="20px"
+                  height="20px"
                 />
               </div>
             )}

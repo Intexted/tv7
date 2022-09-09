@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { IndexContext } from "../context/context";
 import Cookies from "js-cookie";
 import { signIn, signOut } from "next-auth/react";
+import axios from "axios";
 
 function PhoneHeader({
   setBouquet,
@@ -20,22 +21,78 @@ function PhoneHeader({
   setpage,
   redGender,
   handleTous,
+  setGenderProgram,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [genderOpen, setGenderOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [state, setState] = useContext(IndexContext);
+  const [searchValue, setSearchValue] = useState("");
+
   const router = useRouter();
   const token = Cookies.get("token");
+
+  const handleSearch = async () => {
+    if (!searchValue) {
+      return;
+    }
+    try {
+      const { data } = await axios.get(`/favorite/search/${searchValue}`);
+      setGenderProgram(data.data);
+      setSearchOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      {(menuOpen || genderOpen) && (
+      {(menuOpen || genderOpen || searchOpen) && (
         <div
           onClick={() => {
             setMenuOpen(false);
             setGenderOpen(false);
+            setSearchOpen(false);
           }}
           className="bg-black opacity-25 w-screen h-screen fixed z-50"
         ></div>
+      )}
+      {searchOpen && (
+        <div className="md:hidden flex items-center space-x-1 top-10 fixed shadow-md bg-white z-50 w-full justify-center py-5">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 cursor-pointer "
+            fill="none"
+            viewBox="0 0 20 20"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+          <form className="flex space-x-1 items-center">
+            <input
+              type="text"
+              value={searchValue}
+              placeholder=""
+              onChange={(e) => setSearchValue(e.target.value)}
+              className="p-2 border-b-2 h-5  "
+              required={"required"}
+            />
+            <div onClick={() => handleSearch()}>
+              <img
+                src="https://www.svgrepo.com/show/168844/play-button.svg"
+                alt=""
+                height="20px"
+                width="20px"
+                className="cursor-pointer"
+              />
+            </div>
+          </form>
+        </div>
       )}
       {genderOpen && (
         <div className="md:flex top-12 fixed shadow-md bg-white z-50 w-full text-center py-2 mb-2 items-center space-x-1">
@@ -87,9 +144,9 @@ function PhoneHeader({
           <h1
             onClick={() => {
               setState({ ...state, title: "BOUQUET" });
-              router.push("/bouquet");
+              menuOpen ? setMenuOpen(false) : setMenuOpen(true);
+              router.push("/bouquets");
               // if (token) {
-              //   menuOpen ? setMenuOpen(false) : setMenuOpen(true);
               //   setBouquet(true);
               //   setEvening(false);
               //   setBouquetChoisi(bf);
@@ -101,6 +158,18 @@ function PhoneHeader({
           >
             MON TV7 GUIDE
           </h1>
+          {token && (
+            <div
+              onClick={() => {
+                setState({ ...state, title: "Mettre a jour profile" });
+                setMenuOpen(false);
+                router.push("/profile");
+              }}
+              className="cursor-pointer tracking-tight mt-2 font-bold bg-color-blue text-white p-1"
+            >
+              <h1>Mon profil</h1>
+            </div>
+          )}
           <div
             onClick={() => {
               signOut({ redirect: false, callbackUrl: "/" });
@@ -157,6 +226,9 @@ function PhoneHeader({
             />
           </svg>
           <svg
+            onClick={() => {
+              searchOpen ? setSearchOpen(false) : setSearchOpen(true);
+            }}
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
             fill="none"
