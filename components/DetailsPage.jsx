@@ -8,6 +8,7 @@ import moment from "moment";
 
 import "moment/locale/fr"; // without this line it didn't work
 import "moment/locale/ar"; // without this line it didn't work
+moment.locale("fr");
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -51,7 +52,6 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
     programAll.findIndex((item) => item.id === programDetails?.id);
 
   useEffect(() => {
-    moment.locale("fr");
     if (channelId != undefined) {
       const time = moment(new Date()).format("yyyy/MM/DD");
       try {
