@@ -8,12 +8,9 @@ import { IndexContext } from "../context/context";
 import Cookies from "js-cookie";
 import { signIn, signOut } from "next-auth/react";
 import axios from "axios";
+import i18n from "i18next";
 
 function PhoneHeader({
-  setBouquet,
-  setEvening,
-  setBouquetChoisi,
-  bf,
   genders,
   setRedGender,
   getGenderProgram,
@@ -29,10 +26,16 @@ function PhoneHeader({
   const [searchOpen, setSearchOpen] = useState(false);
   const [state, setState] = useContext(IndexContext);
   const [searchValue, setSearchValue] = useState("");
+  const [langOpen, setLangOpen] = useState(false);
 
   const router = useRouter();
   const token = Cookies.get("token");
   const { t } = useTranslation();
+
+  const change_lang = (lng) => {
+    i18n.changeLanguage(lng);
+    document.documentElement.lang = lng;
+  };
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -54,7 +57,7 @@ function PhoneHeader({
 
   return (
     <>
-      {(menuOpen || genderOpen || searchOpen) && (
+      {(menuOpen || genderOpen || searchOpen || langOpen) && (
         <div
           onClick={() => {
             setMenuOpen(false);
@@ -149,17 +152,10 @@ function PhoneHeader({
               setState({ ...state, title: "BOUQUET" });
               menuOpen ? setMenuOpen(false) : setMenuOpen(true);
               router.push("/bouquets");
-              // if (token) {
-              //   setBouquet(true);
-              //   setEvening(false);
-              //   setBouquetChoisi(bf);
-              // } else {
-              //   router.push("/login");
-              // }
             }}
             className="cursor-pointer tracking-tight  font-bold bg-color-blue text-white p-1"
           >
-            MON TV7 GUIDE
+            {t("mon_tv_guide")}
           </h1>
           {token && (
             <div
@@ -170,7 +166,7 @@ function PhoneHeader({
               }}
               className="cursor-pointer tracking-tight mt-2 font-bold bg-color-blue text-white p-1"
             >
-              <h1>Mon profil</h1>
+              <h1>{t("mon_profil")}</h1>
             </div>
           )}
           <div
@@ -181,14 +177,69 @@ function PhoneHeader({
             }}
             className="cursor-pointer tracking-tight mt-2 font-bold bg-color-blue text-white p-1"
           >
-            <h1 className="">{token ? "Se Deconnecter " : "Se Connecter"}</h1>
+            <h1 className="">{token ? t("se_deconnecter") : t("connect")}</h1>
+          </div>
+        </div>
+      )}
+      {langOpen && (
+        <div className="md:flex  top-12 fixed shadow-md bg-white z-50 w-full py-2 mb-2 items-center space-x-1">
+          <div
+            onClick={() => {
+              change_lang("en");
+              setLangOpen(false);
+            }}
+            className="flex justify-center items-center space-x-1"
+          >
+            {" "}
+            <img
+              src="https://cdn-icons-png.flaticon.com/128/555/555417.png"
+              alt=""
+              height="20px"
+              width="20px"
+            />
+            <h1>{t("en")}</h1>
+          </div>
+
+          <div
+            onClick={() => {
+              change_lang("fr");
+              setLangOpen(false);
+            }}
+            className="flex my-2 justify-center items-center space-x-1"
+          >
+            {" "}
+            <img
+              src="https://cdn-icons-png.flaticon.com/128/206/206657.png"
+              alt=""
+              height="20px"
+              width="20px"
+            />
+            <h1>{t("fr")}</h1>
+          </div>
+          <div
+            onClick={() => {
+              change_lang("ar");
+              setLangOpen(false);
+            }}
+            className="flex   justify-center items-center space-x-1"
+          >
+            {" "}
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/555/555593.png"
+              alt=""
+              height="20px"
+              width="20px"
+            />
+            <h1>{t("ar")}</h1>
           </div>
         </div>
       )}
 
       <div
-        className="sticky top-0 z-50 flex bg-white
-    items-center py-2 lg:px-5 justify-between md:hidden shadow-sm border-b-2 px-2"
+        className={`sticky top-0 z-50 flex bg-white
+        items-center py-2 lg:px-5 justify-between md:hidden shadow-sm border-b-2 px-2 ${
+          i18n.language === "ar" ? "rtl" : ""
+        }`}
       >
         {menuOpen ? (
           <XIcon
@@ -206,17 +257,17 @@ function PhoneHeader({
             className="h-7 w-7 md:hidden  cursor-pointer "
           />
         )}
-        <div>
+        <div className="text-center">
           <h1 className="font-semibold">{state.title}</h1>
         </div>
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center space-x-3">
           <svg
             onClick={() => {
               genderOpen ? setGenderOpen(false) : setGenderOpen(true);
               setMenuOpen(false);
             }}
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
+            className={`h-5 w-5 ${i18n.language === "ar" ? "ml-3" : ""}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -246,6 +297,9 @@ function PhoneHeader({
             />
           </svg>
           <svg
+            onClick={() => {
+              langOpen ? setLangOpen(false) : setLangOpen(true);
+            }}
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
             fill="none"

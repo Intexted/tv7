@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Cookies from "js-cookie";
 import loading from "../public/static/loading.svg";
+import i18n from "i18next";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -71,7 +72,7 @@ function Grille({
       setBouquet(false);
       setEvening(false);
       setJournee(false);
-      setState({ ...state, title: "ACTUELLEMENT" });
+      setState({ ...state, title: t("en_ce_moment") });
       if (!id[1]) {
         setGenderProgram(program);
       } else {
@@ -108,7 +109,7 @@ function Grille({
       setBouquet(false);
     } else if (id?.length > 0 && id[0] === "soiree") {
       window.scrollTo(0, 0);
-      setState({ ...state, title: "SOIREE" });
+      setState({ ...state, title: t("evening") });
       setDetails(false);
       setBouquet(false);
       sethasMore(true);
@@ -590,7 +591,11 @@ function Grille({
         {!journee && !details && !bouquet && (
           <div className="flex content-center  justify-center md:w-11/12 md:py-5 w-full md:m-auto">
             <div className="w-full">
-              <div className="md:flex hidden mb-2 items-center space-x-1">
+              <div
+                className={`md:flex ${
+                  i18n.language === "ar" ? "rtl" : ""
+                } hidden mb-2 items-center space-x-1`}
+              >
                 <h1
                   onClick={() => {
                     // setRedGender("TOUS");
@@ -624,7 +629,7 @@ function Grille({
                     <h1
                       onClick={() => {
                         // setRedGender(gender.gender_fr);
-                        console.log(gender.gender_fr.trim());
+                        // console.log(gender.gender_fr.trim());
                         // getGenderProgram(gender.gender_fr, eveningNumber);
                         // sethasMore(true);
                         // setpage(2);
@@ -698,13 +703,15 @@ function Grille({
                     genderProgram.length > 0 ? (
                       <h4 className="md:p-2 ml-2 text-gray-500">Loading ...</h4>
                     ) : (
-                      <h4 className="md:p-2 ml-2 font-semibold text-center text-gray-500">
+                      <h4 className="md:p-2 ml-2  font-semibold text-center text-gray-500">
                         Rien a afficher dans ce genre
                       </h4>
                     )
                   }
-                  className="grid pt-2 sm:grid-cols-1 gap-1 md:gap-5  md:grid-cols-3 content-center
-                 xl:grid-cols-4  m-auto mb-10 border-t-2 w-full"
+                  className={`grid pt-2 sm:grid-cols-1 gap-1 md:gap-5  md:grid-cols-3 content-center
+                 xl:grid-cols-4  m-auto mb-10 border-t-2 w-full ${
+                   i18n.language === "ar" ? "rtl" : ""
+                 }`}
                   endMessage={
                     <p style={{ textAlign: "center" }}>
                       <b></b>

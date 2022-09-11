@@ -3,20 +3,20 @@ import React from "react";
 import MyProgressBar from "./MyProgressBar";
 import { heureDebut, print_Time } from "./progressbar";
 import { useRouter } from "next/router";
+import i18n from "i18next";
 
-function ProgrammeGrille({
-  chaine,
-  genderProgram,
-  swipe_to,
-  index,
-  setDetails,
-  setEvening,
-  setBouquet,
-  setJournee,
-  setChaineId,
-  setChannelId,
-}) {
+function ProgrammeGrille({ chaine, genderProgram, swipe_to, index }) {
   const router = useRouter();
+  let title = "";
+  if (i18n.language === "fr") {
+    title = chaine.title_fr ? chaine.title_fr : chaine.title_ar;
+  }
+  if (i18n.language === "ar") {
+    title = chaine.title_ar ? chaine.title_ar : chaine.title_fr;
+  }
+  if (i18n.language === "en") {
+    title = chaine.title_en ? chaine.title_en : chaine.title_fr;
+  }
   return (
     <div
       onClick={() => {
@@ -26,7 +26,11 @@ function ProgrammeGrille({
       "
     >
       <div className="flex w-full h-2/3" key={chaine.id}>
-        <div className="w-1/5  mr-2 text-center">
+        <div
+          className={`w-1/5 ${
+            i18n.language === "ar" ? "ml-2" : "mr-2"
+          }  text-center`}
+        >
           <Image
             src={chaine.logo_chaine}
             alt="logo chaine"
@@ -34,7 +38,7 @@ function ProgrammeGrille({
             height="50px"
           />
         </div>
-        <div className=" flex flex-col w-3/5 ">
+        <div className=" flex flex-col w-3/5  ">
           <div className=" w-full">
             <h1 className="font-semibold text-xs">
               {/* {moment(chaine.date_start).format("dddd MMMM Do")} */}
@@ -42,9 +46,7 @@ function ProgrammeGrille({
             </h1>
           </div>
           <div className="  my-0.5 w-full">
-            <h1 className="font-semibold text-xs text-blue-600">
-              {chaine.title_fr ? chaine.title_fr : chaine.title_ar}
-            </h1>
+            <h1 className="font-semibold text-xs text-blue-600">{title}</h1>
           </div>
           <div className=" w-full">
             <h1 className="text-xs text-gray-500">

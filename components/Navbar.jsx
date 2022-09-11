@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import { te } from "date-fns/locale";
+import i18n from "i18next";
 function Navbar({
   evening,
   journee,
@@ -18,12 +19,19 @@ function Navbar({
 
   return (
     <div>
-      <div className=" md:flex hidden items-center space-x-8 justify-center  border-y-4  md:px-5 ">
+      <div
+        className={`md:flex hidden  items-center space-x-8 
+      justify-center  border-y-4  md:px-5 ${
+        i18n.language === "ar" ? "rtl" : ""
+      }`}
+      >
         <h1
           onClick={() => {
             router.push(`/actuellement/${redGender}`);
           }}
-          className={`cursor-pointer tracking-tight  font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
+          className={`cursor-pointer tracking-tight ${
+            i18n.language === "ar" ? "ml-10" : ""
+          } font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
             !evening && !journee && !bouquet && !details && !login
               ? "bg-color-blue p-1 text-white"
               : ""
@@ -33,7 +41,9 @@ function Navbar({
         </h1>
         <h1
           onClick={() => {
-            router.push("/journee");
+            router.push("/journee", undefined, {
+              shallow: true,
+            });
           }}
           className={`cursor-pointer tracking-tight  font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
             !evening && !bouquet && journee
@@ -41,7 +51,7 @@ function Navbar({
               : ""
           }   `}
         >
-          {t("programme_journee")}
+          {t("day")}
         </h1>
         <h1
           onClick={() => {

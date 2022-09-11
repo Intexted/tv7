@@ -33,7 +33,7 @@ function Header({ details }) {
 
   return (
     <>
-      <div className="p-5 px-10 hidden md:flex justify-between items-center ">
+      <div className={`p-5 px-10 hidden md:flex justify-between items-center`}>
         <div onClick={() => router.push("/")} className="cursor-pointer">
           <img
             src="/static/logo.png"
@@ -110,7 +110,7 @@ function Header({ details }) {
               setState({ ...state, title: "Mettre a jour profile" });
               router.push("/profile");
             }}
-            className="hidden  hover:font-bold  md:flex items-center cursor-pointer"
+            className="hidden  hover:font-bold md:flex items-center cursor-pointer"
           >
             <img
               src="/static/user.svg"
@@ -131,17 +131,24 @@ function Header({ details }) {
                   Cookies.remove("auth");
                   router.push("/");
                 }}
-                className="text-right pr-20 cursor-pointer"
+                className={
+                  i18n.language != "ar"
+                    ? "text-right pr-20 cursor-pointer"
+                    : "text-right mr-10 pr-5 cursor-pointer"
+                }
               >
-                <h1 className=" hover:font-bold ">
-                  {/* Se Deconnecter */}
-                  {t("se_deconnecter")}
-                </h1>
+                <h1 className=" hover:font-bold  ">{t("se_deconnecter")}</h1>
               </div>
             ) : (
               <Link href="/login">
                 <a>
-                  <div className="text-right pr-20 cursor-pointer">
+                  <div
+                    className={
+                      i18n.language != "ar"
+                        ? "text-right  pr-20 cursor-pointer"
+                        : "text-right mr-10 pr-5 cursor-pointer"
+                    }
+                  >
                     <h1 className="font-semibold hover:font-bold ">
                       {t("connect")}
                     </h1>

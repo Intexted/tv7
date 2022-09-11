@@ -1,25 +1,24 @@
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { IndexContext } from "../context/context";
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 
 function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
   const [state, setState] = useContext(IndexContext);
   const router = useRouter();
+  const { t } = useTranslation();
+
   return (
     <>
       {evening && (
         <div
-          className="flex md:hidden bg-white border-2 w-full z-30 fixed left-0 bottom-10 space-x-4 mt-2  md:ml-1 
-        items-center "
+          className={`flex md:hidden bg-white border-2 w-full z-30 fixed left-0 bottom-10 space-x-4 mt-2  md:ml-1 
+          items-center ${i18n.language === "ar" ? "rtl" : ""}`}
         >
           <div className="text-center w-full text-sm">
             <h1
               onClick={async () => {
-                // setBouquet(false);
-                // setDetails(false);
-                // sethasMore(true);
-                // setpage(2);
-                // getParams(1);
                 router.push(`/soiree/${redGender}/1`, undefined, {
                   shallow: true,
                 });
@@ -30,7 +29,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : "ml-2"
               }`}
             >
-              DEBUT
+              {t("part1P")}
             </h1>
           </div>
           <h1 className="">|</h1>
@@ -53,7 +52,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : "ml-2"
               }`}
             >
-              MILIEU
+              {t("part2P")}
             </h1>
           </div>
           <h1 className="">|</h1>
@@ -75,30 +74,24 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : "ml-2"
               }`}
             >
-              FIN
+              {t("part3P")}
             </h1>
           </div>
         </div>
       )}
       <div>
         <div
-          className="flex md:hidden bg-white border-2 w-full z-30 fixed left-0 bottom-0 space-x-2 mt-2  md:ml-1 
-        items-center "
+          className={`flex md:hidden ${
+            i18n.language === "ar" ? "rtl" : ""
+          } bg-white border-2 w-full z-30 fixed left-0 bottom-0 space-x-2 mt-2  md:ml-1 
+        items-center`}
         >
           <div className="text-center w-full text-sm">
             {" "}
             <h1
               onClick={() => {
                 window.scrollTo(0, 0);
-                setState({ ...state, title: "ACTUELLEMENT" });
-                // setGenderProgram(program);
-                // setRedGender("TOUS");
-                // setDetails(false);
-                // sethasMore(true);
-                // setpage(2);
-                // setEvening(false);
-                // setJournee(false);
-                // setBouquet(false);
+
                 router.push(`/actuellement/${redGender}`);
               }}
               className={`cursor-pointer ${
@@ -107,7 +100,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : "ml-2 p-2"
               }   font-semibold `}
             >
-              ACTUELLEMENT
+              {t("en_ce_moment")}
             </h1>
           </div>
           <h1>|</h1>
@@ -116,11 +109,8 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
             <h1
               onClick={() => {
                 window.scrollTo(0, 0);
-                setState({ ...state, title: "JOURNEE" });
-                // setDetails(false);
-                // setJournee(true);
-                // setEvening(false);
-                // setBouquet(false);
+                setState({ ...state, title: t("day") });
+
                 router.push("/journee");
               }}
               className={`cursor-pointer ${
@@ -129,7 +119,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : ""
               }   font-semibold `}
             >
-              JOURNEE
+              {t("day")}
             </h1>
           </div>
           <h1>|</h1>
@@ -137,13 +127,6 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
             {" "}
             <h1
               onClick={() => {
-                // window.scrollTo(0, 0);
-                // setState({ ...state, title: "SOIREE" });
-                // setBouquet(false);
-                // setDetails(false);
-                // getParams(1);
-                // sethasMore(true);
-                // setpage(2);
                 router.push(`/soiree/${redGender}/1`, undefined, {
                   shallow: true,
                 });
@@ -154,7 +137,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : ""
               }   font-semibold `}
             >
-              SOIREE
+              {t("evening")}
             </h1>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getPercentage } from "./progressbar";
+import i18n from "i18next";
 
 function MyProgressBar({
   date_start,
@@ -38,13 +39,13 @@ function MyProgressBar({
   }, [time_step]);
 
   return (
-    <div className="w-full  rounded-md   h-4 relative">
+    <div className={`w-full ltr rounded-md   h-4 relative `}>
       <div
         className=" h-1 text-xxs  bg-slate-200 w-full"
         style={{ position: "absolute", bottom: 0 }}
       ></div>
       <div
-        className=" h-3 text-xxs   text-blue-600 text-right relative"
+        className=" h-3 text-xxs  text-blue-600 text-right relative"
         style={{
           width: labelPosition,
         }}

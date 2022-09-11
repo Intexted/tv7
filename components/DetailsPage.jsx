@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
+import i18n from "i18next";
 
 import moment from "moment";
+
 import "moment/locale/fr"; // without this line it didn't work
-moment.locale("fr");
+import "moment/locale/ar"; // without this line it didn't work
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -27,11 +29,29 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   const [programAll, setProgramAll] = useState();
   const router = useRouter();
 
+  let title = "";
+  if (i18n.language === "fr") {
+    title = programDetails?.title_fr
+      ? programDetails?.title_fr
+      : programDetails?.title_ar;
+  }
+  if (i18n.language === "ar") {
+    title = programDetails?.title_ar
+      ? programDetails?.title_ar
+      : programDetails?.title_fr;
+  }
+  if (i18n.language === "en") {
+    title = programDetails?.title_en
+      ? programDetails?.title_en
+      : programDetails?.title_fr;
+  }
+
   let index =
     programAll &&
     programAll.findIndex((item) => item.id === programDetails?.id);
 
   useEffect(() => {
+    moment.locale("fr");
     if (channelId != undefined) {
       const time = moment(new Date()).format("yyyy/MM/DD");
       try {
@@ -77,7 +97,11 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   return (
     <>
       <div className=" mt-5 ">
-        <div className="flex space-x-5 items-center px-5">
+        <div
+          className={`flex  space-x-5 items-center px-5 ${
+            i18n.language === "ar" ? "rtl" : ""
+          }`}
+        >
           <div>
             <Image
               src={programAll[0].logo_chaine}
@@ -99,10 +123,12 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
         </div>
 
         <div
-          className="w-11/12 m-auto flex flex-col md:flex-row  space-x-5 
-        md:space-x-20 mt-2 "
+          className={`w-11/12 m-auto ${
+            i18n.language === "ar" ? "rtl" : ""
+          } flex flex-col md:flex-row  space-x-5 
+           mt-2 gap-10 `}
         >
-          <div className="w-full md:w-2/3">
+          <div className="w-full  md:w-2/3">
             {programDetails?.video ? (
               <video controls style={{ width: "800px" }}>
                 <source src={programDetails?.video} />
@@ -119,7 +145,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 height="400px"
               />
             )}
-            <h1 className="mt-2 font-bold">{programDetails.title_fr}</h1>
+            <h1 className="mt-2 font-bold">{title}</h1>
 
             <h1 className="mt-2 font-semibold">
               {programDetails.description_fr
@@ -151,7 +177,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
 
             <Swiper
               slidesPerView={width > 600 ? 3.5 : 2.5}
-              className="mb-5"
+              className="mb-5 ltr"
               spaceBetween={2}
               initialSlide={index + 1}
             >
@@ -190,7 +216,11 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               ))}
             </Swiper>
           </div>
-          <div className="w-11/12 m-auto mb-20 md:m-0  md:w-1/3">
+          <div
+            className={`w-11/12 m-0  md:w-1/3 ${
+              i18n.language === "ar" ? "justify-left" : ""
+            }`}
+          >
             <img
               src="/static/banner2.png"
               alt="logo chaine"

@@ -2,9 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* html:lang(ar) input {
-  text-align: right;
+/* html:lang(ar) * {
+  direction: rtl;
 } */
+
+.rtl {
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
+}
 
 @layer components {
   .grid-3 {
