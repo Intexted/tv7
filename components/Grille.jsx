@@ -19,12 +19,15 @@ import "swiper/css";
 import "swiper/css";
 import "swiper/css/navigation";
 
+import { useTranslation } from "react-i18next";
+
 import PhoneHeader from "./PhoneHeader";
 import BottomBar from "./BottomBar";
 import Swip from "./Swip";
 import Navbar from "./Navbar";
 import Bouquet from "./Bouquet";
 import DetailsPage from "./DetailsPage";
+import { te } from "date-fns/locale";
 
 function Grille({
   genders,
@@ -53,6 +56,8 @@ function Grille({
   const [chaineId, setChaineId] = useState();
   const [channelId, setChannelId] = useState();
   const [searchValue, setSearchValue] = useState("");
+
+  const { t } = useTranslation();
 
   const router = useRouter();
   let { id } = router.query;
@@ -272,12 +277,17 @@ function Grille({
     }
   };
 
-  const handleSearch = async () => {
+  const handleSearch = async (e) => {
+    e.preventDefault();
     if (!searchValue) {
       return;
     }
     try {
-      const { data } = await axios.get(`/favorite/search/${searchValue}`);
+      const { data } = await axios.get(
+        token
+          ? `/favorite/search/${searchValue}`
+          : `/public/search/${searchValue}`
+      );
       setGenderProgram(data.data);
     } catch (error) {
       console.log(error);
@@ -648,37 +658,33 @@ function Grille({
                   </>
                 ))}
                 <div className="hidden md:flex items-center space-x-1 mb-2 ">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 cursor-pointer ml-20 "
-                    fill="none"
-                    viewBox="0 0 20 20"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                  <form className="flex space-x-1 items-center">
+                  <form className="flex space-x-1 items-center ml-20">
                     <input
                       type="text"
                       value={searchValue}
-                      placeholder=""
+                      placeholder={t("search_placeholder")}
                       onChange={(e) => setSearchValue(e.target.value)}
                       className="p-2 border-b-2 h-5 w-24 "
                       required={"required"}
                     />
-                    <div onClick={() => handleSearch()}>
-                      <img
-                        src="https://www.svgrepo.com/show/168844/play-button.svg"
-                        alt=""
-                        height="20px"
-                        width="20px"
-                        className="cursor-pointer"
-                      />
+                    <div
+                      onClick={(e) => handleSearch(e)}
+                      className="bg-color-blue p-1 rounded-md"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4   cursor-pointer   "
+                        fill="none"
+                        viewBox="0 0 20 20"
+                        stroke="#FFFFFF"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
                     </div>
                   </form>
                 </div>

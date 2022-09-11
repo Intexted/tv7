@@ -14,6 +14,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PhoneHeader from "../components/PhoneHeader";
 import BottomBar from "../components/BottomBar";
+import { useTranslation } from "react-i18next";
 
 function Profile() {
   const [state, setState] = useContext(IndexContext);
@@ -25,14 +26,10 @@ function Profile() {
 
   const router = useRouter();
   const { data: session } = useSession();
+  const { t } = useTranslation();
 
   const token = Cookies.get("token");
-  // const auth = Cookies.get("auth");
 
-  // // console.log(auth));
-  // if (!auth) {
-  //   router.push("/");
-  // }
   useEffect(() => {
     if (token) {
       const auth = JSON.parse(Cookies.get("auth"));
@@ -107,7 +104,7 @@ function Profile() {
         <form>
           <div className="flex text-center flex-col">
             <h1 className="text-xl font-semibold roboto mb-2">
-              Mettre a jour le profil
+              {t("update_profile")}
             </h1>
             <div className="flex flex-col text-left mb-2 space-y-1">
               <h1 className="text-gray-500">
@@ -117,7 +114,7 @@ function Profile() {
               <input
                 type="text"
                 name="name"
-                placeholder="Email"
+                placeholder={t("email_placeholder")}
                 className="p-2 border-2 mb-2"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -131,7 +128,7 @@ function Profile() {
               <input
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder={t("fullname_placeholder")}
                 className="p-2 border-2 mb-2"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -145,7 +142,7 @@ function Profile() {
               <input
                 type="password"
                 name="name"
-                placeholder="Password"
+                placeholder={t("password_placeholder")}
                 className="p-2 border-2 mb-2"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -159,7 +156,7 @@ function Profile() {
               <input
                 type="password"
                 name="name"
-                placeholder="Confirm Password"
+                placeholder={t("confirm_password_placeholder")}
                 className="p-2 border-2 mb-2"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -173,7 +170,7 @@ function Profile() {
               {loading ? (
                 <SyncOutlined spin className="py-1 " />
               ) : (
-                <h1>Mettre a jour le profil</h1>
+                <h1>{t("update_profile")}</h1>
               )}
             </button>
           </div>

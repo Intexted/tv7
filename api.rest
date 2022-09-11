@@ -86,3 +86,6 @@ Content-Type: application/json
     "password":"password1",
     "password_confirmation":"password1",
 }
+
+###
+GET https://api.tv7guide.com/api/public/programs/evening/pt2/2022/09/09?gender=FILM

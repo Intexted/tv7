@@ -6,8 +6,11 @@ import { getSession, useSession } from "next-auth/react";
 import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 
 import logo from "../public/static/logo.png";
+import { te } from "date-fns/locale";
 
 function Header({ details }) {
   const [value, setValue] = useState("FR");
@@ -16,11 +19,17 @@ function Header({ details }) {
   const [token, setToken] = useState(false);
   const [state, setState] = useContext(IndexContext);
   const { data: session, status } = useSession();
+  const { t } = useTranslation();
 
   const router = useRouter();
   useEffect(() => {
     setToken(Cookies.get("token") ? Cookies.get("token") : "");
   }, [token]);
+
+  const change_lang = (lng) => {
+    i18n.changeLanguage(lng);
+    document.documentElement.lang = lng;
+  };
 
   return (
     <>
@@ -48,7 +57,7 @@ function Header({ details }) {
           <div
             className={`cursor-pointer flex border-2   items-center space-x-2 px-0.5`}
           >
-            <h1 className="font-bold">{value}</h1>
+            <h1 className="font-bold">{i18n.language.toUpperCase()}</h1>
             <img
               src="/static/arrow_drop_down.svg"
               alt="banner"
@@ -61,25 +70,31 @@ function Header({ details }) {
               !dropDown ? "hidden" : ""
             }`}
           >
-            {value != "FR" && (
+            {i18n.language != "fr" && (
               <h1
-                onClick={() => setValue("FR")}
+                onClick={() => {
+                  change_lang("fr");
+                }}
                 className="cursor-pointer hover:bg-slate-400 border-t-2 hover:text-white w-full font-bold"
               >
                 FR
               </h1>
             )}
-            {value != "EN" && (
+            {i18n.language != "en" && (
               <h1
-                onClick={() => setValue("EN")}
+                onClick={() => {
+                  change_lang("en");
+                }}
                 className="cursor-pointer hover:bg-slate-400 border-t-2 hover:text-white w-full font-bold"
               >
                 EN
               </h1>
             )}
-            {value != "AR" && (
+            {i18n.language != "ar" && (
               <h1
-                onClick={() => setValue("AR")}
+                onClick={() => {
+                  change_lang("ar");
+                }}
                 className="cursor-pointer hover:bg-slate-400 border-t-2 hover:text-white w-full font-bold"
               >
                 AR
@@ -103,7 +118,7 @@ function Header({ details }) {
               width="20px"
               height="20px"
             />
-            <h1>Mon profil</h1>
+            <h1>{t("mon_profil")}</h1>
           </div>
         )}
         {details && (
@@ -118,8 +133,9 @@ function Header({ details }) {
                 }}
                 className="text-right pr-20 cursor-pointer"
               >
-                <h1 className="font-semibold hover:font-bold ">
-                  Se Deconnecter
+                <h1 className=" hover:font-bold ">
+                  {/* Se Deconnecter */}
+                  {t("se_deconnecter")}
                 </h1>
               </div>
             ) : (
@@ -127,7 +143,7 @@ function Header({ details }) {
                 <a>
                   <div className="text-right pr-20 cursor-pointer">
                     <h1 className="font-semibold hover:font-bold ">
-                      S&apos;IDENTIFIER
+                      {t("connect")}
                     </h1>
                   </div>
                 </a>

@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
+import { useTranslation } from "react-i18next";
 
 function Register() {
   const [isLoadingFacebook, setIsLoadingFacebook] = useState(false);
@@ -22,6 +23,7 @@ function Register() {
 
   const router = useRouter();
   const { data: session } = useSession();
+  const { t } = useTranslation();
 
   const token = Cookies.get("token");
   if (token) {
@@ -93,11 +95,13 @@ function Register() {
       <div className="w-full md:w-1/3 py-5 px-10 md:px-0 md:m-auto">
         <form>
           <div className="flex flex-col">
-            <h1 className="text-xl font-semibold roboto mb-2">Inscription</h1>
+            <h1 className="text-xl font-semibold text-center roboto mb-2">
+              {t("register_now")}
+            </h1>
             <input
               type="text"
               name="name"
-              placeholder="Name"
+              placeholder={t("fullname_placeholder")}
               className="p-2 border-2 mb-2"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -105,7 +109,7 @@ function Register() {
             <input
               type="text"
               name="name"
-              placeholder="Email"
+              placeholder={t("email_placeholder")}
               className="p-2 border-2 mb-2"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -114,7 +118,7 @@ function Register() {
             <input
               type="password"
               name="name"
-              placeholder="Password"
+              placeholder={t("password_placeholder")}
               className="p-2 border-2 mb-2"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -123,7 +127,7 @@ function Register() {
             <input
               type="password"
               name="name"
-              placeholder="Confirm Password"
+              placeholder={t("confirm_password_placeholder")}
               className="p-2 border-2 mb-2"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -136,19 +140,18 @@ function Register() {
               {loading ? (
                 <SyncOutlined spin className="py-1 " />
               ) : (
-                <h1>S&apos;inscrire</h1>
+                <h1>{t("register_now")}</h1>
               )}
             </button>
           </div>
         </form>
         <h1 className="text-sm mb-5 text-center">
-          Vous avez déja un compte ?
+          {t("you_have_an_account")}
           <span
             onClick={() => router.push("/login")}
-            className="text-blue-600 cursor-pointer font-semibold"
+            className="text-blue-600 cursor-pointer mx-1 font-semibold"
           >
-            {" "}
-            Se Connecter
+            {t("connect")}
           </span>
         </h1>
         <div className="mt-10 w-full md:w-4/5 md:m-auto">

@@ -1,7 +1,8 @@
 import React from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-
+import { useTranslation } from "react-i18next";
+import { te } from "date-fns/locale";
 function Navbar({
   evening,
   journee,
@@ -13,20 +14,13 @@ function Navbar({
 }) {
   const router = useRouter();
   const token = Cookies.get("token");
+  const { t } = useTranslation();
 
   return (
     <div>
       <div className=" md:flex hidden items-center space-x-8 justify-center  border-y-4  md:px-5 ">
         <h1
           onClick={() => {
-            // setGenderProgram(program);
-            // setRedGender("TOUS");
-            // sethasMore(true);
-            // setpage(2);
-            // setDetails(false);
-            // setBouquet(false);
-            // setEvening(false);
-            // setJournee(false);
             router.push(`/actuellement/${redGender}`);
           }}
           className={`cursor-pointer tracking-tight  font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
@@ -35,14 +29,10 @@ function Navbar({
               : ""
           }`}
         >
-          ACTUELLEMENT
+          {t("en_ce_moment")}
         </h1>
         <h1
           onClick={() => {
-            // setJournee(true);
-            // setEvening(false);
-            // setDetails(false);
-            // setBouquet(false);
             router.push("/journee");
           }}
           className={`cursor-pointer tracking-tight  font-bold hover:bg-blue-500 hover:p-1 hover:text-white ${
@@ -51,15 +41,10 @@ function Navbar({
               : ""
           }   `}
         >
-          JOURNEE
+          {t("programme_journee")}
         </h1>
         <h1
           onClick={() => {
-            // setDetails(false);
-            // setBouquet(false);
-            // getParams(1);
-            // sethasMore(true);
-            // setpage(2);
             router.push(`/soiree/${redGender}/1`, undefined, {
               shallow: true,
             });
@@ -68,15 +53,10 @@ function Navbar({
             evening && eveningNumber === 1 ? "bg-color-blue p-1 text-white" : ""
           }`}
         >
-          DEBUT DE SOIREE
+          {t("part1")}
         </h1>
         <h1
           onClick={() => {
-            // setDetails(false);
-            // setBouquet(false);
-            // getParams(2);
-            // sethasMore(true);
-            // setpage(2);
             router.push(`/soiree/${redGender}/2`, undefined, {
               shallow: true,
             });
@@ -85,15 +65,10 @@ function Navbar({
             evening && eveningNumber === 2 ? "bg-color-blue p-1 text-white" : ""
           }`}
         >
-          MILIEU DE SOIREE
+          {t("part2")}
         </h1>
         <h1
           onClick={() => {
-            // setDetails(false);
-            // setBouquet(false);
-            // getParams(3);
-            // sethasMore(true);
-            // setpage(2);
             router.push(`/soiree/${redGender}/3`, undefined, {
               shallow: true,
             });
@@ -102,7 +77,7 @@ function Navbar({
             evening && eveningNumber === 3 ? "bg-color-blue p-1 text-white" : ""
           }`}
         >
-          FIN DE SOIREE
+          {t("part3")}
         </h1>
 
         <h1
@@ -112,7 +87,7 @@ function Navbar({
           className="cursor-pointer tracking-tight 
            font-bold bg-color-blue text-white p-1"
         >
-          MON TV GUIDE
+          {t("mon_tv_guide")}
         </h1>
       </div>
     </div>

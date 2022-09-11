@@ -14,6 +14,8 @@ import Head from "next/head";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import { IndexContext } from "../context/context";
+import { useTranslation } from "react-i18next";
+import { te } from "date-fns/locale";
 
 function Login() {
   const [isLoadingFacebook, setIsLoadingFacebook] = useState(false);
@@ -26,6 +28,7 @@ function Login() {
 
   const router = useRouter();
   const { data: session } = useSession();
+  const { t } = useTranslation();
 
   const token = Cookies.get("token");
 
@@ -81,8 +84,6 @@ function Login() {
     <div className="">
       <Head>
         <title>TV7</title>
-
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
       </Head>
       <Header />
       <Navbar login={true} />
@@ -90,11 +91,13 @@ function Login() {
       <div className="w-full md:w-1/3 py-5 px-10 md:px-0 md:m-auto">
         <form>
           <div className="flex flex-col">
-            <h1 className="text-xl font-semibold roboto mb-2">Login</h1>
+            <h1 className="text-xl font-semibold text-center roboto mb-2">
+              {t("connect")}
+            </h1>
             <input
               type="text"
               value={email}
-              placeholder="Email"
+              placeholder={t("email_placeholder")}
               onChange={(e) => setEmail(e.target.value)}
               className="p-2 border-2 mb-2"
               required={"required"}
@@ -103,7 +106,7 @@ function Login() {
             <input
               type="password"
               value={password}
-              placeholder="Password"
+              placeholder={t("password_placeholder")}
               onChange={(e) => setPassword(e.target.value)}
               className="p-2 border-2 mb-2"
               required={"required"}
@@ -115,19 +118,18 @@ function Login() {
               {loading ? (
                 <SyncOutlined spin className="py-1  " />
               ) : (
-                "Se Connecter"
+                t("connect")
               )}
             </button>
           </div>
         </form>
-        <h1 className="text-sm mb-5 text-center">
-          Vous n&apos;avez pas encore de compte ?
+        <h1 className="text-sm mb-5 text-center ">
+          {t("no_inscrit")}
           <span
             onClick={() => router.push("/register")}
-            className="text-blue-600 cursor-pointer font-semibold"
+            className="text-blue-600 mx-1 cursor-pointer font-semibold"
           >
-            {" "}
-            S&apos;inscrire
+            {t("register_now")}
           </span>
         </h1>
         <div className="mt-10 w-full md:w-4/5 md:m-auto">
