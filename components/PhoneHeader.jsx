@@ -63,6 +63,7 @@ function PhoneHeader({
             setMenuOpen(false);
             setGenderOpen(false);
             setSearchOpen(false);
+            setLangOpen(false);
           }}
           className="bg-black opacity-25 w-screen h-screen fixed z-50"
         ></div>
@@ -116,7 +117,11 @@ function PhoneHeader({
                 : " text-blue-300"
             }`}
           >
-            TOUS
+            {i18n.language === "fr"
+              ? "TOUS"
+              : i18n.language === "ar"
+              ? "الكل"
+              : "ALL"}
           </h1>
           {genders?.map((gender) => (
             <h1
@@ -136,7 +141,11 @@ function PhoneHeader({
             }`}
               key={gender.id}
             >
-              {gender.gender_fr}
+              {i18n.language === "fr"
+                ? gender.gender_fr.trim()
+                : i18n.language === "ar"
+                ? gender.gender_ar.trim()
+                : gender.gender_en.trim()}
             </h1>
           ))}
         </div>
@@ -160,7 +169,7 @@ function PhoneHeader({
           {token && (
             <div
               onClick={() => {
-                setState({ ...state, title: "Mettre a jour profile" });
+                setState({ ...state, title: t("update_profile") });
                 setMenuOpen(false);
                 router.push("/profile");
               }}
@@ -225,7 +234,7 @@ function PhoneHeader({
           >
             {" "}
             <img
-              src="https://cdn-icons-png.flaticon.com/512/555/555593.png"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Flag_of_the_Arab_League.svg/1024px-Flag_of_the_Arab_League.svg.png"
               alt=""
               height="20px"
               width="20px"
@@ -265,6 +274,8 @@ function PhoneHeader({
             onClick={() => {
               genderOpen ? setGenderOpen(false) : setGenderOpen(true);
               setMenuOpen(false);
+              setSearchOpen(false);
+              setLangOpen(false);
             }}
             xmlns="http://www.w3.org/2000/svg"
             className={`h-5 w-5 ${i18n.language === "ar" ? "ml-3" : ""}`}
@@ -282,6 +293,10 @@ function PhoneHeader({
           <svg
             onClick={() => {
               searchOpen ? setSearchOpen(false) : setSearchOpen(true);
+              setMenuOpen(false);
+              setGenderOpen(false);
+
+              setLangOpen(false);
             }}
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
@@ -299,6 +314,9 @@ function PhoneHeader({
           <svg
             onClick={() => {
               langOpen ? setLangOpen(false) : setLangOpen(true);
+              setMenuOpen(false);
+              setGenderOpen(false);
+              setSearchOpen(false);
             }}
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"

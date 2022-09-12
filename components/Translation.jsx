@@ -45,6 +45,9 @@ export const Transtlation = () => {
             en: "English",
             fr: "Français",
             ar: "العربية",
+            continue_facebook: "Continue with Faceboook",
+            continue_gmail: "Continue with Gmail",
+            continue_twitter: "Continue with Twitter",
           },
         },
         fr: {
@@ -81,6 +84,9 @@ export const Transtlation = () => {
             en: "English",
             fr: "Français",
             ar: "العربية",
+            continue_facebook: "Continuer avec Faceboook",
+            continue_gmail: "Continuer avec Gmail",
+            continue_twitter: "Continuer avec Twitter",
           },
         },
         ar: {
@@ -105,7 +111,8 @@ export const Transtlation = () => {
             no_inscrit: "غير مسجل بعد؟",
             register_now: "سجل الان",
             you_have_an_account: "هل لديك حساب؟",
-            search_placeholder: "بحث ...",
+            search_placeholder:
+              "........................................ بحث ...",
             you_have_an_account: "هل لديك حساب؟",
             email_placeholder:
               ".................... أدخل عنوان بريدك الالكتروني ....................",
@@ -121,6 +128,9 @@ export const Transtlation = () => {
             en: "English",
             fr: "Français",
             ar: "العربية",
+            continue_facebook: "الدخول باستخدام الفيسبوك",
+            continue_gmail: "الدخول باستخدام جيميل",
+            continue_twitter: "الدخول باستخدام تويتر",
           },
         },
       },

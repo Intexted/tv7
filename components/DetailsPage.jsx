@@ -30,6 +30,16 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   const [programAll, setProgramAll] = useState();
   const router = useRouter();
 
+  var event = new Date(Date.now());
+  var options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  // console.log(event.toLocaleDateString("ar-EG", options));
+
   let title = "";
   if (i18n.language === "fr") {
     title = programDetails?.title_fr
@@ -102,7 +112,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
             i18n.language === "ar" ? "rtl" : ""
           }`}
         >
-          <div>
+          <div className="mx-2">
             <Image
               src={programAll[0].logo_chaine}
               alt="logo chaine"
@@ -112,7 +122,11 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
           </div>
           <div>
             <h1 className="font-semibold capitalize">
-              {moment(programDetails.date_start).format("dddd Do MMMM ")}
+              {i18n.language === "ar"
+                ? event.toLocaleDateString("ar-EG", options)
+                : i18n.language === "fr"
+                ? moment(programDetails.date_start).format("dddd Do MMMM ")
+                : event.toLocaleDateString("en-EN", options)}
             </h1>
             <h1 className="font-semibold ">
               {/* {moment(chaine.date_start).format("HH:mm")} */}
@@ -148,16 +162,23 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
             <h1 className="mt-2 font-bold">{title}</h1>
 
             <h1 className="mt-2 font-semibold">
-              {programDetails.description_fr
+              {i18n.language === "fr"
                 ? programDetails.description_fr
-                : programDetails.description_ar}
+                : i18n.language === "ar"
+                ? programDetails.description_ar
+                : programDetails.description_en}
             </h1>
             <h1 className="mt-2 font-semibold">
               {programDetails.acteurSerieOrMovie}
             </h1>
-            <h1 className="mt-2 font-semibold">
-              {programDetails.nationaliteSerieOrMovie}
-            </h1>
+            {programDetails.nationaliteSerieOrMovie && (
+              <div>
+                <h1>Realisations</h1>
+                <h1 className="mt-2 font-semibold">
+                  {programDetails.nationaliteSerieOrMovie}
+                </h1>
+              </div>
+            )}
             <h1 className="mt-2 font-semibold">
               {programDetails.anneeRealisationSerieOrMovie}
             </h1>
@@ -172,7 +193,11 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               {programDetails.gender}{" "}
             </h1>
             <h1 className="mt-2 mb-5 font-bold underline">
-              A suivre sur cette chaine
+              {i18n.language === "fr"
+                ? " A suivre sur cette chaine"
+                : i18n.language === "ar"
+                ? "تابع في هذه القناة"
+                : "Follow on this channel"}
             </h1>
 
             <Swiper
@@ -181,39 +206,51 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               spaceBetween={2}
               initialSlide={index + 1}
             >
-              {programAll.map((chaine) => (
-                <SwiperSlide key={chaine.id}>
-                  <div
-                    onClick={() => {
-                      router.push(`/details/${chaine.id}/${chaine.channel_id}`);
-                    }}
-                    className="cursor-pointer border-2 p-2 text-center  h-[195px]"
-                  >
-                    <div className="">
-                      <img
-                        src={
-                          chaine.thumbnail
-                            ? chaine.thumbnail
-                            : "/static/tvShowNo.jfif"
-                        }
-                        alt="logo chaine"
-                        width="200px"
-                        height="150px"
-                      />
-                      <div className="mt-2">
-                        <h1 className="font-semibold text-xs">
-                          {heureDebut(chaine.date_start)}
-                        </h1>
-                      </div>
-                      <div className="mt-2">
-                        <h1 className="font-semibold text-xs ">
-                          {chaine.title_fr ? chaine.title_fr : chaine.title_ar}
-                        </h1>
+              {programAll.map((chaine) => {
+                let title = "";
+                if (i18n.language === "fr") {
+                  title = chaine.title_fr ? chaine.title_fr : chaine.title_ar;
+                }
+                if (i18n.language === "ar") {
+                  title = chaine.title_ar ? chaine.title_ar : chaine.title_fr;
+                }
+                if (i18n.language === "en") {
+                  title = chaine.title_en ? chaine.title_en : chaine.title_fr;
+                }
+                return (
+                  <SwiperSlide key={chaine.id}>
+                    <div
+                      onClick={() => {
+                        router.push(
+                          `/details/${chaine.id}/${chaine.channel_id}`
+                        );
+                      }}
+                      className="cursor-pointer border-2 p-2 text-center  h-[195px]"
+                    >
+                      <div className="">
+                        <img
+                          src={
+                            chaine.thumbnail
+                              ? chaine.thumbnail
+                              : "/static/tvShowNo.jfif"
+                          }
+                          alt="logo chaine"
+                          width="200px"
+                          height="150px"
+                        />
+                        <div className="mt-2">
+                          <h1 className="font-semibold text-xs">
+                            {heureDebut(chaine.date_start)}
+                          </h1>
+                        </div>
+                        <div className="mt-2">
+                          <h1 className="font-semibold text-xs ">{title}</h1>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </SwiperSlide>
-              ))}
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
           </div>
           <div
@@ -221,6 +258,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               i18n.language === "ar" ? "justify-left" : ""
             }`}
           >
+            {/* add pub here */}
             <img
               src="/static/banner2.png"
               alt="logo chaine"

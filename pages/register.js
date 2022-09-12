@@ -172,7 +172,7 @@ function Register() {
               {isLoadingFacebook ? (
                 <SyncOutlined spin className="py-1 h-8 ml-20 " />
               ) : (
-                "Continuer avec Facebook"
+                t("continue_facebook")
               )}{" "}
             </h1>
           </div>
@@ -194,7 +194,7 @@ function Register() {
               {isLoadingGoogle ? (
                 <SyncOutlined spin className="py-1" />
               ) : (
-                "Continuer avec Gmail"
+                t("continue_gmail")
               )}
             </h1>
           </div>
@@ -216,7 +216,7 @@ function Register() {
               {isLoadingTwitter ? (
                 <SyncOutlined spin className="py-1" />
               ) : (
-                "Continuer avec Twitter "
+                t("continue_twitter")
               )}
             </h1>
           </div>

@@ -104,10 +104,10 @@ function Header({ details }) {
         </div>
       </div>
       <div className="hidden mb-2 md:flex justify-end space-x-5 items-center">
-        {token && (
+        {(token || session) && (
           <div
             onClick={() => {
-              setState({ ...state, title: "Mettre a jour profile" });
+              // setState({ ...state, title: t("update_profile") });
               router.push("/profile");
             }}
             className="hidden  hover:font-bold md:flex items-center cursor-pointer"

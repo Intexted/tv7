@@ -64,6 +64,18 @@ function Grille({
   let { id } = router.query;
   const token = Cookies.get("token");
 
+  // let genderLanguage = "";
+
+  // if (i18n.language === "fr") {
+  //   genderLanguage = gender.gender_fr.trim();
+  // }
+  // if (i18n.language === "ar") {
+  //   genderLanguage = gender.gender_ar.trim();
+  // }
+  // if (i18n.language === "en") {
+  //   genderLanguage = gender.gender_en.trim();
+  // }
+
   useEffect(() => {
     if (id?.length > 0 && id[0] === "actuellement") {
       sethasMore(true);
@@ -621,7 +633,11 @@ function Grille({
                       : "hover:bg-slate-400 hover:text-white hover:p-1 text-blue-300"
                   }`}
                 >
-                  TOUS
+                  {i18n.language === "fr"
+                    ? "TOUS"
+                    : i18n.language === "ar"
+                    ? "الكل"
+                    : "ALL"}
                 </h1>
                 {genders?.map((gender) => (
                   <>
@@ -658,7 +674,11 @@ function Grille({
                  }`}
                       key={gender.id}
                     >
-                      {gender.gender_fr.trim()}
+                      {i18n.language === "fr"
+                        ? gender.gender_fr.trim()
+                        : i18n.language === "ar"
+                        ? gender.gender_ar.trim()
+                        : gender.gender_en.trim()}
                     </h1>
                   </>
                 ))}
