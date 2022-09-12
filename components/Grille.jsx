@@ -334,6 +334,8 @@ function Grille({
         redGender={redGender}
         handleTous={handleTous}
         setGenderProgram={setGenderProgram}
+        evening={evening}
+        journee={journee}
       />
       <BottomBar
         setGenderProgram={setGenderProgram}

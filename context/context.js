@@ -5,7 +5,7 @@ const IndexContext = createContext();
 
 const IndexProvider = ({ children }) => {
   const [state, setState] = useState({
-    title: "ACTUELLEMENT",
+    title: "MAINTENANT",
     user: {},
     token: "",
   });

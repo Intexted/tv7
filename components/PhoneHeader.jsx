@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,6 +20,8 @@ function PhoneHeader({
   redGender,
   handleTous,
   setGenderProgram,
+  evening,
+  journee,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [genderOpen, setGenderOpen] = useState(false);
@@ -27,10 +29,13 @@ function PhoneHeader({
   const [state, setState] = useContext(IndexContext);
   const [searchValue, setSearchValue] = useState("");
   const [langOpen, setLangOpen] = useState(false);
+  const [title, seTitle] = useState("");
 
   const router = useRouter();
   const token = Cookies.get("token");
   const { t } = useTranslation();
+
+  let { id } = router.query;
 
   const change_lang = (lng) => {
     i18n.changeLanguage(lng);
@@ -267,7 +272,11 @@ function PhoneHeader({
           />
         )}
         <div className="text-center">
-          <h1 className="font-semibold">{state.title}</h1>
+          {id?.length > 0 && id[0] != "profile" && (
+            <h1 className="font-semibold">
+              {evening ? t("evening") : journee ? t("day") : t("en_ce_moment")}
+            </h1>
+          )}
         </div>
         <div className="flex items-center space-x-3">
           <svg
