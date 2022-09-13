@@ -30,6 +30,40 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   const [programAll, setProgramAll] = useState();
   const router = useRouter();
 
+  const getRealisateurAndActeursInfo = (
+    listOfPersonne,
+    anneeRealisation,
+    nationaliteRealisateur
+  ) => {
+    let realisation,
+      realisateur,
+      acteurs = "";
+
+    if (listOfPersonne && listOfPersonne.length > 0) {
+      listOfPersonne = JSON.parse(listOfPersonne);
+      realisateur = listOfPersonne.filter(
+        (item) => item.libelle === "Réalisateur"
+      )[0].personne;
+      acteurs = listOfPersonne
+        .filter((item) => item.libelle === "Acteur")
+        .map((p) => p.personne)
+        .join(", ");
+
+      realisation = realisateur
+        ? `${realisateur} (${anneeRealisation}) - ${nationaliteRealisateur}`
+        : "";
+    }
+    return { realisation, realisateur, acteurs };
+  };
+
+  let programPersonne = getRealisateurAndActeursInfo(
+    programDetails?.acteurSerieOrMovie,
+    programDetails?.anneeRealisationSerieOrMovie,
+    programDetails?.nationaliteSerieOrMovie
+  );
+
+  console.log(programPersonne);
+
   var event = new Date(Date.now());
   var options = {
     weekday: "long",
@@ -81,7 +115,6 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
       try {
         axios.get(`/public/programs/${chaineId}`).then((data) => {
           setProgramDetails(data.data.data[0]);
-          console.log(data.data.data[0]);
         });
       } catch (error) {
         console.log(error);
@@ -160,38 +193,49 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               />
             )}
             <h1 className="mt-2 font-bold">{title}</h1>
+            <h1 className="mt-2 capitalize font-semibold">
+              {programDetails.gender}{" "}
+            </h1>
+            {programPersonne.realisation && i18n.language != "ar" && (
+              <div className="flex space-x-2">
+                <h1 className="font-semibold">Realisations: </h1>
+                <h1>{programPersonne.realisation}</h1>
+              </div>
+            )}
+            {programDetails.saisonSerieOrMovie && i18n.language != "ar" && (
+              <div className="flex space-x-2">
+                <h1 className="font-semibold">Episode :</h1>
+                <h1 className="">{programDetails.saisonSerieOrMovie}</h1>
+              </div>
+            )}
+            {programDetails.duration && i18n.language != "ar" && (
+              <div className="flex space-x-2">
+                <h1 className="font-semibold">Duree : </h1>
+                <h1>{print_Time(programDetails.duration)}</h1>
+              </div>
+            )}
 
-            <h1 className="mt-2 font-semibold">
+            <h1 className=" font-semibold">
               {i18n.language === "fr"
                 ? programDetails.description_fr
                 : i18n.language === "ar"
                 ? programDetails.description_ar
                 : programDetails.description_en}
             </h1>
-            <h1 className="mt-2 font-semibold">
-              {programDetails.acteurSerieOrMovie}
-            </h1>
-            {programDetails.nationaliteSerieOrMovie && (
-              <div>
-                <h1>Realisations</h1>
-                <h1 className="mt-2 font-semibold">
-                  {programDetails.nationaliteSerieOrMovie}
-                </h1>
+
+            {programPersonne.realisateur && i18n.language != "ar" && (
+              <div className="flex space-x-2">
+                <h1 className="font-semibold">Réalisateur: </h1>
+                <h1>{programPersonne.realisateur}</h1>
               </div>
             )}
-            <h1 className="mt-2 font-semibold">
-              {programDetails.anneeRealisationSerieOrMovie}
-            </h1>
-            <h1 className="mt-2 font-semibold">
-              {programDetails.titreSerieOrMovie}
-            </h1>
-            <h1 className="mt-2 font-semibold">
-              {programDetails.saisonSerieOrMovie}
-            </h1>
+            {programPersonne.acteurs && i18n.language != "ar" && (
+              <div className="flex space-x-2">
+                <h1 className="font-semibold">Acteurs: </h1>
+                <h1>{programPersonne.acteurs}</h1>
+              </div>
+            )}
 
-            <h1 className="mt-2 capitalize font-semibold">
-              {programDetails.gender}{" "}
-            </h1>
             <h1 className="mt-2 mb-5 font-bold underline">
               {i18n.language === "fr"
                 ? " A suivre sur cette chaine"
