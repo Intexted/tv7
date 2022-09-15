@@ -62,8 +62,6 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
     programDetails?.nationaliteSerieOrMovie
   );
 
-  console.log(programPersonne);
-
   var event = new Date(Date.now());
   var options = {
     weekday: "long",
@@ -236,7 +234,12 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               </div>
             )}
 
-            <h1 className="mt-2 mb-5 font-bold underline">
+            <h1
+              onClick={() => {
+                router.push(`/chaine/${channelId}`);
+              }}
+              className="mt-2 mb-5 font-bold underline"
+            >
               {i18n.language === "fr"
                 ? " A suivre sur cette chaine"
                 : i18n.language === "ar"
