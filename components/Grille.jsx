@@ -494,6 +494,8 @@ function Grille({
                         draggable={true}
                         initialSlide={index}
                         spaceBetween={0}
+                        navigation={true}
+                        modules={[Navigation]}
                       >
                         <div className="">
                           {chaine?.programDay.map((item) => {
@@ -563,6 +565,8 @@ function Grille({
                         draggable={true}
                         initialSlide={index}
                         spaceBetween={0}
+                        navigation={true}
+                        modules={[Navigation]}
                       >
                         <div className="">
                           {chaine?.programDay.map((item) => {
