@@ -78,7 +78,7 @@ function Program() {
               {heureDebut(chaine.date_start)}
             </h1>
             <div className="w-0.5 bg-gray-200 h-16"></div>
-            <div className="  px-4 flex flex-col space-y-5">
+            <div className="w-2/4  px-4 flex flex-col space-y-5">
               <h1 className="font-bold text-xs ">{title}</h1>
               <h1 className="text-xs  text-gray-500">
                 {chaine.gender}
@@ -86,7 +86,7 @@ function Program() {
               </h1>
             </div>
             {chaine.thumbnail && (
-              <div className="relative">
+              <div className="ml-auto  relative">
                 {chaine.video && (
                   <div className="absolute top-1 left-1 text-center rounded-full z-10">
                     <img
@@ -105,7 +105,7 @@ function Program() {
                   }
                   alt="logo chaine"
                   width="110px"
-                  height="80px"
+                  height="70px"
                 />
               </div>
             )}
