@@ -9,6 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Cookies from "js-cookie";
 import loading from "../public/static/loading.svg";
 import i18n from "i18next";
+import { getSession, useSession } from "next-auth/react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -57,24 +58,14 @@ function Grille({
   const [chaineId, setChaineId] = useState();
   const [channelId, setChannelId] = useState();
   const [searchValue, setSearchValue] = useState("");
+  const { data: session } = useSession();
+  const [loading, setLoading] = useState(false);
 
   const { t } = useTranslation();
 
   const router = useRouter();
   let { id } = router.query;
   const token = Cookies.get("token");
-
-  // let genderLanguage = "";
-
-  // if (i18n.language === "fr") {
-  //   genderLanguage = gender.gender_fr.trim();
-  // }
-  // if (i18n.language === "ar") {
-  //   genderLanguage = gender.gender_ar.trim();
-  // }
-  // if (i18n.language === "en") {
-  //   genderLanguage = gender.gender_en.trim();
-  // }
 
   useEffect(() => {
     if (id?.length > 0 && id[0] === "actuellement") {
@@ -85,6 +76,7 @@ function Grille({
       setEvening(false);
       setJournee(false);
       setState({ ...state, title: t("en_ce_moment") });
+
       if (!id[1]) {
         setGenderProgram(program);
       } else {
@@ -96,7 +88,7 @@ function Grille({
         }
       }
     } else if (id?.length > 0 && id[0] === "bouquets") {
-      if (token) {
+      if (token || session) {
         setDetails(false);
         setBouquet(true);
         setEvening(false);
@@ -292,6 +284,7 @@ function Grille({
 
   const handleSearch = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!searchValue) {
       return;
     }
@@ -302,6 +295,7 @@ function Grille({
           : `/public/search/${searchValue}`
       );
       setGenderProgram(data.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -320,6 +314,22 @@ function Grille({
 
   return (
     <>
+      {loading && (
+        <>
+          <div className="h-full w-full absolute top-0 left-0 bg-black opacity-25 z-10"></div>
+          <div
+            className="h-40 absolute top-1/2 left-1/2 z-50 "
+            style={{ transform: " translate(-50% , -50%)" }}
+          >
+            <img
+              src="/static/loading.svg"
+              alt="logo chaine"
+              width="100px"
+              height="100px"
+            />
+          </div>
+        </>
+      )}
       <PhoneHeader
         setBouquet={setBouquet}
         setEvening={setEvening}
@@ -616,11 +626,6 @@ function Grille({
               >
                 <h1
                   onClick={() => {
-                    // setRedGender("TOUS");
-                    // handleTous();
-                    // sethasMore(true);
-                    // setpage(2);
-
                     evening
                       ? router.push(
                           `/soiree/TOUS/${eveningNumber}`,
@@ -650,11 +655,6 @@ function Grille({
                     <h1 className="text-slate-200 mx-1">|</h1>
                     <h1
                       onClick={() => {
-                        // setRedGender(gender.gender_fr);
-                        // console.log(gender.gender_fr.trim());
-                        // getGenderProgram(gender.gender_fr, eveningNumber);
-                        // sethasMore(true);
-                        // setpage(2);
                         evening
                           ? router.push(
                               `/soiree/${gender.gender_fr.trim()}/${eveningNumber}`,
@@ -688,14 +688,21 @@ function Grille({
                     </h1>
                   </>
                 ))}
-                <div className="hidden md:flex items-center space-x-1 mb-2 ">
-                  <form className="flex space-x-1 items-center ml-20">
+                <div className="flex-1"></div>
+                <div
+                  style={{ marginLeft: "auto" }}
+                  className="hidden md:flex items-center space-x-1  ml-auto "
+                >
+                  <form
+                    onSubmit={(e) => handleSearch(e)}
+                    className="flex space-x-1 items-center"
+                  >
                     <input
                       type="text"
                       value={searchValue}
                       placeholder={t("search_placeholder")}
                       onChange={(e) => setSearchValue(e.target.value)}
-                      className="p-2 border-b-2 h-5 w-24 "
+                      className="p-3 border-b-2 h-5 w-80 "
                       required={"required"}
                     />
                     <div

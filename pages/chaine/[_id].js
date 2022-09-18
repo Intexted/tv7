@@ -85,6 +85,7 @@ function Program() {
                 <span>{` | ${print_Time(chaine.duration)}`}</span>
               </h1>
             </div>
+            <div className="flex-1"></div>
             {chaine.thumbnail && (
               <div className="ml-auto  relative">
                 {chaine.video && (

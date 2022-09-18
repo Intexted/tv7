@@ -10,6 +10,7 @@ import axios from "axios";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import { useTranslation } from "react-i18next";
+import Head from "next/head";
 
 function Register() {
   const [isLoadingFacebook, setIsLoadingFacebook] = useState(false);
@@ -90,10 +91,14 @@ function Register() {
 
   return (
     <div className="">
+      <Head>
+        <title>TV7 Guide</title>
+        <link rel="icon" href="/static/icon.png" />
+      </Head>
       <Header />
       <Navbar login={true} />
       <div className="w-full md:w-1/3 py-5 px-10 md:px-0 md:m-auto">
-        <form>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <div className="flex flex-col">
             <h1 className="text-xl font-semibold text-center roboto mb-2">
               {t("register_now")}
@@ -134,7 +139,7 @@ function Register() {
             />
 
             <button
-              onClick={(e) => handleSubmit(e)}
+              // onClick={(e) => handleSubmit(e)}
               className="bg-blue-700 mb-2 hover:bg-blue-800 rounded-sm text-center font-bold w-2/3 m-auto text-white p-2 cursor-pointer"
             >
               {loading ? (

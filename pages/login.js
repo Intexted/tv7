@@ -16,6 +16,7 @@ import Navbar from "../components/Navbar";
 import { IndexContext } from "../context/context";
 import { useTranslation } from "react-i18next";
 import { te } from "date-fns/locale";
+import Password from "../components/Password";
 
 function Login() {
   const [isLoadingFacebook, setIsLoadingFacebook] = useState(false);
@@ -32,7 +33,7 @@ function Login() {
 
   const token = Cookies.get("token");
 
-  if (token && router.query.page === "guide") {
+  if ((token || session) && router.query.page === "guide") {
     router.push("/bouquets");
     return;
   } else if (token) {
@@ -83,13 +84,14 @@ function Login() {
   return (
     <div className="">
       <Head>
-        <title>TV7</title>
+        <title>TV7 Guide</title>
+        <link rel="icon" href="/static/icon.png" />
       </Head>
       <Header />
       <Navbar login={true} />
       <ToastContainer />
       <div className="w-full md:w-1/3 py-5 px-10 md:px-0 md:m-auto">
-        <form>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <div className="flex flex-col">
             <h1 className="text-xl font-semibold text-center roboto mb-2">
               {t("connect")}
@@ -103,16 +105,16 @@ function Login() {
               required={"required"}
             />
 
-            <input
+            {/* <input
               type="password"
-              value={password}
-              placeholder={t("password_placeholder")}
-              onChange={(e) => setPassword(e.target.value)}
+             
+             
               className="p-2 border-2 mb-2"
               required={"required"}
-            />
+            /> */}
+            <Password setPassword={setPassword} password={password} t={t} />
             <button
-              onClick={(e) => handleSubmit(e)}
+              // onClick={(e) => handleSubmit(e)}
               className="bg-blue-700 mb-2 hover:bg-blue-800 rounded-sm text-center font-bold w-2/3 m-auto text-white p-2 cursor-pointer"
             >
               {loading ? (

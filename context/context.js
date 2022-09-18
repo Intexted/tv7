@@ -8,6 +8,8 @@ const IndexProvider = ({ children }) => {
     title: "MAINTENANT",
     user: {},
     token: "",
+    position: 0,
+    active: false,
   });
   const token = Cookies.get("token");
   // config axios

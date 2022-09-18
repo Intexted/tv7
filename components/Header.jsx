@@ -123,7 +123,7 @@ function Header({ details }) {
         )}
         {details && (
           <div className="hidden md:flex">
-            {token ? (
+            {token || session ? (
               <div
                 onClick={() => {
                   signOut({ redirect: false, callbackUrl: "/" });

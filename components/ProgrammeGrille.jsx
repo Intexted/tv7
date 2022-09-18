@@ -1,26 +1,58 @@
 import Image from "next/image";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MyProgressBar from "./MyProgressBar";
 import { heureDebut, print_Time } from "./progressbar";
 import { useRouter } from "next/router";
 import i18n from "i18next";
+import { IndexContext } from "../context/context";
 
 function ProgrammeGrille({ chaine, genderProgram, swipe_to, index }) {
+  const [state, setState] = useContext(IndexContext);
   const router = useRouter();
+
   let title = "";
   if (i18n.language === "fr") {
-    title = chaine.title_fr ? chaine.title_fr : chaine.title_ar;
+    title = chaine.title_fr
+      ? chaine.title_fr
+      : chaine.title_en
+      ? chaine.title_en
+      : chaine.title_ar;
   }
   if (i18n.language === "ar") {
-    title = chaine.title_ar ? chaine.title_ar : chaine.title_fr;
+    title = chaine.title_ar;
   }
   if (i18n.language === "en") {
-    title = chaine.title_en ? chaine.title_en : chaine.title_fr;
+    title = chaine.title_en ? chaine.title_en : chaine.title_ar;
   }
+
+  useEffect(() => {
+    if (state.active) {
+      window.scrollTo(0, state.position);
+      setState({
+        ...state,
+        active: false,
+      });
+    }
+
+    router.beforePopState(() => {
+      setState({
+        ...state,
+        active: true,
+      });
+      return true;
+    });
+  }, [state, state.active]);
+
   return (
     <div
       onClick={() => {
-        router.push(`/details/${chaine.id}/${chaine.channel_id}`);
+        setState({
+          ...state,
+          position: window.pageYOffset,
+        });
+        router.push(`/details/${chaine.id}/${chaine.channel_id}`, undefined, {
+          shallow: true,
+        });
       }}
       className="flex flex-col  cursor-pointer h-[90px]
       "
@@ -36,6 +68,7 @@ function ProgrammeGrille({ chaine, genderProgram, swipe_to, index }) {
             alt="logo chaine"
             width="60px"
             height="50px"
+            objectFit="contain"
           />
         </div>
         <div className=" flex flex-col w-3/5  ">

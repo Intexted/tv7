@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PhoneHeader from "../components/PhoneHeader";
 import BottomBar from "../components/BottomBar";
 import { useTranslation } from "react-i18next";
+import Head from "next/head";
 
 function Profile() {
   const [state, setState] = useContext(IndexContext);
@@ -30,11 +31,18 @@ function Profile() {
 
   const token = Cookies.get("token");
 
+  console.log(session);
+
   useEffect(() => {
     if (token) {
       const auth = JSON.parse(Cookies.get("auth"));
       setName(auth.name);
       setEmail(auth.email);
+      setPassword("");
+      setConfirmPassword("");
+    } else if (session) {
+      setName(session.user.name);
+      setEmail(session.user.email);
       setPassword("");
       setConfirmPassword("");
     } else {
@@ -95,13 +103,17 @@ function Profile() {
 
   return (
     <div className="">
+      <Head>
+        <title>TV7 Guide</title>
+        <link rel="icon" href="/static/icon.png" />
+      </Head>
       <ToastContainer />
       <PhoneHeader />
 
       <Header details={true} />
       <Navbar login={true} />
       <div className="w-full md:w-1/3 py-5 px-10 md:px-0 md:m-auto">
-        <form>
+        <form onClick={(e) => handleSubmit(e)}>
           <div className="flex text-center flex-col">
             <h1 className="text-xl font-semibold roboto mb-2">
               {t("update_profile")}
@@ -164,7 +176,7 @@ function Profile() {
             </div>
 
             <button
-              onClick={(e) => handleSubmit(e)}
+              // onClick={(e) => handleSubmit(e)}
               className="bg-red-500 my-2 hover:bg-red-700 rounded-sm text-center font-bold w-2/3 m-auto text-white p-2 cursor-pointer"
             >
               {loading ? (

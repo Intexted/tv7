@@ -27,7 +27,9 @@ function Navbar({
       >
         <h1
           onClick={() => {
-            router.push(`/actuellement/${redGender}`);
+            router.push(`/actuellement/${redGender}`, undefined, {
+              scroll: false,
+            });
           }}
           className={`cursor-pointer tracking-tight ${
             i18n.language === "ar" ? "ml-10" : ""

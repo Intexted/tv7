@@ -29,7 +29,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : "ml-2"
               }`}
             >
-              {t("part1P")}
+              {t("part1P").toUpperCase()}
             </h1>
           </div>
           <h1 className="">|</h1>
@@ -52,7 +52,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : "ml-2"
               }`}
             >
-              {t("part2P")}
+              {t("part2P").toUpperCase()}
             </h1>
           </div>
           <h1 className="">|</h1>
@@ -74,7 +74,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : "ml-2"
               }`}
             >
-              {t("part3P")}
+              {t("part3P").toUpperCase()}
             </h1>
           </div>
         </div>
@@ -90,9 +90,8 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
             {" "}
             <h1
               onClick={() => {
-                window.scrollTo(0, 0);
-
                 router.push(`/actuellement/${redGender}`);
+                // window.scrollTo(0, 1966);
               }}
               className={`cursor-pointer ${
                 !evening && !journee && !bouquet
@@ -100,7 +99,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : "ml-2 p-2"
               }   font-semibold `}
             >
-              {t("en_ce_moment")}
+              {t("en_ce_moment").toUpperCase()}
             </h1>
           </div>
           <h1>|</h1>
@@ -119,7 +118,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : ""
               }   font-semibold `}
             >
-              {t("day")}
+              {t("day").toUpperCase()}
             </h1>
           </div>
           <h1>|</h1>
@@ -137,7 +136,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   : ""
               }   font-semibold `}
             >
-              {t("evening")}
+              {t("evening").toUpperCase()}
             </h1>
           </div>
         </div>

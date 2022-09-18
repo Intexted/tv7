@@ -71,22 +71,36 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   };
 
   // console.log(event.toLocaleDateString("ar-EG", options));
+  // let title = "";
+  // if (i18n.language === "fr") {
+  //   title = chaine.title_fr
+  //     ? chaine.title_fr
+  //     : chaine.title_en
+  //     ? chaine.title_en
+  //     : chaine.title_ar;
+  // }
+  // if (i18n.language === "ar") {
+  //   title = chaine.title_ar;
+  // }
+  // if (i18n.language === "en") {
+  //   title = chaine.title_en ? chaine.title_en : chaine.title_ar;
+  // }
 
   let title = "";
   if (i18n.language === "fr") {
     title = programDetails?.title_fr
       ? programDetails?.title_fr
+      : programDetails?.title_en
+      ? programDetails?.title_en
       : programDetails?.title_ar;
   }
   if (i18n.language === "ar") {
-    title = programDetails?.title_ar
-      ? programDetails?.title_ar
-      : programDetails?.title_fr;
+    title = programDetails?.title_ar;
   }
   if (i18n.language === "en") {
     title = programDetails?.title_en
       ? programDetails?.title_en
-      : programDetails?.title_fr;
+      : programDetails?.title_ar;
   }
 
   let index =
@@ -143,18 +157,19 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
             i18n.language === "ar" ? "rtl" : ""
           }`}
         >
-          <div className="mx-2">
+          <div className="mx-2 ">
             <Image
               src={programAll[0].logo_chaine}
               alt="logo chaine"
               width="90px"
               height="90px"
+              objectFit="contain"
             />
           </div>
           <div>
             <h1 className="font-semibold capitalize">
               {i18n.language === "ar"
-                ? event.toLocaleDateString("ar-EG", options)
+                ? event.toLocaleDateString("ar-EG-u-nu-latn", options)
                 : i18n.language === "fr"
                 ? moment(programDetails.date_start).format("dddd Do MMMM ")
                 : event.toLocaleDateString("en-EN", options)}
@@ -165,6 +180,15 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               <span>{`| ${print_Time(programDetails.duration)}`}</span>
             </h1>
           </div>
+          {/* <div className="flex-grow"></div>
+          <div onClick={() => router.back()} className="cursor-pointer w-10">
+            <img
+              src="/static/back.svg"
+              alt="banner"
+              width="30px"
+              height="30px"
+            />
+          </div> */}
         </div>
 
         <div
@@ -179,16 +203,14 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 <source src={programDetails?.video} />
               </video>
             ) : (
-              <img
-                src={
-                  programDetails?.cover
-                    ? programDetails?.cover
-                    : "/static/tvShowNo.jfif"
-                }
-                alt="logo chaine"
-                width="800px"
-                height="400px"
-              />
+              programDetails?.cover && (
+                <img
+                  src={programDetails?.cover}
+                  alt="logo chaine"
+                  width="800px"
+                  height="400px"
+                />
+              )
             )}
             <h1 className="mt-2 font-bold">{title}</h1>
             <h1 className="mt-2 capitalize font-semibold">
@@ -216,9 +238,15 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
             <h1 className=" font-semibold">
               {i18n.language === "fr"
                 ? programDetails.description_fr
+                  ? programDetails.description_fr
+                  : programDetails.description_en
+                  ? programDetails.description_en
+                  : programDetails.description_ar
                 : i18n.language === "ar"
                 ? programDetails.description_ar
-                : programDetails.description_en}
+                : programDetails.description_en
+                ? programDetails.description_en
+                : programDetails.description_ar}
             </h1>
 
             {programPersonne.realisateur && i18n.language != "ar" && (
@@ -241,7 +269,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               className="mt-2 mb-5 font-bold underline"
             >
               {i18n.language === "fr"
-                ? " A suivre sur cette chaine"
+                ? " Programme de la journée pour cette chaine"
                 : i18n.language === "ar"
                 ? "تابع في هذه القناة"
                 : "Follow on this channel"}
@@ -256,13 +284,17 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
               {programAll.map((chaine) => {
                 let title = "";
                 if (i18n.language === "fr") {
-                  title = chaine.title_fr ? chaine.title_fr : chaine.title_ar;
+                  title = chaine.title_fr
+                    ? chaine.title_fr
+                    : chaine.title_en
+                    ? chaine.title_en
+                    : chaine.title_ar;
                 }
                 if (i18n.language === "ar") {
-                  title = chaine.title_ar ? chaine.title_ar : chaine.title_fr;
+                  title = chaine.title_ar;
                 }
                 if (i18n.language === "en") {
-                  title = chaine.title_en ? chaine.title_en : chaine.title_fr;
+                  title = chaine.title_en ? chaine.title_en : chaine.title_ar;
                 }
                 return (
                   <SwiperSlide key={chaine.id}>
