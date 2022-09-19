@@ -65,6 +65,7 @@ function Grille({
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const [date, setDate] = useState(Date.now());
 
   const { t } = useTranslation();
 
@@ -80,6 +81,7 @@ function Grille({
       setBouquet(false);
       setEvening(false);
       setJournee(false);
+
       setState({ ...state, title: t("en_ce_moment") });
 
       if (!id[1]) {
@@ -147,14 +149,14 @@ function Grille({
     } else {
       return;
     }
-  }, [id, bf, bm, bmo, token, eveningNumber, evening]);
+  }, [id, bf, bm, bmo, token, eveningNumber, evening, date]);
 
   useEffect(() => {
     setGenderProgram(program);
   }, []);
 
   const fetchMoreDataWithToken = async () => {
-    const time = moment(new Date()).format("yyyy/MM/DD");
+    const time = moment(date).format("yyyy/MM/DD");
 
     try {
       const { data } = await axios.post(
@@ -179,7 +181,7 @@ function Grille({
   };
 
   const fetchMoreData = async () => {
-    const time = moment(new Date()).format("yyyy/MM/DD");
+    const time = moment(date).format("yyyy/MM/DD");
 
     try {
       const { data } = await axios.get(
@@ -221,7 +223,7 @@ function Grille({
   const getNightProgramWithToken = async (num, redGender = redGender) => {
     setLoading(true);
     try {
-      const time = moment(new Date()).format("yyyy/MM/DD");
+      const time = moment(date).format("yyyy/MM/DD");
       const { data } = await axios.post(
         `/favorite/channels/programs/evening/pt${num}/${time}${
           redGender === "TOUS" ? "" : `?gender=${redGender}`
@@ -238,7 +240,7 @@ function Grille({
   const getNightProgram = async (num, redGender = redGender) => {
     setLoading(true);
     try {
-      const time = moment(new Date()).format("yyyy/MM/DD");
+      const time = moment(date).format("yyyy/MM/DD");
       const { data } = await axios.get(
         `/public/programs/evening/pt${num}/${time}${
           redGender === "TOUS" ? "" : `?gender=${redGender}`
@@ -254,7 +256,7 @@ function Grille({
   const getGenderProgramWithToken = async (gender, num, evening = evening) => {
     setLoading(true);
     try {
-      const time = moment(new Date()).format("yyyy/MM/DD");
+      const time = moment(Date.now()).format("yyyy/MM/DD");
       const { data } = await axios.post(
         evening
           ? `/favorite/channels/programs/evening/pt${num}/${time}${
@@ -276,7 +278,7 @@ function Grille({
     const genderTrim = gender.trim();
     setLoading(true);
     try {
-      const time = moment(new Date()).format("yyyy/MM/DD");
+      const time = moment(Date.now()).format("yyyy/MM/DD");
       const { data } = await axios.get(
         evening
           ? `/public/programs/evening/pt${num}/${time} ${
@@ -326,7 +328,9 @@ function Grille({
 
   return (
     <>
-      {dropDown && <DropDown setDropDown={setDropDown} />}
+      {dropDown && (
+        <DropDown setDate={setDate} date={date} setDropDown={setDropDown} />
+      )}
       {loading && (
         <>
           <div className="h-full w-full absolute top-0 left-0 bg-black opacity-25 z-10"></div>
@@ -396,7 +400,7 @@ function Grille({
             className="capitalize text-center flex justify-between rounded-sm items-center
            font-semibold cursor-pointer border-2 p-2 w-60 mt-2 m-auto"
           >
-            <h1>{moment(Date.now()).format("dddd Do MMMM YYYY ")}</h1>
+            <h1>{moment(date).format("dddd Do MMMM YYYY ")}</h1>
             <img
               src="/static/arrow_drop_down.svg"
               alt="banner"

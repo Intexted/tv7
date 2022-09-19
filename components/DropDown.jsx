@@ -4,10 +4,10 @@ import "moment/locale/fr"; // without this line it didn't work
 import "moment/locale/ar"; // without this line it didn't work
 moment.locale("fr");
 
-function DropDown({ setDropDown }) {
-  let array = [];
-
-  const [Selected, setSelected] = useState(1);
+function DropDown({ setDropDown, setDate, date }) {
+  const [Selected, setSelected] = useState(
+    Math.floor((date - Date.now()) / (24 * 3600 * 1000)) + 2
+  );
 
   const addDays = function (days) {
     var date = new Date();
@@ -17,7 +17,10 @@ function DropDown({ setDropDown }) {
 
   return (
     <>
-      <div className="h-full w-full absolute top-0 left-0 bg-black opacity-25 z-10"></div>
+      <div
+        onClick={() => setDropDown(false)}
+        className="h-full w-full absolute top-0 left-0 bg-black opacity-25 z-10"
+      ></div>
       <div
         className="h-40 w-[300px]  absolute top-1/2 left-1/2 z-50 "
         style={{ transform: " translate(-50% , -50%)" }}
@@ -75,19 +78,13 @@ function DropDown({ setDropDown }) {
                 <h1>{moment(addDays(index)).format("dddd Do MMMM ")}</h1>
               </div>
             ))}
-            {/* <div
-                className=" rounded-full flex justify-center
-               align-middle border-2 bg-blue-200 border-blue-500 h-5 w-5"
-              ></div> */}
-            {/* <h1>{moment(Date.now()).format("dddd Do MMMM ")}</h1>
-            <h1>{moment(Date.now()).format("dddd Do MMMM ")}</h1>
-            <h1>{moment(Date.now()).format("dddd Do MMMM ")}</h1>
-            <h1>{moment(Date.now()).format("dddd Do MMMM ")}</h1>
-            <h1>{moment(Date.now()).format("dddd Do MMMM ")}</h1>
-            <h1>{moment(Date.now()).format("dddd Do MMMM ")}</h1> */}
           </div>
           <div className="bg-slate-100 border-t-2 py-1">
             <div
+              onClick={() => {
+                setDate(addDays(Selected - 1));
+                setDropDown(false);
+              }}
               className="cursor-pointer text-xs bg-color-blue w-1/2 m-auto
              rounded-sm text-center"
             >

@@ -135,7 +135,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   }
   return (
     <>
-      <div className=" mt-5 ">
+      <div className=" mt-2 mb-20">
         <div
           className={`flex  space-x-5 items-center px-5 ${
             i18n.language === "ar" ? "rtl" : ""
@@ -202,33 +202,33 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
             </h1>
             {programPersonne.realisation && i18n.language != "ar" && (
               <div className="flex space-x-2">
-                <h1 className="font-semibold">
-                  Realisations: {programPersonne.realisation}{" "}
+                <h1>
+                  <span className="font-semibold">Realisations: </span>
+                  {programPersonne.realisation}
                 </h1>
                 {/* <h1>{programPersonne.realisation}</h1> */}
               </div>
             )}
             {programDetails.saisonSerieOrMovie && i18n.language != "ar" && (
               <div className="flex space-x-2">
-                <h1 className="font-semibold">
-                  Episode : {programDetails.saisonSerieOrMovie}
+                <h1>
+                  <span className="font-semibold">Episode: </span>
+                  {programDetails.saisonSerieOrMovie}
                 </h1>
                 {/* <h1 className="">{programDetails.saisonSerieOrMovie}</h1> */}
               </div>
             )}
             {programDetails.duration && i18n.language != "ar" && (
               <div className="flex space-x-2">
-                <h1 className="font-semibold">
-                  Duree : {print_Time(programDetails.duration)}{" "}
+                <h1>
+                  <span className="font-semibold"> Duree: </span>
+                  {print_Time(programDetails.duration)}{" "}
                 </h1>
                 {/* <h1>{print_Time(programDetails.duration)}</h1> */}
               </div>
             )}
 
-            <h1 className=" font-semibold">
-              {i18n.language === "fr" && "Description: "}
-              {i18n.language === "en" && "Description: "}
-              {i18n.language === "ar" && "وصف:"}
+            <h1 className=" my-2">
               {i18n.language === "fr"
                 ? programDetails.description_fr
                   ? programDetails.description_fr
@@ -244,16 +244,20 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
 
             {programPersonne.realisateur && i18n.language != "ar" && (
               <div className="flex space-x-2">
-                <h1 className="font-semibold">
-                  Réalisateur: {programPersonne.realisateur}
+                <h1>
+                  <span className="font-semibold">Réalisateur: </span>
+                  {programPersonne.realisateur}
                 </h1>
                 {/* <h1>{programPersonne.realisateur}</h1> */}
               </div>
             )}
             {programPersonne.acteurs && i18n.language != "ar" && (
               <div className="flex space-x-2">
-                <h1 className="font-semibold">Acteurs: </h1>
-                <h1 className="font-semibold">{programPersonne.acteurs}</h1>
+                <h1>
+                  <span className="font-semibold">Acteurs: </span>
+                  {programPersonne.acteurs}
+                </h1>
+                {/* <h1 className="font-semibold">{programPersonne.acteurs}</h1> */}
               </div>
             )}
 
