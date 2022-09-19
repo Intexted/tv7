@@ -16,6 +16,7 @@ import PhoneHeader from "../components/PhoneHeader";
 import BottomBar from "../components/BottomBar";
 import { useTranslation } from "react-i18next";
 import Head from "next/head";
+import DropDown from "../components/DropDown";
 
 function Profile() {
   const [state, setState] = useContext(IndexContext);

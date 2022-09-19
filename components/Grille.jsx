@@ -10,6 +10,9 @@ import Cookies from "js-cookie";
 import loading from "../public/static/loading.svg";
 import i18n from "i18next";
 import { getSession, useSession } from "next-auth/react";
+import "moment/locale/fr"; // without this line it didn't work
+import "moment/locale/ar"; // without this line it didn't work
+moment.locale("fr");
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -30,6 +33,7 @@ import Navbar from "./Navbar";
 import Bouquet from "./Bouquet";
 import DetailsPage from "./DetailsPage";
 import { te } from "date-fns/locale";
+import DropDown from "./DropDown";
 
 function Grille({
   genders,
@@ -60,6 +64,7 @@ function Grille({
   const [searchValue, setSearchValue] = useState("");
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
+  const [dropDown, setDropDown] = useState(false);
 
   const { t } = useTranslation();
 
@@ -214,6 +219,7 @@ function Grille({
   };
 
   const getNightProgramWithToken = async (num, redGender = redGender) => {
+    setLoading(true);
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.post(
@@ -221,14 +227,16 @@ function Grille({
           redGender === "TOUS" ? "" : `?gender=${redGender}`
         }`
       );
-      console.log(data.data);
+
       setGenderProgram(data.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
 
   const getNightProgram = async (num, redGender = redGender) => {
+    setLoading(true);
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
@@ -238,11 +246,13 @@ function Grille({
       );
 
       setGenderProgram(data.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
   const getGenderProgramWithToken = async (gender, num, evening = evening) => {
+    setLoading(true);
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.post(
@@ -255,6 +265,7 @@ function Grille({
             }`
       );
       setGenderProgram(data.data);
+      setLoading(false);
 
       // setEvening(false);
     } catch (error) {
@@ -263,6 +274,7 @@ function Grille({
   };
   const getGenderProgram = async (gender, num, evening = evening) => {
     const genderTrim = gender.trim();
+    setLoading(true);
     try {
       const time = moment(new Date()).format("yyyy/MM/DD");
       const { data } = await axios.get(
@@ -275,7 +287,7 @@ function Grille({
             }`
       );
       setGenderProgram(data.data);
-
+      setLoading(false);
       // setEvening(false);
     } catch (error) {
       console.log(error);
@@ -314,6 +326,7 @@ function Grille({
 
   return (
     <>
+      {dropDown && <DropDown setDropDown={setDropDown} />}
       {loading && (
         <>
           <div className="h-full w-full absolute top-0 left-0 bg-black opacity-25 z-10"></div>
@@ -346,6 +359,7 @@ function Grille({
         setGenderProgram={setGenderProgram}
         evening={evening}
         journee={journee}
+        setLoading={setLoading}
       />
       <BottomBar
         setGenderProgram={setGenderProgram}
@@ -376,6 +390,21 @@ function Grille({
           redGender={redGender}
           details={details}
         />
+        {evening && (
+          <div
+            onClick={() => setDropDown(true)}
+            className="capitalize text-center flex justify-between rounded-sm items-center
+           font-semibold cursor-pointer border-2 p-2 w-60 mt-2 m-auto"
+          >
+            <h1>{moment(Date.now()).format("dddd Do MMMM YYYY ")}</h1>
+            <img
+              src="/static/arrow_drop_down.svg"
+              alt="banner"
+              width="30px"
+              height="30px"
+            />
+          </div>
+        )}
         {bouquet && (
           <Bouquet
             setBouquetChoisiNumero={setBouquetChoisiNumero}
@@ -617,7 +646,7 @@ function Grille({
           </div>
         )}
         {!journee && !details && !bouquet && (
-          <div className="flex content-center  justify-center md:w-11/12 md:py-5 w-full md:m-auto">
+          <div className="flex content-center  justify-center md:w-11/12 md:py-3 w-full md:m-auto">
             <div className="w-full">
               <div
                 className={`md:flex ${
