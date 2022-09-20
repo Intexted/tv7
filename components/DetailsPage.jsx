@@ -275,7 +275,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
             </h1>
 
             <Swiper
-              slidesPerView={width > 600 ? 3.5 : 2.5}
+              slidesPerView={width > 600 ? 4.5 : 2.5}
               className="mb-5 ltr"
               spaceBetween={2}
               initialSlide={index + 1}
@@ -315,6 +315,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                           alt="logo chaine"
                           width="200px"
                           height="150px"
+                          objectFit=""
                         />
                         <div className="mt-2">
                           <h1 className="font-semibold text-xs">
