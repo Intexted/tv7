@@ -181,7 +181,9 @@ function Grille({
   };
 
   const fetchMoreData = async () => {
-    const time = moment(date).format("yyyy/MM/DD");
+    const time = evening
+      ? moment(date).format("yyyy/MM/DD")
+      : moment(Date.now()).format("yyyy/MM/DD");
 
     try {
       const { data } = await axios.get(

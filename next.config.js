@@ -5,7 +5,7 @@ const nextConfig = {
   images: {
     loader: "akamai",
     path: "",
-    unoptimized: true,
+
     domains: [
       "www.svgrepo.com",
       "api.tv7guide.com",
