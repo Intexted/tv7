@@ -13,7 +13,8 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
     <>
       {evening && (
         <div
-          className={`flex md:hidden bg-white border-2 w-full z-30 fixed left-0 bottom-10 space-x-4 mt-2  md:ml-1 
+          className={`flex md:hidden bg-white border-2 w-full z-30 
+          fixed left-0 bottom-8 justify-between mt-2  md:ml-1 
           items-center ${i18n.language === "ar" ? "rtl" : ""}`}
         >
           <div className="text-center w-full text-sm">
@@ -23,13 +24,13 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   shallow: true,
                 });
               }}
-              className={`cursor-pointer tracking-tight roboto font-bold  ${
+              className={`cursor-pointer tracking-tight text-xs  ${
                 evening && eveningNumber === 1
                   ? "bg-color-blue text-white p-2"
                   : "ml-2"
               }`}
             >
-              {t("part1P").toUpperCase()}
+              {t("part1").toUpperCase()}
             </h1>
           </div>
           <h1 className="">|</h1>
@@ -46,13 +47,13 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   shallow: true,
                 });
               }}
-              className={`cursor-pointer tracking-tight roboto font-bold  ${
+              className={`cursor-pointer tracking-tight text-xs  ${
                 evening && eveningNumber === 2
                   ? "bg-color-blue text-white p-2"
                   : "ml-2"
               }`}
             >
-              {t("part2P").toUpperCase()}
+              {t("part2").toUpperCase()}
             </h1>
           </div>
           <h1 className="">|</h1>
@@ -68,13 +69,13 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                   shallow: true,
                 });
               }}
-              className={`cursor-pointer tracking-tight roboto font-bold  ${
+              className={`cursor-pointer tracking-tight text-xs  ${
                 evening && eveningNumber === 3
                   ? "bg-color-blue text-white p-2"
                   : "ml-2"
               }`}
             >
-              {t("part3P").toUpperCase()}
+              {t("part3").toUpperCase()}
             </h1>
           </div>
         </div>
@@ -83,7 +84,8 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
         <div
           className={`flex md:hidden ${
             i18n.language === "ar" ? "rtl" : ""
-          } bg-white border-2 w-full z-30 fixed left-0 bottom-0 space-x-2 mt-2  md:ml-1 
+          } bg-white border-2 w-full z-30 fixed left-0 bottom-0
+           justify-between mt-2  md:ml-1 
         items-center`}
         >
           <div className="text-center w-full text-sm">
@@ -97,7 +99,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                 !evening && !journee && !bouquet
                   ? "bg-color-blue text-white p-2"
                   : "ml-2 p-2"
-              }   font-semibold `}
+              }   text-xs `}
             >
               {t("en_ce_moment").toUpperCase()}
             </h1>
@@ -116,7 +118,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                 !evening && !bouquet && journee
                   ? "bg-color-blue text-white p-2"
                   : ""
-              }   font-semibold `}
+              }   text-xs `}
             >
               {t("day").toUpperCase()}
             </h1>
@@ -134,7 +136,7 @@ function BottomBar({ evening, journee, redGender, eveningNumber, bouquet }) {
                 evening && !journee && !bouquet
                   ? "bg-color-blue text-white p-2"
                   : ""
-              }   font-semibold `}
+              }   text-xs `}
             >
               {t("evening").toUpperCase()}
             </h1>

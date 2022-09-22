@@ -268,7 +268,7 @@ function PhoneHeader({
               menuOpen ? setMenuOpen(false) : setMenuOpen(true);
               setGenderOpen(false);
             }}
-            className="h-7 w-7 md:hidden  cursor-pointer "
+            className="h-7 w-7 md:hidden  cursor-pointer"
           />
         )}
         <div className="text-center">
@@ -320,7 +320,31 @@ function PhoneHeader({
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
           </svg>
-          <svg
+          <div
+            onClick={() => {
+              langOpen ? setLangOpen(false) : setLangOpen(true);
+              setMenuOpen(false);
+              setGenderOpen(false);
+              setSearchOpen(false);
+            }}
+          >
+            {i18n.language === "fr" && (
+              <h1 className="cursor-pointer hover:bg-slate-400  hover:text-white w-full font-bold">
+                FR
+              </h1>
+            )}
+            {i18n.language === "en" && (
+              <h1 className="cursor-pointer hover:bg-slate-400  hover:text-white w-full font-bold">
+                EN
+              </h1>
+            )}
+            {i18n.language === "ar" && (
+              <h1 className="cursor-pointer hover:bg-slate-400  hover:text-white w-full font-bold">
+                AR
+              </h1>
+            )}
+          </div>
+          {/* <svg
             onClick={() => {
               langOpen ? setLangOpen(false) : setLangOpen(true);
               setMenuOpen(false);
@@ -339,7 +363,7 @@ function PhoneHeader({
               strokeLinejoin="round"
               d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
             />
-          </svg>
+          </svg> */}
         </div>
       </div>
     </>

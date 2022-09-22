@@ -61,9 +61,8 @@ Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
 Content-Type: application/json
 
 ###
- POST     https://api.tv7guide.com/api/favorite/channels/programs/atthemoment/2022/09/07?gender=TOUS
-Authorization: Bearer 745|OnrRoHlfhoFG2qRlJ5nBOzm0bNSOvFwbm6IyVR10
-Content-Type: application/json
+ POST     https://api.tv7guide.com/api/favorite/channels/programs/atthemoment/2022/09/22
+
 # At the moment:
 # api/favorite/channels/programs/atthemoment/{y?}/{m?}/{d?}
 # Les programmes de la soirée
@@ -88,4 +87,4 @@ Content-Type: application/json
 }
 
 ###
-GET https://api.tv7guide.com/api/public/programs/evening/pt2/2022/09/09?gender=FILM
+GET https://api.tv7guide.com/api/public/programs/evening/pt2/2022/09/22

@@ -402,7 +402,7 @@ function Grille({
             className="capitalize text-center flex justify-between rounded-sm items-center
            font-semibold cursor-pointer border-2 p-2 w-60 mt-2 m-auto"
           >
-            <h1>{moment(date).format("dddd Do MMMM YYYY ")}</h1>
+            <h1>{moment(date).format("dddd Do MMMM YYYY")}</h1>
             <img
               src="/static/arrow_drop_down.svg"
               alt="banner"
@@ -428,7 +428,7 @@ function Grille({
         )}
 
         {journee && !bouquet && (
-          <div className="mt-5  border-2 border-slate-100 px-5">
+          <div className="mt-5   border-slate-100 px-5">
             <Swiper
               navigation={true}
               modules={[Navigation]}
@@ -473,6 +473,22 @@ function Grille({
                       >
                         <div className="">
                           {chaine?.programDay.map((item) => {
+                            let title = "";
+                            if (i18n.language === "fr") {
+                              title = item.title_fr
+                                ? item.title_fr
+                                : item.title_en
+                                ? item.title_en
+                                : item.title_ar;
+                            }
+                            if (i18n.language === "ar") {
+                              title = item.title_ar;
+                            }
+                            if (i18n.language === "en") {
+                              title = item.title_en
+                                ? item.title_en
+                                : item.title_ar;
+                            }
                             return (
                               <SwiperSlide
                                 onClick={() =>
@@ -491,7 +507,7 @@ function Grille({
                                     {moment(item.date_start).format("HH:mm")}
                                   </h1>
                                   <h1 className="text-xs font-medium text-blue-700">
-                                    {item.title_ar}
+                                    {title}
                                   </h1>
                                   <h1 className="text-xs text-gray-500">
                                     {item.gender}
@@ -544,6 +560,22 @@ function Grille({
                       >
                         <div className="">
                           {chaine?.programDay.map((item) => {
+                            let title = "";
+                            if (i18n.language === "fr") {
+                              title = item.title_fr
+                                ? item.title_fr
+                                : item.title_en
+                                ? item.title_en
+                                : item.title_ar;
+                            }
+                            if (i18n.language === "ar") {
+                              title = item.title_ar;
+                            }
+                            if (i18n.language === "en") {
+                              title = item.title_en
+                                ? item.title_en
+                                : item.title_ar;
+                            }
                             return (
                               <SwiperSlide
                                 onClick={() =>
@@ -562,7 +594,7 @@ function Grille({
                                     {moment(item.date_start).format("HH:mm")}
                                   </h1>
                                   <h1 className="text-xs font-medium text-blue-700">
-                                    {item.title_ar}
+                                    {title}
                                   </h1>
                                   <h1 className="text-xs text-gray-500">
                                     {item.gender}
@@ -615,6 +647,22 @@ function Grille({
                       >
                         <div className="">
                           {chaine?.programDay.map((item) => {
+                            let title = "";
+                            if (i18n.language === "fr") {
+                              title = item.title_fr
+                                ? item.title_fr
+                                : item.title_en
+                                ? item.title_en
+                                : item.title_ar;
+                            }
+                            if (i18n.language === "ar") {
+                              title = item.title_ar;
+                            }
+                            if (i18n.language === "en") {
+                              title = item.title_en
+                                ? item.title_en
+                                : item.title_ar;
+                            }
                             return (
                               <SwiperSlide
                                 onClick={() =>
@@ -633,7 +681,7 @@ function Grille({
                                     {moment(item.date_start).format("HH:mm")}
                                   </h1>
                                   <h1 className="text-xs font-medium text-blue-700">
-                                    {item.title_fr}
+                                    {title}
                                   </h1>
                                   <h1 className="text-xs text-gray-500">
                                     {item.gender}

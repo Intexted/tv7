@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
@@ -28,7 +28,13 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   const { width } = useWindowDimensions();
   const [programDetails, setProgramDetails] = useState();
   const [programAll, setProgramAll] = useState();
+  const [playButton, setPlayButton] = useState(true);
   const router = useRouter();
+
+  const vidRef = useRef(null);
+  const handlePlayVideo = () => {
+    vidRef.current.play();
+  };
 
   const getRealisateurAndActeursInfo = (
     listOfPersonne,
@@ -183,9 +189,44 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
         >
           <div className="w-full  md:w-2/3">
             {programDetails?.video ? (
-              <video controls style={{ width: "800px" }}>
-                <source src={programDetails?.video} />
-              </video>
+              <div className="relative">
+                <video
+                  onPlay={() => setPlayButton(false)}
+                  onPause={() => setPlayButton(true)}
+                  ref={vidRef}
+                  controls
+                  style={{ width: "800px" }}
+                >
+                  <source src={programDetails?.video} />
+                </video>
+                {playButton && (
+                  <div
+                    style={{ transform: " translate(-50% , -50%)" }}
+                    className="absolute top-1/2 left-1/2  text-center rounded-full z-10"
+                  >
+                    <svg
+                      onClick={() => handlePlayVideo()}
+                      className="cursor-pointer"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlnsXlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      width="40px"
+                      height="40px"
+                      viewBox="0 0 27.8 27.8"
+                      style={{ enableBackground: "new 0 0 27.8 27.8" }}
+                      xmlSpace="preserve"
+                    >
+                      <path
+                        fill="#000"
+                        d="M23.8,4.1c-2.5-2.5-6-4.1-9.8-4.1S6.6,1.6,4.1,4.1C1.6,6.6,0,10.1,0,13.9c0,7.7,6.2,13.9,13.9,13.9c3.8,0,7.3-1.6,9.8-4.1
+	c2.5-2.5,4.1-6,4.1-9.8C27.8,10.1,26.3,6.6,23.8,4.1z M11.4,18.8V7.9l8.1,5.9L11.4,18.8z"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
             ) : (
               programDetails?.cover && (
                 <img

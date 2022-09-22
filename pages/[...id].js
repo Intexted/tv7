@@ -132,9 +132,6 @@ export default function Home() {
       getProgramWithToken();
       getAndFilter();
       getFavBouquet();
-      getBouquetWithToken(2);
-      getBouquetWithToken(1);
-      getBouquetWithToken(3);
     } else {
       getProgram();
       getBouquet(2);
@@ -142,6 +139,17 @@ export default function Home() {
       getBouquet(3);
     }
   }, []);
+  useEffect(() => {
+    if (token) {
+      getBouquetWithToken(2);
+      getBouquetWithToken(1);
+      getBouquetWithToken(3);
+    } else {
+      getBouquet(2);
+      getBouquet(1);
+      getBouquet(3);
+    }
+  }, [bouquetApi, bouquetFavoris]);
 
   if (!token && id?.length > 0 && id[0] === "bouquets") {
     // return <Login />;

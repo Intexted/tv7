@@ -61,7 +61,7 @@ export const Transtlation = () => {
             part3P: "Fin ",
             accueil: "Accueil",
             programme_journee: "Programme de la journée",
-            mon_tv_guide: "Mon TV 7 Guide",
+            mon_tv_guide: "Personnalisez votre programme TV",
             evening: "Programme de la soirée",
             bouquets_tv: "Bouquets TV",
             parametres: "Paramètres",
