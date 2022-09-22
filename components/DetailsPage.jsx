@@ -191,6 +191,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
             {programDetails?.video ? (
               <div className="relative">
                 <video
+                  poster={programDetails?.cover}
                   onPlay={() => setPlayButton(false)}
                   onPause={() => setPlayButton(true)}
                   ref={vidRef}
@@ -202,7 +203,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 {playButton && (
                   <div
                     style={{ transform: " translate(-50% , -50%)" }}
-                    className="absolute top-1/2 left-1/2  text-center rounded-full z-10"
+                    className="absolute top-1/2 left-1/2  text-center rounded-full z-50"
                   >
                     <svg
                       onClick={() => handlePlayVideo()}
@@ -219,7 +220,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                       xmlSpace="preserve"
                     >
                       <path
-                        fill="#000"
+                        fill="#FFF"
                         d="M23.8,4.1c-2.5-2.5-6-4.1-9.8-4.1S6.6,1.6,4.1,4.1C1.6,6.6,0,10.1,0,13.9c0,7.7,6.2,13.9,13.9,13.9c3.8,0,7.3-1.6,9.8-4.1
 	c2.5-2.5,4.1-6,4.1-9.8C27.8,10.1,26.3,6.6,23.8,4.1z M11.4,18.8V7.9l8.1,5.9L11.4,18.8z"
                       />

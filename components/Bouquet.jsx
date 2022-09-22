@@ -19,11 +19,6 @@ function Bouquet({
   const router = useRouter();
 
   const addToFav = async (chaine, index) => {
-    setBouquetApi([...bouquetApi, (bouquetApi[index].favoris = "true")]);
-    setBouquetFavoris([
-      ...bouquetFavoris,
-      (bouquetFavoris[bouquetApi[index]?.package_id - 1].favoris = "true"),
-    ]);
     try {
       await axios.post(
         `https://api.tv7guide.com/api/favorite/channels/post/${chaine.id}`
@@ -31,10 +26,13 @@ function Bouquet({
     } catch (error) {
       console.log(error);
     }
+    setBouquetApi([...bouquetApi, (bouquetApi[index].favoris = "true")]);
+    setBouquetFavoris([
+      ...bouquetFavoris,
+      (bouquetFavoris[bouquetApi[index]?.package_id - 1].favoris = "true"),
+    ]);
   };
   const removeFromFav = async (chaine, index) => {
-    setBouquetApi([...bouquetApi, (bouquetApi[index].favoris = "false")]);
-
     try {
       await axios.delete(
         `https://api.tv7guide.com/api/favorite/channels/delete/${chaine.id}`
@@ -42,19 +40,9 @@ function Bouquet({
     } catch (error) {
       console.log(error);
     }
+    setBouquetApi([...bouquetApi, (bouquetApi[index].favoris = "false")]);
   };
   const addBouquetToFav = async (index) => {
-    setBouquetFavoris([
-      ...bouquetFavoris,
-      (bouquetFavoris[index - 1].favoris = "true"),
-    ]);
-
-    bouquetApi.map((b, i) =>
-      b.package_id === index
-        ? setBouquetApi([...bouquetApi, (bouquetApi[i].favoris = "true")])
-        : ""
-    );
-
     // console.log("add", bouquetFavoris);
     try {
       await axios.post(
@@ -63,8 +51,25 @@ function Bouquet({
     } catch (error) {
       console.log(error);
     }
+    setBouquetFavoris([
+      ...bouquetFavoris,
+      (bouquetFavoris[index - 1].favoris = "true"),
+    ]);
+    bouquetApi.map((b, i) => {
+      b.package_id === index
+        ? setBouquetApi([...bouquetApi, (bouquetApi[i].favoris = "true")])
+        : "";
+    });
   };
   const removeBouquetFromFav = async (index) => {
+    // console.log("remove", bouquetFavoris);
+    try {
+      await axios.delete(
+        `https://api.tv7guide.com/api/favorite/packages/channels/delete/${index}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
     setBouquetFavoris([
       ...bouquetFavoris,
       (bouquetFavoris[index - 1].favoris = "false"),
@@ -74,14 +79,6 @@ function Bouquet({
         ? setBouquetApi([...bouquetApi, (bouquetApi[i].favoris = "false")])
         : ""
     );
-    // console.log("remove", bouquetFavoris);
-    try {
-      await axios.delete(
-        `https://api.tv7guide.com/api/favorite/packages/channels/delete/${index}`
-      );
-    } catch (error) {
-      console.log(error);
-    }
   };
   if (!bouquetFavoris || !bouquetApi) {
     return (

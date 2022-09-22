@@ -79,7 +79,7 @@ function ProgrammeGrille({ chaine, genderProgram, swipe_to, index }) {
             </h1>
           </div>
           <div className="  my-0.5 w-full">
-            <h1 className="font-bold text-xs text-blue-600">{title}</h1>
+            <h1 className="font-semibold text-sm text-blue-600">{title}</h1>
           </div>
           <div className=" w-full">
             <h1 className="text-xs text-gray-500">

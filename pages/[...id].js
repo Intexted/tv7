@@ -18,9 +18,7 @@ export default function Home() {
   const { data: session } = useSession();
   const [program, setProgram] = useState();
   const [genders, setGenders] = useState();
-  const [bf, setBf] = useState();
-  const [bm, setBm] = useState();
-  const [bmo, setBmo] = useState();
+
   const [bouquetApi, setBouquetApi] = useState();
   const [bouquetFavoris, setBouquetFavoris] = useState();
 
@@ -79,52 +77,52 @@ export default function Home() {
       console.log(error);
     }
   };
-  const getBouquetWithToken = async (num) => {
-    const time = moment(new Date()).format("yyyy/MM/DD");
-    try {
-      const { data } = await axios.get(
-        `https://api.tv7guide.com/api/packages/channels/${num}/${time}`
-      );
+  // const getBouquetWithToken = async (num) => {
+  //   const time = moment(new Date()).format("yyyy/MM/DD");
+  //   try {
+  //     const { data } = await axios.get(
+  //       `https://api.tv7guide.com/api/packages/channels/${num}/${time}`
+  //     );
 
-      switch (num) {
-        case 1:
-          setBf(data.data);
-          break;
-        case 2:
-          setBm(data.data);
-          break;
-        case 3:
-          setBmo(data.data);
-          break;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const getBouquet = async (num) => {
-    const time = moment(new Date()).format("yyyy/MM/DD");
-    try {
-      const res = await fetch(
-        token
-          ? `https://api.tv7guide.com/api/packages/channels/${num}/${time}`
-          : `https://api.tv7guide.com/api/public/packages/channels/${num}/${time}`
-      );
-      const data = await res.json();
-      switch (num) {
-        case 1:
-          setBf(data.data);
-          break;
-        case 2:
-          setBm(data.data);
-          break;
-        case 3:
-          setBmo(data.data);
-          break;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     switch (num) {
+  //       case 1:
+  //         setBf(data.data);
+  //         break;
+  //       case 2:
+  //         setBm(data.data);
+  //         break;
+  //       case 3:
+  //         setBmo(data.data);
+  //         break;
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const getBouquet = async (num) => {
+  //   const time = moment(new Date()).format("yyyy/MM/DD");
+  //   try {
+  //     const res = await fetch(
+  //       token
+  //         ? `https://api.tv7guide.com/api/packages/channels/${num}/${time}`
+  //         : `https://api.tv7guide.com/api/public/packages/channels/${num}/${time}`
+  //     );
+  //     const data = await res.json();
+  //     switch (num) {
+  //       case 1:
+  //         setBf(data.data);
+  //         break;
+  //       case 2:
+  //         setBm(data.data);
+  //         break;
+  //       case 3:
+  //         setBmo(data.data);
+  //         break;
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     getGenders();
@@ -134,22 +132,20 @@ export default function Home() {
       getFavBouquet();
     } else {
       getProgram();
-      getBouquet(2);
-      getBouquet(1);
-      getBouquet(3);
     }
   }, []);
-  useEffect(() => {
-    if (token) {
-      getBouquetWithToken(2);
-      getBouquetWithToken(1);
-      getBouquetWithToken(3);
-    } else {
-      getBouquet(2);
-      getBouquet(1);
-      getBouquet(3);
-    }
-  }, [bouquetApi, bouquetFavoris]);
+  // useEffect(() => {
+  //   console.log("first");
+  //   if (token) {
+  //     getBouquetWithToken(3);
+  //     getBouquetWithToken(2);
+  //     getBouquetWithToken(1);
+  //   } else {
+  //     getBouquet(3);
+  //     getBouquet(2);
+  //     getBouquet(1);
+  //   }
+  // }, [bouquetApi, bouquetFavoris]);
 
   if (!token && id?.length > 0 && id[0] === "bouquets") {
     // return <Login />;
@@ -186,9 +182,6 @@ export default function Home() {
         genders={genders}
         bouquetApi={bouquetApi}
         program={program}
-        bf={bf}
-        bm={bm}
-        bmo={bmo}
         setBouquetApi={setBouquetApi}
         bouquetFavoris={bouquetFavoris}
         setBouquetFavoris={setBouquetFavoris}

@@ -38,9 +38,6 @@ import DropDown from "./DropDown";
 function Grille({
   genders,
   program,
-  bf,
-  bm,
-  bmo,
   bouquetApi,
   setBouquetApi,
   bouquetFavoris,
@@ -66,6 +63,9 @@ function Grille({
   const [loading, setLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [date, setDate] = useState(Date.now());
+  const [bf, setBf] = useState();
+  const [bm, setBm] = useState();
+  const [bmo, setBmo] = useState();
 
   const { t } = useTranslation();
 
@@ -113,7 +113,7 @@ function Grille({
       } else {
         router.push("/login?page=guide");
       }
-    } else if (id[0] === "journee") {
+    } else if (id?.length > 0 && id[0] === "journee") {
       setJournee(true);
       setEvening(false);
       setDetails(false);
@@ -154,6 +154,67 @@ function Grille({
   useEffect(() => {
     setGenderProgram(program);
   }, []);
+
+  useEffect(() => {
+    console.log("object");
+
+    if (token) {
+      getBouquetWithToken(3);
+      getBouquetWithToken(2);
+      getBouquetWithToken(1);
+    } else {
+      getBouquet(3);
+      getBouquet(2);
+      getBouquet(1);
+    }
+  }, [bouquetApi, bouquetFavoris]);
+
+  const getBouquetWithToken = async (num) => {
+    const time = moment(new Date()).format("yyyy/MM/DD");
+    // try {
+    axios
+      .get(`https://api.tv7guide.com/api/packages/channels/${num}/${time}`)
+      .then((data) => {
+        switch (num) {
+          case 1:
+            setBf(data.data.data);
+            break;
+          case 2:
+            setBm(data.data.data);
+            break;
+          case 3:
+            setBmo(data.data.data);
+            break;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const getBouquet = async (num) => {
+    const time = moment(new Date()).format("yyyy/MM/DD");
+    try {
+      const res = await fetch(
+        token
+          ? `https://api.tv7guide.com/api/packages/channels/${num}/${time}`
+          : `https://api.tv7guide.com/api/public/packages/channels/${num}/${time}`
+      );
+      const data = await res.json();
+      switch (num) {
+        case 1:
+          setBf(data.data);
+          break;
+        case 2:
+          setBm(data.data);
+          break;
+        case 3:
+          setBmo(data.data);
+          break;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const fetchMoreDataWithToken = async () => {
     const time = moment(date).format("yyyy/MM/DD");
