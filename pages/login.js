@@ -143,7 +143,7 @@ function Login() {
             }}
             className="border-2 cursor-pointer hover:bg-slate-200 flex space-x-2 items-center p-2 rounded-2xl font-bold mb-2"
           >
-            <Image
+            <img
               src="https://www.svgrepo.com/show/138943/facebook.svg"
               height="40px"
               width="40px"
@@ -166,7 +166,7 @@ function Login() {
             }}
             className="border-2 cursor-pointer hover:bg-slate-200 flex space-x-2 items-center p-2 rounded-2xl font-bold mb-2"
           >
-            <Image
+            <img
               src="https://www.svgrepo.com/show/355037/google.svg"
               height="40px"
               width="40px"
@@ -189,7 +189,7 @@ function Login() {
             }}
             className="border-2 cursor-pointer hover:bg-slate-200 flex space-x-2 items-center p-2 rounded-2xl font-bold mb-2"
           >
-            <Image
+            <img
               src="https://www.svgrepo.com/show/157844/twitter.svg"
               height="40px"
               width="40px"

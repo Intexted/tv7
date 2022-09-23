@@ -193,6 +193,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 <video
                   poster={programDetails?.cover}
                   onPlay={() => setPlayButton(false)}
+                  onPause={() => setPlayButton(true)}
                   ref={vidRef}
                   controls
                   style={{ width: "800px" }}
@@ -202,7 +203,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 {playButton && (
                   <div
                     style={{ transform: " translate(-50% , -50%)" }}
-                    className="absolute top-1/2 left-1/2  text-center rounded-full z-50"
+                    className="hidden md:flex absolute top-1/2 left-1/2  text-center rounded-full z-50"
                   >
                     <svg
                       onClick={() => handlePlayVideo()}
