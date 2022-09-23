@@ -77,7 +77,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   };
 
   let title = "";
-  if (i18n.language === "fr") {
+  if (i18n.language === "fr" || i18n.language === "fr-FR") {
     title = programDetails?.title_fr
       ? programDetails?.title_fr
       : programDetails?.title_en
@@ -87,7 +87,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   if (i18n.language === "ar") {
     title = programDetails?.title_ar;
   }
-  if (i18n.language === "en") {
+  if (i18n.language === "en" || i18n.language === "en-US") {
     title = programDetails?.title_en
       ? programDetails?.title_en
       : programDetails?.title_ar;

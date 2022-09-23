@@ -11,7 +11,7 @@ function ProgrammeGrille({ chaine, genderProgram, swipe_to, index }) {
   const router = useRouter();
 
   let title = "";
-  if (i18n.language === "fr") {
+  if (i18n.language === "fr" || i18n.language === "fr-FR") {
     title = chaine.title_fr
       ? chaine.title_fr
       : chaine.title_en
@@ -21,7 +21,7 @@ function ProgrammeGrille({ chaine, genderProgram, swipe_to, index }) {
   if (i18n.language === "ar") {
     title = chaine.title_ar;
   }
-  if (i18n.language === "en") {
+  if (i18n.language === "en" || i18n.language === "en-US") {
     title = chaine.title_en ? chaine.title_en : chaine.title_ar;
   }
 

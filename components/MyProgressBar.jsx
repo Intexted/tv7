@@ -39,7 +39,7 @@ function MyProgressBar({
   }, [time_step]);
 
   return (
-    <div className={`w-full ltr rounded-md   h-4 relative `}>
+    <div className={`w-full ltr rounded-md  mt-2 h-4 relative `}>
       <div
         className=" h-1 text-xxs  bg-slate-200 w-full"
         style={{ position: "absolute", bottom: 0 }}

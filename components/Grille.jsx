@@ -378,17 +378,6 @@ function Grille({
     }
   };
 
-  if (!bm) {
-    return (
-      <div
-        className="h-40 absolute top-1/2 left-1/2 "
-        style={{ transform: " translate(-50% , -50%)" }}
-      >
-        <Image src={loading} alt="logo chaine" width="100px" height="100px" />
-      </div>
-    );
-  }
-
   return (
     <>
       {dropDown && (
@@ -460,8 +449,8 @@ function Grille({
         {evening && (
           <div
             onClick={() => setDropDown(true)}
-            className="capitalize text-center flex justify-between rounded-sm items-center
-           font-semibold cursor-pointer border-2 p-2 w-60 mt-2 m-auto"
+            className="capitalize text-center flex justify-center rounded-sm items-center
+           font-semibold cursor-pointer border-2 p-2 w-72 mt-2 m-auto"
           >
             <h1>{moment(date).format("dddd Do MMMM YYYY")}</h1>
             <img
@@ -515,6 +504,7 @@ function Grille({
                         alt="logo chaine"
                         width="40px"
                         height="40px"
+                        objectFit="contain"
                       />
                     </div>
 
@@ -535,7 +525,10 @@ function Grille({
                         <div className="">
                           {chaine?.programDay.map((item) => {
                             let title = "";
-                            if (i18n.language === "fr") {
+                            if (
+                              i18n.language === "fr" ||
+                              i18n.language === "fr-FR"
+                            ) {
                               title = item.title_fr
                                 ? item.title_fr
                                 : item.title_en
@@ -545,7 +538,11 @@ function Grille({
                             if (i18n.language === "ar") {
                               title = item.title_ar;
                             }
-                            if (i18n.language === "en") {
+                            if (
+                              i18n.language === "en" ||
+                              i18n.language === "en-US" ||
+                              i18n.language === "en-UK"
+                            ) {
                               title = item.title_en
                                 ? item.title_en
                                 : item.title_ar;
@@ -602,6 +599,7 @@ function Grille({
                         alt="logo chaine"
                         width="40px"
                         height="40px"
+                        objectFit="contain"
                       />
                     </div>
 
@@ -622,7 +620,10 @@ function Grille({
                         <div className="">
                           {chaine?.programDay.map((item) => {
                             let title = "";
-                            if (i18n.language === "fr") {
+                            if (
+                              i18n.language === "fr" ||
+                              i18n.language === "fr-FR"
+                            ) {
                               title = item.title_fr
                                 ? item.title_fr
                                 : item.title_en
@@ -632,7 +633,11 @@ function Grille({
                             if (i18n.language === "ar") {
                               title = item.title_ar;
                             }
-                            if (i18n.language === "en") {
+                            if (
+                              i18n.language === "en" ||
+                              i18n.language === "en-US" ||
+                              i18n.language === "en-UK"
+                            ) {
                               title = item.title_en
                                 ? item.title_en
                                 : item.title_ar;
@@ -689,6 +694,7 @@ function Grille({
                         alt="logo chaine"
                         width="40px"
                         height="40px"
+                        objectFit="contain"
                       />
                     </div>
 
@@ -709,7 +715,10 @@ function Grille({
                         <div className="">
                           {chaine?.programDay.map((item) => {
                             let title = "";
-                            if (i18n.language === "fr") {
+                            if (
+                              i18n.language === "fr" ||
+                              i18n.language === "fr-FR"
+                            ) {
                               title = item.title_fr
                                 ? item.title_fr
                                 : item.title_en
@@ -719,7 +728,11 @@ function Grille({
                             if (i18n.language === "ar") {
                               title = item.title_ar;
                             }
-                            if (i18n.language === "en") {
+                            if (
+                              i18n.language === "en" ||
+                              i18n.language === "en-US" ||
+                              i18n.language === "en-UK"
+                            ) {
                               title = item.title_en
                                 ? item.title_en
                                 : item.title_ar;

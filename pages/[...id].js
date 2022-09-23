@@ -134,18 +134,6 @@ export default function Home() {
       getProgram();
     }
   }, []);
-  // useEffect(() => {
-  //   console.log("first");
-  //   if (token) {
-  //     getBouquetWithToken(3);
-  //     getBouquetWithToken(2);
-  //     getBouquetWithToken(1);
-  //   } else {
-  //     getBouquet(3);
-  //     getBouquet(2);
-  //     getBouquet(1);
-  //   }
-  // }, [bouquetApi, bouquetFavoris]);
 
   if (!token && id?.length > 0 && id[0] === "bouquets") {
     // return <Login />;
@@ -161,7 +149,7 @@ export default function Home() {
       >
         <img
           src="/static/loading.svg"
-          alt="logo chaine"
+          alt="logo"
           width="100px"
           height="100px"
         />
@@ -189,58 +177,3 @@ export default function Home() {
     </div>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   const session = await getSession(context);
-//   process.env.TZ = "UTC";
-//   const getBouquet = async (num) => {
-//     const time = moment(new Date()).format("yyyy/MM/DD");
-//     try {
-//       const res = await fetch(
-//         `https://api.tv7guide.com/api/public/packages/channels/${num}/${time}`
-//       );
-//       const data = await res.json();
-//       return data.data;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-//   const getProgram = async () => {
-//     const time = moment(new Date()).format("yyyy/MM/DD");
-//     try {
-//       const { data } = await axios.get(
-//         `https://api.tv7guide.com/api/public/programs/atthemoment/${time}`
-//       );
-
-//       return data.data;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-//   const getGenders = async () => {
-//     try {
-//       const { data } = await axios.get(
-//         "https://api.tv7guide.com/api/public/genders"
-//       );
-//       return data;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-//   const dataGenders = await getGenders();
-//   const dataProgram = await getProgram();
-//   const bouquetFrancais = await getBouquet(1);
-//   const bouquetMaroc = await getBouquet(2);
-//   const bouquetMO = await getBouquet(3);
-
-//   return {
-//     props: {
-//       // bf: bouquetFrancais,
-//       genders: dataGenders,
-//       program: dataProgram,
-//       // bm: bouquetMaroc,
-//       // bmo: bouquetMO,
-//       session,
-//     }, // will be passed to the page component as props
-//   };
-// }

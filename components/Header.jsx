@@ -57,7 +57,11 @@ function Header({ details }) {
           <div
             className={`cursor-pointer flex border-2   items-center space-x-2 px-0.5`}
           >
-            <h1 className="font-bold">{i18n.language.toUpperCase()}</h1>
+            <h1 className="font-bold">
+              {i18n.language.toUpperCase() === "FR-FR"
+                ? "FR"
+                : i18n.language.toUpperCase()}
+            </h1>
             <img
               src="/static/arrow_drop_down.svg"
               alt="banner"
