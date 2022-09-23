@@ -193,7 +193,6 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 <video
                   poster={programDetails?.cover}
                   onPlay={() => setPlayButton(false)}
-                  onPause={() => setPlayButton(true)}
                   ref={vidRef}
                   controls
                   style={{ width: "800px" }}
