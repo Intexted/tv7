@@ -328,13 +328,12 @@ function PhoneHeader({
               setSearchOpen(false);
             }}
           >
-            {
-              <h1 className="font-bold">
-                {i18n.language.toUpperCase() === "FR-FR"
-                  ? "FR"
-                  : i18n.language.toUpperCase()}
+            {(i18n.language === "fr" ||
+              i18n.language.toUpperCase() === "FR-FR") && (
+              <h1 className="cursor-pointer hover:bg-slate-400  hover:text-white w-full font-bold">
+                FR
               </h1>
-            }
+            )}
             {i18n.language === "en" && (
               <h1 className="cursor-pointer hover:bg-slate-400  hover:text-white w-full font-bold">
                 EN
