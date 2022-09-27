@@ -47,9 +47,9 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
 
     if (listOfPersonne && listOfPersonne.length > 0) {
       listOfPersonne = JSON.parse(listOfPersonne);
-      realisateur = listOfPersonne.filter(
+      realisateur = listOfPersonne?.filter(
         (item) => item.libelle === "Réalisateur"
-      )[0].personne;
+      )[0]?.personne;
       acteurs = listOfPersonne
         .filter((item) => item.libelle === "Acteur")
         .map((p) => p.personne)

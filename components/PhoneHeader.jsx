@@ -186,8 +186,9 @@ function PhoneHeader({
           <div
             onClick={() => {
               signOut({ redirect: false, callbackUrl: "/" });
-              Cookies.set("token", "");
-              router.push("/login");
+              Cookies.remove("token");
+              Cookies.remove("auth");
+              router.push("/");
             }}
             className="cursor-pointer tracking-tight mt-2 font-bold bg-color-blue text-white p-1"
           >
