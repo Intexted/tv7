@@ -56,13 +56,17 @@ function Program() {
       {programAll.map((chaine) => {
         let title = "";
         if (i18n.language === "fr" || i18n.language === "fr-FR") {
-          title = chaine.title_fr ? chaine.title_fr : chaine.title_ar;
+          title = chaine?.title_fr
+            ? chaine?.title_fr
+            : chaine?.title_en
+            ? chaine?.title_en
+            : chaine?.title_ar;
         }
         if (i18n.language === "ar") {
-          title = chaine.title_ar ? chaine.title_ar : chaine.title_fr;
+          title = chaine?.title_ar;
         }
         if (i18n.language === "en" || i18n.language === "en-US") {
-          title = chaine.title_en ? chaine.title_en : chaine.title_fr;
+          title = chaine?.title_en ? chaine?.title_en : chaine?.title_ar;
         }
         return (
           <div
