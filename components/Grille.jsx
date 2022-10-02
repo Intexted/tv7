@@ -156,8 +156,6 @@ function Grille({
   }, []);
 
   useEffect(() => {
-    console.log("object");
-
     if (token) {
       getBouquetWithToken(3);
       getBouquetWithToken(2);

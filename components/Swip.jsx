@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ProgrammeGrille from "./ProgrammeGrille";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -26,8 +26,20 @@ function Swip({
     swiperRef.current.swiper.slideTo(i);
   };
 
+  // const [currentSlide, setCurrentSlide] = useState(0);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setCurrentSlide(Math.random() * 3);
+  //   }, 2000);
+  // }, []);
+
   return (
-    <Swiper slidesPerView={1} ref={swiperRef} className="w-full">
+    <Swiper
+      initialSlide={0}
+      slidesPerView={1}
+      ref={swiperRef}
+      className="w-full"
+    >
       <SwiperSlide key={chaine.id}>
         <ProgrammeGrille
           index={1}

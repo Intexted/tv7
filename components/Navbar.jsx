@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import { te } from "date-fns/locale";
 import i18n from "i18next";
+import { getSession, useSession } from "next-auth/react";
+
 function Navbar({
   evening,
   journee,
@@ -16,6 +18,7 @@ function Navbar({
   const router = useRouter();
   const token = Cookies.get("token");
   const { t } = useTranslation();
+  const { data: session } = useSession();
 
   return (
     <div>
@@ -94,7 +97,9 @@ function Navbar({
 
         <h1
           onClick={() => {
-            router.push("/bouquets");
+            token || session
+              ? router.push("/bouquets")
+              : router.push("/login?page=guide");
           }}
           className="cursor-pointer tracking-tight 
            font-bold bg-color-blue text-white p-1"

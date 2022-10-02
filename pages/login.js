@@ -32,11 +32,7 @@ function Login() {
   const { t } = useTranslation();
 
   const token = Cookies.get("token");
-
-  if ((token || session) && router.query.page === "guide") {
-    router.push("/bouquets");
-    return;
-  } else if (token) {
+  if (token) {
     router.push("/");
   }
 

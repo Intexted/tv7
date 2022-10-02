@@ -55,7 +55,7 @@ export const get_Duration = (duration) => {
 };
 
 export const getPercentage = (startTime, duration) => {
-  const currentDate = new Date();
+  const currentDate = Date.now();
   const startDate = convertDateToUserTimeZone(startTime);
   const endDate = addMinutes(startDate, duration);
 

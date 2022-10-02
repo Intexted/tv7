@@ -68,6 +68,12 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
     programDetails?.nationaliteSerieOrMovie
   );
 
+  let programPersonneAr = getRealisateurAndActeursInfo(
+    programDetails?.acteurSerieOrMovieAr,
+    programDetails?.anneeRealisationSerieOrMovie,
+    programDetails?.nationaliteSerieOrMovie
+  );
+
   var event = new Date(Date.now());
   var options = {
     weekday: "long",
@@ -117,12 +123,15 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
       try {
         axios.get(`/public/programs/${chaineId}`).then((data) => {
           setProgramDetails(data.data.data[0]);
+          console.log(data.data.data[0]);
         });
       } catch (error) {
         console.log(error);
       }
     }
   }, [chaineId]);
+
+  console.log(programDetails);
 
   if (programDetails == undefined || programAll == undefined) {
     return (
@@ -251,13 +260,21 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 {/* <h1>{programPersonne.realisation}</h1> */}
               </div>
             )}
+
             {programDetails.saisonSerieOrMovie && i18n.language != "ar" && (
               <div className="flex space-x-2">
                 <h1>
-                  <span className="font-semibold">Episode: </span>
+                  <span className="font-semibold"> Saison: </span>
                   {programDetails.saisonSerieOrMovie}
                 </h1>
-                {/* <h1 className="">{programDetails.saisonSerieOrMovie}</h1> */}
+              </div>
+            )}
+            {programDetails.episodeSerie && i18n.language != "ar" && (
+              <div className="flex space-x-2">
+                <h1>
+                  <span className="font-semibold"> Episode: </span>
+                  {programDetails.episodeSerie}
+                </h1>
               </div>
             )}
             {programDetails.duration && i18n.language != "ar" && (
@@ -266,9 +283,16 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                   <span className="font-semibold"> Duree: </span>
                   {print_Time(programDetails.duration)}{" "}
                 </h1>
-                {/* <h1>{print_Time(programDetails.duration)}</h1> */}
               </div>
             )}
+            {/* {programDetails.duration && i18n.language === "ar" && (
+              <div className="flex space-x-2">
+                <h1>
+                  <span className="font-semibold"> المدة الزمنية: </span>
+                  {print_Time(programDetails.duration)}{" "}
+                </h1>
+              </div>
+            )} */}
 
             <h1 className=" my-2">
               {i18n.language === "fr"
@@ -290,7 +314,6 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                   <span className="font-semibold">Réalisateur: </span>
                   {programPersonne.realisateur}
                 </h1>
-                {/* <h1>{programPersonne.realisateur}</h1> */}
               </div>
             )}
             {programPersonne.acteurs && i18n.language != "ar" && (
@@ -299,7 +322,14 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                   <span className="font-semibold">Acteurs: </span>
                   {programPersonne.acteurs}
                 </h1>
-                {/* <h1 className="font-semibold">{programPersonne.acteurs}</h1> */}
+              </div>
+            )}
+            {programPersonneAr.acteurs && i18n.language === "ar" && (
+              <div className="flex space-x-2">
+                <h1>
+                  <span className="font-semibold">ممثلين: </span>
+                  {programPersonneAr.acteurs}
+                </h1>
               </div>
             )}
 
