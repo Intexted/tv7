@@ -34,6 +34,7 @@ import Bouquet from "./Bouquet";
 import DetailsPage from "./DetailsPage";
 import { te } from "date-fns/locale";
 import DropDown from "./DropDown";
+import { heureDebut } from "./progressbar";
 
 function Grille({
   genders,
@@ -560,7 +561,8 @@ function Grille({
                                   key={item.id}
                                 >
                                   <h1 className="font-bold text-xs">
-                                    {moment(item.date_start).format("HH:mm")}
+                                    {/* {moment(item.date_start).format("HH:mm")} */}
+                                    {heureDebut(item.date_start)}
                                   </h1>
                                   <h1 className="text-xs font-medium text-blue-700">
                                     {title}
@@ -655,7 +657,8 @@ function Grille({
                                   key={item.id}
                                 >
                                   <h1 className="font-bold text-xs">
-                                    {moment(item.date_start).format("HH:mm")}
+                                    {/* {moment(item.date_start).format("HH:mm")} */}
+                                    {heureDebut(item.date_start)}
                                   </h1>
                                   <h1 className="text-xs font-medium text-blue-700">
                                     {title}
@@ -750,7 +753,8 @@ function Grille({
                                   key={item.id}
                                 >
                                   <h1 className="font-bold text-xs">
-                                    {moment(item.date_start).format("HH:mm")}
+                                    {/* {moment(item.date_start).format("HH:mm")} */}
+                                    {heureDebut(item.date_start)}
                                   </h1>
                                   <h1 className="text-xs font-medium text-blue-700">
                                     {title}

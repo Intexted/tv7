@@ -316,6 +316,7 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 </h1>
               </div>
             )}
+
             {programPersonne.acteurs && i18n.language != "ar" && (
               <div className="flex space-x-2">
                 <h1>
@@ -332,7 +333,14 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 </h1>
               </div>
             )}
-
+            {programPersonneAr.realisateur && i18n.language === "ar" && (
+              <div className="flex space-x-2">
+                <h1>
+                  <span className="font-semibold">اخراج: </span>
+                  {programPersonneAr.realisateur}
+                </h1>
+              </div>
+            )}
             <h1
               onClick={() => {
                 router.push(`/chaine/${channelId}`);
