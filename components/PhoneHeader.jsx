@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import { signIn, signOut } from "next-auth/react";
 import axios from "axios";
 import i18n from "i18next";
+import { getSession, useSession } from "next-auth/react";
 
 function PhoneHeader({
   genders,
@@ -30,6 +31,7 @@ function PhoneHeader({
   const [searchValue, setSearchValue] = useState("");
   const [langOpen, setLangOpen] = useState(false);
   const [title, seTitle] = useState("");
+  const { data: session } = useSession();
 
   const router = useRouter();
   const token = Cookies.get("token");
@@ -165,7 +167,9 @@ function PhoneHeader({
             onClick={() => {
               setState({ ...state, title: "BOUQUET" });
               menuOpen ? setMenuOpen(false) : setMenuOpen(true);
-              router.push("/bouquets");
+              token || session
+                ? router.push("/bouquets")
+                : router.push("/login?page=guide");
             }}
             className="cursor-pointer tracking-tight  font-bold bg-color-blue text-white p-1"
           >
