@@ -98,109 +98,118 @@ function Bouquet({
   return (
     <>
       <div className="flex md:justify-center px-5 pt-5 md:items-center mt-2 space-x-4 md:space-x-12">
-        <div className="flex space-x-1 items-center">
-          <div
-            onClick={() => {
-              bouquetFavoris[0].favoris === "false"
-                ? addBouquetToFav(1)
-                : removeBouquetFromFav(1);
-            }}
-            className="h-8 w-8 border-2"
-          >
-            {" "}
-            {bouquetFavoris[0].favoris === "true" && (
-              <img
-                src="/static/check.svg"
-                alt="banner"
-                width="30px"
-                height="30px"
-              />
-            )}
-          </div>{" "}
-          <h1
-            onClick={() => {
-              setBouquetChoisiNumero(1);
-              // setBouquetChoisi(bf);
-              router.push("/bouquet/1");
-            }}
-            className={`cursor-pointer text-center text-xs md:text-lg ${
-              bouquetChoisiNumero === 1
-                ? "bg-color-blue text-white p-1"
-                : " hover:bg-slate-400 hover:text-white hover:p-1"
-            } font-semibold `}
-          >
-            BOUQUET FRANCE
-          </h1>
-        </div>
-        <div className="flex space-x-1 items-center">
-          <div
-            onClick={() => {
-              bouquetFavoris[1].favoris === "false"
-                ? addBouquetToFav(2)
-                : removeBouquetFromFav(2);
-            }}
-            className="h-8 w-8 border-2"
-          >
-            {" "}
-            {bouquetFavoris[1].favoris === "true" && (
-              <img
-                src="/static/check.svg"
-                alt="banner"
-                width="30px"
-                height="30px"
-              />
-            )}
-          </div>{" "}
-          <h1
-            onClick={() => {
-              setBouquetChoisiNumero(2);
-              // setBouquetChoisi(bm);
-
-              router.push("/bouquet/2");
-            }}
-            className={`cursor-pointer text-center text-xs md:text-lg ${
-              bouquetChoisiNumero === 2
-                ? "bg-color-blue text-white p-1"
-                : " hover:bg-slate-400 hover:text-white hover:p-1"
-            } font-semibold `}
-          >
-            BOUQUET MAROC
-          </h1>
-        </div>
-        <div className="flex space-x-1 items-center">
-          <div
-            onClick={() => {
-              bouquetFavoris[2].favoris === "false"
-                ? addBouquetToFav(3)
-                : removeBouquetFromFav(3);
-            }}
-            className="h-8 w-8 border-2"
-          >
-            {" "}
-            {bouquetFavoris[2].favoris === "true" && (
-              <img
-                src="/static/check.svg"
-                alt="banner"
-                width="30px"
-                height="30px"
-              />
-            )}
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="font-bold text-white">BIENTÔT</h1>
+          <div className="flex space-x-1 items-center">
+            <div
+              onClick={() => {
+                bouquetFavoris[0].favoris === "false"
+                  ? addBouquetToFav(1)
+                  : removeBouquetFromFav(1);
+              }}
+              className="h-8 w-8 border-2"
+            >
+              {" "}
+              {bouquetFavoris[0].favoris === "true" && (
+                <img
+                  src="/static/check.svg"
+                  alt="banner"
+                  width="30px"
+                  height="30px"
+                />
+              )}
+            </div>{" "}
+            <h1
+              onClick={() => {
+                setBouquetChoisiNumero(1);
+                // setBouquetChoisi(bf);
+                router.push("/bouquet/1");
+              }}
+              className={`cursor-pointer text-center text-xs md:text-lg ${
+                bouquetChoisiNumero === 1
+                  ? "bg-color-blue text-white p-1"
+                  : " hover:bg-slate-400 hover:text-white hover:p-1"
+              } font-semibold `}
+            >
+              BOUQUET FRANCE
+            </h1>
           </div>
-          <h1
-            onClick={() => {
-              setBouquetChoisiNumero(3);
-              // setBouquetChoisi(bmo);
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="font-bold text-red-600">BIENTÔT</h1>
+          <div className="flex space-x-1 items-center">
+            <div
+              onClick={() => {
+                bouquetFavoris[1].favoris === "false"
+                  ? addBouquetToFav(2)
+                  : removeBouquetFromFav(2);
+              }}
+              className="h-8 w-8 border-2"
+            >
+              {" "}
+              {/* {bouquetFavoris[1].favoris === "true" && (
+                <img
+                  src="/static/check.svg"
+                  alt="banner"
+                  width="30px"
+                  height="30px"
+                />
+              )} */}
+            </div>{" "}
+            <h1
+              onClick={() => {
+                setBouquetChoisiNumero(2);
+                // setBouquetChoisi(bm);
 
-              router.push("/bouquet/3");
-            }}
-            className={`cursor-pointer text-center text-xs md:text-lg ${
-              bouquetChoisiNumero === 3
-                ? "bg-color-blue text-white p-1"
-                : " hover:bg-slate-400 hover:text-white hover:p-1"
-            } font-semibold `}
-          >
-            BOUQUET MOYEN-ORIENT
-          </h1>
+                router.push("/bouquet/2");
+              }}
+              className={`cursor-pointer text-center text-xs md:text-lg ${
+                bouquetChoisiNumero === 2
+                  ? "bg-color-blue text-white p-1"
+                  : " hover:bg-slate-400 hover:text-white hover:p-1"
+              } font-semibold `}
+            >
+              BOUQUET MAROC
+            </h1>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="font-bold text-red-600">BIENTÔT</h1>
+          <div className="flex space-x-1 items-center">
+            <div
+              onClick={() => {
+                bouquetFavoris[2].favoris === "false"
+                  ? addBouquetToFav(3)
+                  : removeBouquetFromFav(3);
+              }}
+              className="h-8 w-8 border-2"
+            >
+              {" "}
+              {/* {bouquetFavoris[2].favoris === "true" && (
+                <img
+                  src="/static/check.svg"
+                  alt="banner"
+                  width="30px"
+                  height="30px"
+                />
+              )} */}
+            </div>
+            <h1
+              onClick={() => {
+                setBouquetChoisiNumero(3);
+                // setBouquetChoisi(bmo);
+
+                router.push("/bouquet/3");
+              }}
+              className={`cursor-pointer text-center text-xs md:text-lg ${
+                bouquetChoisiNumero === 3
+                  ? "bg-color-blue text-white p-1"
+                  : " hover:bg-slate-400 hover:text-white hover:p-1"
+              } font-semibold `}
+            >
+              BOUQUET MOYEN-ORIENT
+            </h1>
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-5 md:grid-cols-8 px-5 md:px-20 my-10 gap-4">
