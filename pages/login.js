@@ -32,9 +32,10 @@ function Login() {
   const { t } = useTranslation();
 
   const token = Cookies.get("token");
-  if (token) {
-    router.push("/");
-  }
+  const auth = Cookies.get("auth");
+  // if (token && auth) {
+  //   router.push("/");
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
