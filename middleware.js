@@ -5,9 +5,9 @@ export default function middleware(req) {
   let url = req.url;
 
   if (
-    (verify && url === "http://localhost:3000/login") ||
-    (verify && url === "http://localhost:3000/register")
+    (verify && url === "https://tv7guide.com/login") ||
+    (verify && url === "https://tv7guide.com/register")
   ) {
-    return NextResponse.redirect("http://localhost:3000/");
+    return NextResponse.redirect("https://tv7guide.com/");
   }
 }
