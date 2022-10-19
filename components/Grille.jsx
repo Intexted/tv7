@@ -925,14 +925,14 @@ function Grille({
                       <>
                         {index != 0 && index % items === 0 ? (
                           <>
-                            <div className=" md:grid-3 xl:grid-4  m-auto my-5  ">
-                              {/* <img
+                            {/* <div className=" md:grid-3 xl:grid-4  m-auto my-5  ">
+                              <img
                                 src="/static/banner3.png"
                                 alt="banner"
                                 width="800px"
                                 height="70px"
-                              /> */}
-                            </div>
+                              />
+                            </div> */}
                             <Swip
                               chaine={chaine}
                               genderProgram={genderProgram}

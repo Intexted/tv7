@@ -18,6 +18,15 @@ function Bouquet({
 }) {
   const router = useRouter();
 
+  const getFavBouquet = async () => {
+    try {
+      const { data } = await axios.get("https://api.tv7guide.com/api/packages");
+      setBouquetFavoris(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const addToFav = async (chaine, index) => {
     try {
       await axios.post(
@@ -40,6 +49,8 @@ function Bouquet({
     } catch (error) {
       console.log(error);
     }
+    //
+    getFavBouquet();
     setBouquetApi([...bouquetApi, (bouquetApi[index].favoris = "false")]);
   };
   const addBouquetToFav = async (index) => {

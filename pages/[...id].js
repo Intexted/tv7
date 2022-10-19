@@ -39,11 +39,9 @@ export default function Home() {
   const getFavBouquet = async () => {
     try {
       const { data } = await axios.get("https://api.tv7guide.com/api/packages");
-
       setBouquetFavoris(data.data);
     } catch (error) {
       console.log(error);
-      console.log("1");
     }
   };
 

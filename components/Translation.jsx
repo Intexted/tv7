@@ -134,7 +134,7 @@ export const Transtlation = () => {
           },
         },
       },
-      //   lng: "fr", // if you're using a language detector, do not define the lng option
+      // lng: "fr", // if you're using a language detector, do not define the lng option
       fallbackLng: "ar",
       detection: {
         order: [
@@ -153,10 +153,15 @@ export const Transtlation = () => {
         escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
       },
     });
-  //
-  //   document.documentElement.lang = i18n.language;
-  const change_lang = (lng) => {
-    i18n.changeLanguage(lng);
-    document.documentElement.lang = lng;
+
+  // // //
+  const change_lang = () => {
+    let lng = i18n.language.split("-")[0].toLowerCase();
+
+    if (lng === "en" || lng === "fr" || lng === "ar") i18n.changeLanguage(lng);
+    else {
+      i18n.changeLanguage("fr");
+    }
   };
+  change_lang();
 };

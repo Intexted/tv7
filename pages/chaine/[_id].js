@@ -65,7 +65,11 @@ function Program() {
         if (i18n.language === "ar") {
           title = chaine?.title_ar;
         }
-        if (i18n.language === "en" || i18n.language === "en-US") {
+        if (
+          i18n.language === "en" ||
+          i18n.language === "en-US" ||
+          i18n.language === "en-GB"
+        ) {
           title = chaine?.title_en ? chaine?.title_en : chaine?.title_ar;
         }
         return (

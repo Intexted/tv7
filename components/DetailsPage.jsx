@@ -93,7 +93,11 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
   if (i18n.language === "ar") {
     title = programDetails?.title_ar;
   }
-  if (i18n.language === "en" || i18n.language === "en-US") {
+  if (
+    i18n.language === "en" ||
+    i18n.language === "en-US" ||
+    i18n.language === "en-GB"
+  ) {
     title = programDetails?.title_en
       ? programDetails?.title_en
       : programDetails?.title_ar;
@@ -130,8 +134,6 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
       }
     }
   }, [chaineId]);
-
-  console.log(programDetails);
 
   if (programDetails == undefined || programAll == undefined) {
     return (
@@ -307,7 +309,12 @@ function DetailsPage({ chaineId, channelId, setChaineId, setChannelId }) {
                 ? programDetails.description_en
                 : programDetails.description_ar}
             </h1>
-
+            {/* add pub here ... */}
+            {i18n.language != "ar" ? (
+              <div id="teads_fr"></div>
+            ) : (
+              <div id="teads_ar"></div>
+            )}
             {programPersonne.realisateur && i18n.language != "ar" && (
               <div className="flex space-x-2">
                 <h1>
