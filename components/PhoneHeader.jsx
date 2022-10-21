@@ -77,7 +77,10 @@ function PhoneHeader({
       )}
       {searchOpen && (
         <div className="fixed top-10   md:hidden shadow-md bg-white z-50 w-full text-center py-4  items-center space-x-1 mb-2 ">
-          <form className="flex space-x-1 items-center ml-20">
+          <form
+            onSubmit={(e) => handleSearch(e)}
+            className="flex space-x-1 items-center ml-20"
+          >
             <input
               type="text"
               value={searchValue}
